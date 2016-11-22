@@ -22,6 +22,7 @@ public class Main {
 				"Bia³ystok", "15-888", "999999999", new Date(), "1919111111");
 		administrator.setAdministratorSzczegoly(administratorSzczegoly);
 		entityManager.persist(administrator);
+		entityManager.persist(administratorSzczegoly);
 		entityManager.getTransaction().commit();
 		
 		
