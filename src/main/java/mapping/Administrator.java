@@ -2,6 +2,7 @@ package mapping;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,8 +23,7 @@ public class Administrator {
 	private Date dataZatrudnienia;
 
 
-	@OneToOne
-	@JoinColumn(name="IdAdminSzczegoly")
+	@OneToOne(mappedBy="administrator", cascade=CascadeType.ALL)
 	private AdministratorSzczegoly administratorSzczegoly;
 
 	public int getIdAdministratora() {

@@ -6,16 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 @Entity(name = "Administrator_szczegoly")
 public class AdministratorSzczegoly {
 	
 	@Id
-	@GeneratedValue
-	@Column(name = "IdAdminSzczegoly")
-	private int id;
+	@Column(name="Id_administratora", unique=true, nullable=false)
+	@GeneratedValue(generator="gen")
+	@GenericGenerator(name="gen", strategy="foreign", parameters= @Parameter(name="property", value="administrator") )
+	private int idAdministratora;
 	@Column(name = "Imie")
 	private String imie;
 	@Column(name = "Nazwisko")
@@ -33,6 +38,15 @@ public class AdministratorSzczegoly {
 	private Date dataUrodzenia;
 	@Column(name = "PESEL")
 	private String pesel;
+	
+	@OneToOne
+	@PrimaryKeyJoinColumn
+	private Administrator administrator;
+	
+
+	public AdministratorSzczegoly() {
+		super();
+	}
 
 	public AdministratorSzczegoly(String imie, String nazwisko, String ulica, String miasto, String kodPocztowy,
 			String telefon, Date dataUrodzenia, String pesel) {
@@ -45,6 +59,14 @@ public class AdministratorSzczegoly {
 		this.telefon = telefon;
 		this.dataUrodzenia = dataUrodzenia;
 		this.pesel = pesel;
+	}
+
+	public int getIdAdministratora() {
+		return idAdministratora;
+	}
+
+	public void setIdAdministratora(int idAdministratora) {
+		this.idAdministratora = idAdministratora;
 	}
 
 	public String getImie() {
@@ -110,5 +132,17 @@ public class AdministratorSzczegoly {
 	public void setPesel(String pesel) {
 		this.pesel = pesel;
 	}
+
+	public Administrator getAdministrator() {
+		return administrator;
+	}
+
+	public void setAdministrator(Administrator administrator) {
+		this.administrator = administrator;
+	}
+
+	
+
+	
 
 }
