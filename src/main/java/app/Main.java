@@ -1,6 +1,8 @@
 package app;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,9 @@ import mapping.AdministratorDetails;
 import mapping.Decision;
 import mapping.DetailedRaport;
 import mapping.MapConst;
+import mapping.ReportedProduct;
+import mapping.Shop;
+import mapping.User;
 
 public class Main {
 	private final static Logger LOG = Logger.getLogger(Main.class.getName());
@@ -48,7 +53,24 @@ public class Main {
 //		entityManager.persist(decision);
 //		entityManager.persist(detailedRaport);
 		
+		/**
+		 * Test dla zglaszanego produktu <-> USER i SKLEP
+		 * 
+		 */
 		
+		User user = new User("Jan","Kowalski","Lesna","Warszawa","mail","15-888","992323232");
+		Shop shop = new Shop("Nazwa sklepu 111", "adres sklepu 111", "Miasto sklepu 111", "15-888", "telefon sklepu", "nip sklepu");
+		ReportedProduct reportedProduct_1 = new ReportedProduct("Klawiatura MSI10", "X343", "MSI", new Date());
+		reportedProduct_1.setUser(user);
+		reportedProduct_1.setShop(shop);
+		List<ReportedProduct> reportedProducts = new ArrayList<ReportedProduct>();
+		reportedProducts.add(reportedProduct_1);
+		user.setReportedProducts(reportedProducts);
+		shop.setReportedProducts(reportedProducts);
+		
+		entityManager.persist(shop);
+		entityManager.persist(user);
+		entityManager.persist(reportedProduct_1);
 		
 
 		entityManager.getTransaction().commit();
