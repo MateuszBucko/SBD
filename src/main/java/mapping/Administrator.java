@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,37 +16,50 @@ public class Administrator {
 	@Id
 	@GeneratedValue
 	@Column(name = "Id_administratora")
-	private int idAdministratora;
-	@Temporal(TemporalType.TIMESTAMP)
+	private int idAdministrator;
+	@Temporal(TemporalType.DATE)
 	@Column(name = "Data_zatrudnienia")
-	private Date dataZatrudnienia;
+	private Date hireDate;
 
+	@OneToOne(mappedBy = "administrator", cascade = CascadeType.ALL)
+	private AdministratorDetails administratorDetails;
 
-	@OneToOne(mappedBy="administrator", cascade=CascadeType.ALL)
-	private AdministratorSzczegoly administratorSzczegoly;
-
-	public int getIdAdministratora() {
-		return idAdministratora;
+	
+	public Administrator() {
+		super();
 	}
 
-	public void setIdAdministratora(int idAdministratora) {
-		this.idAdministratora = idAdministratora;
+	public Administrator(Date hireDate) {
+		super();
+		this.hireDate = hireDate;
 	}
 
-	public Date getDataZatrudnienia() {
-		return dataZatrudnienia;
+	public int getIdAdministrator() {
+		return idAdministrator;
 	}
 
-	public void setDataZatrudnienia(Date dataZatrudnienia) {
-		this.dataZatrudnienia = dataZatrudnienia;
+	public void setIdAdministrator(int idAdministrator) {
+		this.idAdministrator = idAdministrator;
 	}
 
-	public AdministratorSzczegoly getAdministratorSzczegoly() {
-		return administratorSzczegoly;
+	public Date getHireDate() {
+		return hireDate;
 	}
 
-	public void setAdministratorSzczegoly(AdministratorSzczegoly administratorSzczegoly) {
-		this.administratorSzczegoly = administratorSzczegoly;
+	public void setHireDate(Date hireDate) {
+		this.hireDate = hireDate;
 	}
+
+	public AdministratorDetails getAdministratorDetails() {
+		return administratorDetails;
+	}
+
+	public void setAdministratorDetails(AdministratorDetails administratorDetails) {
+		this.administratorDetails = administratorDetails;
+	}
+	
+	
+
+	
 
 }
