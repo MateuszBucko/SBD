@@ -46,7 +46,6 @@ public class AdministratorDetails {
 	public AdministratorDetails() {
 		super();
 	}
-	
 
 	public AdministratorDetails(String firstName, String lastName, String street, String city, String postCode,
 			String phone, Date birthDate, String pesel) {
@@ -60,8 +59,6 @@ public class AdministratorDetails {
 		this.birthDate = birthDate;
 		this.pesel = pesel;
 	}
-
-
 
 	public int getIdAdministratora() {
 		return idAdministratora;
@@ -142,9 +139,5 @@ public class AdministratorDetails {
 	public void setAdministrator(Administrator administrator) {
 		this.administrator = administrator;
 	}
-	
-	
-
-	
 
 }

@@ -1,12 +1,14 @@
 package mapping;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +26,9 @@ public class Administrator {
 	@OneToOne(mappedBy = "administrator", cascade = CascadeType.ALL)
 	private AdministratorDetails administratorDetails;
 
-	
+	@OneToMany(mappedBy = "administrator")
+	private List<Complaint> complaints;
+
 	public Administrator() {
 		super();
 	}
@@ -57,9 +61,13 @@ public class Administrator {
 	public void setAdministratorDetails(AdministratorDetails administratorDetails) {
 		this.administratorDetails = administratorDetails;
 	}
-	
-	
 
-	
+	public List<Complaint> getComplaints() {
+		return complaints;
+	}
+
+	public void setComplaints(List<Complaint> complaints) {
+		this.complaints = complaints;
+	}
 
 }

@@ -8,11 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity(name = "Sklep")
-public class Shop {
+@Entity(name = "Serwis")
+public class Service {
 	@Id
 	@GeneratedValue
-	private int shopId;
+	private int seriveId;
 	@Column(name = "Nazwa")
 	private String name;
 	@Column(name = "Adres")
@@ -23,32 +23,29 @@ public class Shop {
 	private String postCode;
 	@Column(name = "Telefon")
 	private String phone;
-	@Column(name = "NIP")
-	private String nip;
 
-	@OneToMany(mappedBy = "shop")
-	private List<ReportedProduct> reportedProducts;
+	@OneToMany(mappedBy = "service")
+	private List<Repair_Service> repairService;
 
-	public Shop(String name, String address, String city, String postCode, String phone, String nip) {
+	public Service(String name, String address, String city, String postCode, String phone) {
 		super();
 		this.name = name;
 		this.address = address;
 		this.city = city;
 		this.postCode = postCode;
 		this.phone = phone;
-		this.nip = nip;
 	}
 
-	public Shop() {
+	public Service() {
 		super();
 	}
 
-	public int getShopId() {
-		return shopId;
+	public int getSeriveId() {
+		return seriveId;
 	}
 
-	public void setShopId(int shopId) {
-		this.shopId = shopId;
+	public void setSeriveId(int seriveId) {
+		this.seriveId = seriveId;
 	}
 
 	public String getName() {
@@ -91,20 +88,12 @@ public class Shop {
 		this.phone = phone;
 	}
 
-	public String getNip() {
-		return nip;
+	public List<Repair_Service> getRepairService() {
+		return repairService;
 	}
 
-	public void setNip(String nip) {
-		this.nip = nip;
-	}
-
-	public List<ReportedProduct> getReportedProducts() {
-		return reportedProducts;
-	}
-
-	public void setReportedProducts(List<ReportedProduct> reportedProducts) {
-		this.reportedProducts = reportedProducts;
+	public void setRepairService(List<Repair_Service> repairService) {
+		this.repairService = repairService;
 	}
 
 }

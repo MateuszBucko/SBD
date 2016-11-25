@@ -10,7 +10,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
-@Entity(name="Raport_szczegolowy")
+@Entity(name = "Raport_szczegolowy")
 public class DetailedRaport {
 	@Id
 	@Column(name = "Id_decyzji", unique = true, nullable = false)
