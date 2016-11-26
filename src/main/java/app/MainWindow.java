@@ -40,7 +40,6 @@ public class MainWindow extends JPanel {
 
 		// listenery
 		addUserButton.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				JTextField firstName = new JTextField(30);
 				JTextField lastName = new JTextField(30);
