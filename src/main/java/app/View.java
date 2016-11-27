@@ -238,7 +238,7 @@ public class View extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				int dayint = 0;
+				int dayint=0;
 				int monthint = 0;
 				int yearint = 0;
 				 
