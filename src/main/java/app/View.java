@@ -18,14 +18,11 @@ public class View extends JFrame{
 
 	JPanel jp = new JPanel();
 	JPanel jp2 = new JPanel();
-	JPanel panel2 = new JPanel();
+	JPanel jpshop = new JPanel();
+
 	JPanel panel_1 = new JPanel();
 	JPanel panel_2 = new JPanel();
- 	
-	JLabel jl = new JLabel();
-	JLabel jl2 = new JLabel();
-	
-	
+ 			
 	JLabel jladdAdminDate = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
 	JLabel jladdAdminDay = new JLabel("Dzie\u0144:");
 	JLabel jladdAdminMonth = new JLabel("Miesi\u0105c:");
@@ -41,8 +38,10 @@ public class View extends JFrame{
 	JLabel jlpsl = new JLabel("    Podaj PESEL");
 	
 	JLabel jlmail = new JLabel(" Podaj e-mail");
-	 		
 	
+	JLabel jlshopName = new JLabel("Podaj nazwê sklepu");
+	JLabel jlshopNIP = new JLabel("Podaj numer NIP");
+	 			
 	JTextField jtname = new JTextField();
 	JTextField jtsurname = new JTextField();
 	JTextField jtstreet = new JTextField();
@@ -51,30 +50,17 @@ public class View extends JFrame{
 	JTextField jtphone = new JTextField();
 	JTextField jtbirth = new JTextField();
 	JTextField jtpsl = new JTextField();
-	JTextField jtmail = new JTextField();
-	
+	JTextField jtmail = new JTextField();	
 	JTextField jtAdminDay = new JTextField();
 	JTextField jtAdminMonth = new JTextField();
 	JTextField jtAdminYear = new JTextField();
+	JTextField jtshopName = new JTextField();
+	JTextField jtshopNIP = new JTextField();
 	
     JButton jb = new JButton("Enter");  
     JButton btnNewButton = new JButton("Dalej");
     
-    
-    public static Date getDate(int year, int month, int day) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.MONTH, month);
-        cal.set(Calendar.DAY_OF_MONTH, day);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal.getTime();
-    }
-    
-    
-    
+      
 	public void menuPanel(){
 			
 		panel_1.setBounds(10, 11, 1245, 65);
@@ -103,6 +89,8 @@ public class View extends JFrame{
 		JButton addShopPanel = new JButton("Add Shop");
 		addShopPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				InsertShop();
 			}
 		});
 		
@@ -118,8 +106,7 @@ public class View extends JFrame{
 		panel_1.add(addShopPanel);
 		panel_1.add(addRaportPanel);
 	}
-	
-	
+		
 	public void InsertUser(){
 				
 		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
@@ -156,14 +143,9 @@ public class View extends JFrame{
 		
 		jp2.add(jlphone);
 		jp2.add(jtphone);
-		
-		
-	//	jp2.add)
-		
-		
+						
 		jp2.add(jlbirth);
-	//	jp2.add(jtbirth);
-		
+			
 		jp2.add(jladdAdminDay);
 		jp2.add(jtAdminDay);
 		jp2.add(jladdAdminMonth);
@@ -186,7 +168,7 @@ public class View extends JFrame{
                     
                     if(!input2.equals(""))
                     { 
-                    jl.setText(input2);
+               
                                               
                     System.out.println(input2);
                  
@@ -220,13 +202,11 @@ public class View extends JFrame{
                     }
                     
                     Date date = calendar.getTime();
-                                        
-                    
+                                                            
                     if(!year.equals("")){
                     	System.out.println(date.toString());
                     }
-                    
-                                          
+                                                              
                     frameAddAdmin.dispose();  
                     
                     jtbirth.setText("");
@@ -243,16 +223,10 @@ public class View extends JFrame{
                 }
         });
         
+                             
+        jp2.setBounds(550, 100, 800, 800);    
         
-        jp2.add(jl);                  
-        jp2.setBounds(550, 100, 800, 800);          
-       
-        
-      //  add(jp); 
-        
-        frameAddAdmin.getContentPane().add(jp2); 
-        
-      //  frameAddAdmin.pack();
+        frameAddAdmin.getContentPane().add(jp2);         
         frameAddAdmin.setVisible(true);
            	
 	}
@@ -381,8 +355,7 @@ public class View extends JFrame{
 		
 		
 	}
-	
-	
+		
 	public void InsertAdmin(final int day,final int month,final int year){
 		
 		
@@ -473,18 +446,98 @@ public class View extends JFrame{
         });
         
         
-        jp.add(jl);                  
+                    
         jp.setBounds(100, 100, 350, 800);          
-      //  add(jp); 
+     
         
         frameAddAdmin.getContentPane().add(jp); 
         
-      //  frameAddAdmin.pack();
+      
         frameAddAdmin.setVisible(true);
 	
 	}
-	      
+	      	
+	public void InsertShop(){
+				
+		final JFrame frameAddAdmin = new JFrame ("Dodaj Sklep");
+		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setBounds(100, 100, 350, 270);
+		
+
+		jtcity.setColumns(20);
 	
+		jtphone.setColumns(20);
+		jtpostcode.setColumns(18);
+
+		jtstreet.setColumns(20);
+	
+		jtshopName.setColumns(18);
+		jtshopNIP.setColumns(20);
+		
+		
+		
+		jpshop.add(jlshopName);
+		jpshop.add(jtshopName);
+		
+				
+		jpshop.add(jlstreet);
+		jpshop.add(jtstreet);
+				
+		jpshop.add(jlcity);
+		jpshop.add(jtcity);
+				
+		jpshop.add(jlpostcode);
+		jpshop.add(jtpostcode);
+		
+		jpshop.add(jlphone);
+		jpshop.add(jtphone);
+		
+
+		jpshop.add(jlshopNIP);
+		jpshop.add(jtshopNIP);
+
+				
+		jpshop.add(jb);
+		
+        jb.addActionListener(new ActionListener()
+        {
+                public void actionPerformed(ActionEvent e)
+                {
+                       String input = jtshopName.getText();
+       
+                       
+                       if(!input.equals(""))
+                       { 
+                    	   
+                      
+                       System.out.println("dodano sklep");
+              
+                       }
+                                              
+                       frameAddAdmin.dispose();                       
+                                      
+            		jtcity.setText("");            	
+            		jtphone.setText("");
+            		jtpostcode.setText("");            	
+            		jtstreet.setText("");            
+            		jtshopName.setText("");            		
+            		jtshopNIP.setText("");
+                                        
+                }
+        });
+        
+        
+                    
+        jpshop.setBounds(100, 100, 350, 400);          
+     
+        
+        frameAddAdmin.getContentPane().add(jpshop); 
+        
+      
+        frameAddAdmin.setVisible(true);
+	
+	}
+		
 	public View()
 	{
 		
