@@ -5,6 +5,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,6 +59,21 @@ public class View extends JFrame{
 	
     JButton jb = new JButton("Enter");  
     JButton btnNewButton = new JButton("Dalej");
+    
+    
+    public static Date getDate(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.YEAR, year);
+        cal.set(Calendar.MONTH, month);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        return cal.getTime();
+    }
+    
+    
     
 	public void menuPanel(){
 			
@@ -246,10 +263,11 @@ public class View extends JFrame{
 				String day = jtAdminDay.getText();
 				
 				
+				
                 if(!day.equals(""))
                 { 
              	                	   
-              //  jl.setText(input);
+               // jl.setText(input);
                 	 dayint = Integer.parseInt(day);
        
                 }
@@ -274,14 +292,23 @@ public class View extends JFrame{
                 { 
               	   
               //  jl.setText(input);
-                	 yearint = Integer.parseInt(year);
+               	 yearint = Integer.parseInt(year);
        
                 }
 				
 				
+                if(!day.equals(""))
+                { 
+             	   
+                	System.out.println("dzieñ: "+day);
+              //  jl.setText(input);
+                                          
+                	InsertAdmin(dayint,monthint,yearint);
+       
+                }
 					
 				
-				InsertAdmin(dayint,monthint,yearint);
+			//	
 				
 				frameAddAdminDate.dispose();
 				
@@ -361,6 +388,18 @@ public class View extends JFrame{
                      //  jl.setText(input);
                                                  
                        System.out.println(day+" "+month+" "+year);
+                       
+                       Calendar calendar = Calendar.getInstance();
+                       calendar.clear();
+                       calendar.set(Calendar.MONTH, month-1);
+                       calendar.set(Calendar.YEAR, year);
+                       calendar.set(Calendar.DATE, day);
+                       Date date = calendar.getTime();
+                    		   
+                    	//data = getDate(year, month, day);
+                       
+                                    
+                       System.out.println(date.toString());
               
                        }
                        
