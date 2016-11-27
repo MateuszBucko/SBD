@@ -37,7 +37,7 @@ public class View extends JFrame{
 	JLabel jlpostcode = new JLabel("Podaj pod pocztowy");
 	JLabel jlcity = new JLabel("     Podaj miasto");
 	JLabel jlphone = new JLabel("     Podaj telefon");
-	JLabel jlbirth = new JLabel("Podaj datê urodzenia");
+	JLabel jlbirth = new JLabel(" Data urodzenia");
 	JLabel jlpsl = new JLabel("    Podaj PESEL");
 	
 	JLabel jlmail = new JLabel(" Podaj e-mail");
@@ -122,7 +122,7 @@ public class View extends JFrame{
 	
 	public void InsertUser(){
 				
-		final JFrame frameAddAdmin = new JFrame ("Dodaj Admina");
+		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 400);
    		
@@ -134,6 +134,9 @@ public class View extends JFrame{
 		jtstreet.setColumns(20);
 		jtsurname.setColumns(20);	
 		jtmail.setColumns(20);
+		jtAdminDay.setColumns(2);
+		jtAdminMonth.setColumns(2);
+		jtAdminYear.setColumns(4);
 		
 		
 		jp2.add(jlname);
@@ -154,8 +157,19 @@ public class View extends JFrame{
 		jp2.add(jlphone);
 		jp2.add(jtphone);
 		
+		
+	//	jp2.add)
+		
+		
 		jp2.add(jlbirth);
-		jp2.add(jtbirth);
+	//	jp2.add(jtbirth);
+		
+		jp2.add(jladdAdminDay);
+		jp2.add(jtAdminDay);
+		jp2.add(jladdAdminMonth);
+		jp2.add(jtAdminMonth);
+		jp2.add(jladdAdminYear);
+		jp2.add(jtAdminYear);
 		
 		jp2.add(jlmail);
 		jp2.add(jtmail);
@@ -177,7 +191,42 @@ public class View extends JFrame{
                     System.out.println(input2);
                  
                     }
-                       
+                    
+                    
+                    int dayint=0;
+    				int monthint = 0;
+    				int yearint = 0;
+    				 
+    				
+    				String day = jtAdminDay.getText();
+    				   				    				
+                    if(!day.equals("")){ dayint = Integer.parseInt(day); }
+    				    							    				
+    				String month = jtAdminMonth.getText();
+    								
+                    if(!month.equals("")){ monthint = Integer.parseInt(month); }
+    				   			    				
+    				String year = jtAdminYear.getText();
+    				
+    				if(!year.equals("")){ yearint = Integer.parseInt(year); }
+                    
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.clear();
+                    
+                    if(!year.equals("")){
+                    calendar.set(Calendar.MONTH, monthint-1);
+                    calendar.set(Calendar.YEAR, yearint);
+                    calendar.set(Calendar.DATE, dayint);
+                    }
+                    
+                    Date date = calendar.getTime();
+                                        
+                    
+                    if(!year.equals("")){
+                    	System.out.println(date.toString());
+                    }
+                    
+                                          
                     frameAddAdmin.dispose();  
                     
                     jtbirth.setText("");
@@ -188,6 +237,9 @@ public class View extends JFrame{
                		jtmail.setText("");
                		jtstreet.setText("");
                		jtsurname.setText("");
+    				jtAdminDay.setText(null);
+    				jtAdminMonth.setText(null);
+    				jtAdminYear.setText(null);
                 }
         });
         
@@ -384,9 +436,7 @@ public class View extends JFrame{
                        if(!input.equals(""))
                        { 
                     	   
-                    	   
-                     //  jl.setText(input);
-                                                 
+                    	                                                    
                        System.out.println(day+" "+month+" "+year);
                        
                        Calendar calendar = Calendar.getInstance();
@@ -399,6 +449,10 @@ public class View extends JFrame{
                     	//data = getDate(year, month, day);
                        
                                     
+                       
+                       
+                       
+                       
                        System.out.println(date.toString());
               
                        }
