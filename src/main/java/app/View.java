@@ -18,10 +18,17 @@ public class View extends JFrame{
 	JPanel jp2 = new JPanel();
 	JPanel panel2 = new JPanel();
 	JPanel panel_1 = new JPanel();
+	JPanel panel_2 = new JPanel();
  	
 	JLabel jl = new JLabel();
 	JLabel jl2 = new JLabel();
-		
+	
+	
+	JLabel jladdAdminDate = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
+	JLabel jladdAdminDay = new JLabel("Dzie\u0144:");
+	JLabel jladdAdminMonth = new JLabel("Miesi\u0105c:");
+	JLabel jladdAdminYear = new JLabel("Rok:");
+	
 	JLabel jlname = new JLabel("          Podaj imiê");
 	JLabel jlsurname = new JLabel("Podaj nazwisko");
 	JLabel jlstreet = new JLabel("         Podaj ulicê");
@@ -30,6 +37,7 @@ public class View extends JFrame{
 	JLabel jlphone = new JLabel("     Podaj telefon");
 	JLabel jlbirth = new JLabel("Podaj datê urodzenia");
 	JLabel jlpsl = new JLabel("    Podaj PESEL");
+	
 	JLabel jlmail = new JLabel(" Podaj e-mail");
 	 		
 	
@@ -43,12 +51,12 @@ public class View extends JFrame{
 	JTextField jtpsl = new JTextField();
 	JTextField jtmail = new JTextField();
 	
-    JButton jb = new JButton("Enter");
-        
-    //Strefa testow
-	JTextField textField_1;
-	JLabel lblNewLabel_1;	
-	//Koniec strefy testow
+	JTextField jtAdminDay = new JTextField();
+	JTextField jtAdminMonth = new JTextField();
+	JTextField jtAdminYear = new JTextField();
+	
+    JButton jb = new JButton("Enter");  
+    JButton btnNewButton = new JButton("Dalej");
     
 	public void menuPanel(){
 			
@@ -70,7 +78,7 @@ public class View extends JFrame{
 		addAdminPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				InsertAdmin();	
+				InsertAdminData();	
 				
 			}
 		});
@@ -180,8 +188,123 @@ public class View extends JFrame{
            	
 	}
 	
+	public void InsertAdminData(){
+		
+		final JFrame frameAddAdminDate = new JFrame ("Dodaj Admina");
+		frameAddAdminDate.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdminDate.setBounds(100, 100, 380, 297);
+		
+		
+		panel_2.setBounds(0, 0, 315, 297);
+		getContentPane().add(panel_2);
+		panel_2.setLayout(null);
+		
+		
+		jladdAdminDate.setBounds(65, 51, 257, 14);
+		panel_2.add(jladdAdminDate);
+		
+		
+		jladdAdminDay.setBounds(74, 90, 46, 14);
+		panel_2.add(jladdAdminDay);
+		
+		
+		jladdAdminMonth.setBounds(65, 132, 100, 14);
+		panel_2.add(jladdAdminMonth);
+		
+		
+		jladdAdminYear.setBounds(74, 174, 29, 14);
+		panel_2.add(jladdAdminYear);
+		
+		
+		jtAdminDay.setBounds(130, 87, 46, 20);
+		panel_2.add(jtAdminDay);
+		jtAdminDay.setColumns(2);
+		
+		
+		jtAdminMonth.setBounds(130, 129, 46, 20);
+		panel_2.add(jtAdminMonth);
+		jtAdminMonth.setColumns(2);
+		
+		
+		jtAdminYear.setBounds(130, 171, 46, 20);
+		panel_2.add(jtAdminYear);
+		jtAdminYear.setColumns(4);
+		
+		
+
+		
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int dayint = 0;
+				int monthint = 0;
+				int yearint = 0;
+				 
+				
+				String day = jtAdminDay.getText();
+				
+				
+                if(!day.equals(""))
+                { 
+             	                	   
+              //  jl.setText(input);
+                	 dayint = Integer.parseInt(day);
+       
+                }
+				
+							
+				
+				String month = jtAdminMonth.getText();
+								
+                if(!month.equals(""))
+                { 
+             	                	   
+              //  jl.setText(input);
+                	 monthint = Integer.parseInt(month);
+       
+                }
+				
+				
+				
+				String year = jtAdminYear.getText();
+				
+				if(!year.equals(""))
+                { 
+              	   
+              //  jl.setText(input);
+                	 yearint = Integer.parseInt(year);
+       
+                }
+				
+				
+					
+				
+				InsertAdmin(dayint,monthint,yearint);
+				
+				frameAddAdminDate.dispose();
+				
+				jtAdminDay.setText(null);
+				jtAdminMonth.setText(null);
+				jtAdminYear.setText(null);
+				
+			}
+		});
+		
+		btnNewButton.setBounds(87, 213, 89, 23);
+		panel_2.add(btnNewButton);
+		
+        frameAddAdminDate.getContentPane().add(panel_2); 
+        
+      //  frameAddAdmin.pack();
+        frameAddAdminDate.setVisible(true);
+		
+		
+	}
 	
-	public void InsertAdmin(){
+	
+	public void InsertAdmin(final int day,final int month,final int year){
 		
 		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Admina");
@@ -235,9 +358,9 @@ public class View extends JFrame{
                        { 
                     	   
                     	   
-                       jl.setText(input);
+                     //  jl.setText(input);
                                                  
-                       System.out.println(input);
+                       System.out.println(day+" "+month+" "+year);
               
                        }
                        
