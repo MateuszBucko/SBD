@@ -23,11 +23,22 @@ import mapping.ReportedProduct;
 import mapping.Service;
 import mapping.Shop;
 import mapping.User;
+import javax.swing.*;
 
 public class Main {
-	// private final static Logger LOG = Logger.getLogger(Main.class.getName());
-	//
-	// public static void main(String[] args) {
+	
+
+	 public static void main(String[] args) {
+		 
+		 
+		 System.out.println("witaj");
+		 
+	
+
+		 
+	
+		 View widoki = new View();
+	 		  
 	// EntityManagerFactory entityManagerFactory =
 	// Persistence.createEntityManagerFactory("myDatabase");
 	// EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -139,6 +150,6 @@ public class Main {
 	// entityManager.close();
 	// entityManagerFactory.close();
 	//
-	// }
+	 }
 	//
 }
