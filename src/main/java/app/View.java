@@ -19,6 +19,7 @@ public class View extends JFrame{
 	JPanel jp = new JPanel();
 	JPanel jp2 = new JPanel();
 	JPanel jpshop = new JPanel();
+	JPanel jpservice = new JPanel();
 
 	JPanel panel_1 = new JPanel();
 	JPanel panel_2 = new JPanel();
@@ -41,6 +42,8 @@ public class View extends JFrame{
 	
 	JLabel jlshopName = new JLabel("Podaj nazwê sklepu");
 	JLabel jlshopNIP = new JLabel("Podaj numer NIP");
+	
+	JLabel jlserviceName = new JLabel("Podaj nazwê serwisu");
 	 			
 	JTextField jtname = new JTextField();
 	JTextField jtsurname = new JTextField();
@@ -56,6 +59,7 @@ public class View extends JFrame{
 	JTextField jtAdminYear = new JTextField();
 	JTextField jtshopName = new JTextField();
 	JTextField jtshopNIP = new JTextField();
+	JTextField jtserviceName = new JTextField();
 	
     JButton jb = new JButton("Enter");  
     JButton btnNewButton = new JButton("Dalej");
@@ -101,17 +105,30 @@ public class View extends JFrame{
 			}
 		});
 				
+		
+		JButton addServicePanel = new JButton("Add Service");
+		addServicePanel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				InsertService();
+				
+			}
+		});
+		
+		
+		
 		panel_1.add(addAdminPanel);
 		panel_1.add(addUserPanel);
 		panel_1.add(addShopPanel);
 		panel_1.add(addRaportPanel);
+		panel_1.add(addServicePanel);
 	}
 		
 	public void InsertUser(){
 				
 		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 400);
+		frameAddAdmin.setBounds(100, 100, 350, 300);
    		
 		jtbirth.setColumns(17);
 		jtcity.setColumns(20);
@@ -121,9 +138,7 @@ public class View extends JFrame{
 		jtstreet.setColumns(20);
 		jtsurname.setColumns(20);	
 		jtmail.setColumns(20);
-		jtAdminDay.setColumns(2);
-		jtAdminMonth.setColumns(2);
-		jtAdminYear.setColumns(4);
+
 		
 		
 		jp2.add(jlname);
@@ -144,14 +159,7 @@ public class View extends JFrame{
 		jp2.add(jlphone);
 		jp2.add(jtphone);
 						
-		jp2.add(jlbirth);
-			
-		jp2.add(jladdAdminDay);
-		jp2.add(jtAdminDay);
-		jp2.add(jladdAdminMonth);
-		jp2.add(jtAdminMonth);
-		jp2.add(jladdAdminYear);
-		jp2.add(jtAdminYear);
+
 		
 		jp2.add(jlmail);
 		jp2.add(jtmail);
@@ -168,45 +176,12 @@ public class View extends JFrame{
                     
                     if(!input2.equals(""))
                     { 
-               
-                                              
+                                                             
                     System.out.println(input2);
                  
                     }
                     
-                    
-                    int dayint=0;
-    				int monthint = 0;
-    				int yearint = 0;
-    				 
-    				
-    				String day = jtAdminDay.getText();
-    				   				    				
-                    if(!day.equals("")){ dayint = Integer.parseInt(day); }
-    				    							    				
-    				String month = jtAdminMonth.getText();
-    								
-                    if(!month.equals("")){ monthint = Integer.parseInt(month); }
-    				   			    				
-    				String year = jtAdminYear.getText();
-    				
-    				if(!year.equals("")){ yearint = Integer.parseInt(year); }
-                    
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.clear();
-                    
-                    if(!year.equals("")){
-                    calendar.set(Calendar.MONTH, monthint-1);
-                    calendar.set(Calendar.YEAR, yearint);
-                    calendar.set(Calendar.DATE, dayint);
-                    }
-                    
-                    Date date = calendar.getTime();
-                                                            
-                    if(!year.equals("")){
-                    	System.out.println(date.toString());
-                    }
-                                                              
+                                                                                     
                     frameAddAdmin.dispose();  
                     
                     jtbirth.setText("");
@@ -217,9 +192,7 @@ public class View extends JFrame{
                		jtmail.setText("");
                		jtstreet.setText("");
                		jtsurname.setText("");
-    				jtAdminDay.setText(null);
-    				jtAdminMonth.setText(null);
-    				jtAdminYear.setText(null);
+
                 }
         });
         
@@ -363,7 +336,7 @@ public class View extends JFrame{
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 400);
 		
-		jtbirth.setColumns(17);
+	//	jtbirth.setColumns(17);
 		jtcity.setColumns(20);
 		jtname.setColumns(20);
 		jtphone.setColumns(20);
@@ -371,6 +344,9 @@ public class View extends JFrame{
 		jtpsl.setColumns(20);
 		jtstreet.setColumns(20);
 		jtsurname.setColumns(20);	
+		jtAdminDay.setColumns(2);
+		jtAdminMonth.setColumns(2);
+		jtAdminYear.setColumns(4);
 		
 		
 		jp.add(jlname);
@@ -391,8 +367,16 @@ public class View extends JFrame{
 		jp.add(jlphone);
 		jp.add(jtphone);
 		
+		
 		jp.add(jlbirth);
-		jp.add(jtbirth);
+		
+		jp.add(jladdAdminDay);
+		jp.add(jtAdminDay);
+		jp.add(jladdAdminMonth);
+		jp.add(jtAdminMonth);
+		jp.add(jladdAdminYear);
+		jp.add(jtAdminYear);
+		
 		
 		jp.add(jlpsl);
 		jp.add(jtpsl);
@@ -403,14 +387,55 @@ public class View extends JFrame{
         {
                 public void actionPerformed(ActionEvent e)
                 {
-                       String input = jtname.getText();
-       
+                       String input = jtname.getText();       
+                                             
+                       int dayint=0;
+       				   int monthint = 0;
+       				   int yearint = 0;
+       				 
+       				
+       				String day2 = jtAdminDay.getText();
+       				   				    				
+                       if(!day2.equals("")){ dayint = Integer.parseInt(day2); }
+       				    							    				
+       				String month2 = jtAdminMonth.getText();
+       								
+                       if(!month2.equals("")){ monthint = Integer.parseInt(month2); }
+       				   			    				
+       				String year2 = jtAdminYear.getText();
+       				
+       				if(!year2.equals("")){ yearint = Integer.parseInt(year2); }
+       				
+       				
+       				 // Data urodzenia
                        
+                       Calendar calendar2 = Calendar.getInstance();
+                       calendar2.clear();
+                       
+                       if(!year2.equals("")){
+                       calendar2.set(Calendar.MONTH, monthint-1);
+                       calendar2.set(Calendar.YEAR, yearint);
+                       calendar2.set(Calendar.DATE, dayint);
+                       }
+                                                                     
+                       Date date2 = calendar2.getTime();
+                       
+                       //
+                                                               
+                       if(!year2.equals("")){
+                    	   
+                       	System.out.println(date2.toString());
+                       	
+                       }
+                       
+                                                                       
                        if(!input.equals(""))
                        { 
-                    	   
-                    	                                                    
+                    	                       	                                                    
                        System.out.println(day+" "+month+" "+year);
+                       
+                       
+                       //
                        
                        Calendar calendar = Calendar.getInstance();
                        calendar.clear();
@@ -419,21 +444,19 @@ public class View extends JFrame{
                        calendar.set(Calendar.DATE, day);
                        Date date = calendar.getTime();
                     		   
-                    	//data = getDate(year, month, day);
+                       //	
                        
-                                    
+                                                                                                     
+                       System.out.println("data zatrudnienia"+date.toString());
                        
-                       
-                       
-                       
-                       System.out.println(date.toString());
+                       System.out.println("data narodzin"+date2.toString());
               
                        }
                        
                        
                        frameAddAdmin.dispose();                       
                        
-               		jtbirth.setText("");
+              		
             		jtcity.setText("");
             		jtname.setText("");
             		jtphone.setText("");
@@ -441,6 +464,9 @@ public class View extends JFrame{
             		jtpsl.setText("");
             		jtstreet.setText("");
             		jtsurname.setText("");
+    				jtAdminDay.setText(null);
+    				jtAdminMonth.setText(null);
+    				jtAdminYear.setText(null);
                                         
                 }
         });
@@ -536,6 +562,75 @@ public class View extends JFrame{
       
         frameAddAdmin.setVisible(true);
 	
+	}
+		
+	public void InsertService(){
+		
+		final JFrame frameAddAdmin = new JFrame ("Dodaj Serwis");
+		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setBounds(100, 100, 350, 270);
+		
+
+		jtcity.setColumns(20);	
+		jtphone.setColumns(20);
+		jtpostcode.setColumns(18);
+		jtstreet.setColumns(20);	
+		jtserviceName.setColumns(17);
+								
+		jpservice.add(jlserviceName);
+		jpservice.add(jtserviceName);
+		
+				
+		jpservice.add(jlstreet);
+		jpservice.add(jtstreet);
+				
+		jpservice.add(jlcity);
+		jpservice.add(jtcity);
+				
+		jpservice.add(jlpostcode);
+		jpservice.add(jtpostcode);
+		
+		jpservice.add(jlphone);
+		jpservice.add(jtphone);
+		
+				
+		jpservice.add(jb);
+		
+        jb.addActionListener(new ActionListener()
+        {
+                public void actionPerformed(ActionEvent e)
+                {
+                       String input = jtserviceName.getText();
+       
+                       
+                       if(!input.equals(""))
+                       {                    
+                    	   // dodawanie do bazy danych tutaj
+                    	                       	                      	   
+                       System.out.println("dodano serwis");  
+                       
+                       }
+                                                         
+                       frameAddAdmin.dispose();                       
+                                      
+            		jtcity.setText("");            	
+            		jtphone.setText("");
+            		jtpostcode.setText("");            	
+            		jtstreet.setText("");            
+            		jtserviceName.setText("");            		            		                                        
+                }
+        });
+        
+                           
+        jpservice.setBounds(100, 100, 350, 400);          
+             
+        frameAddAdmin.getContentPane().add(jpservice); 
+              
+        frameAddAdmin.setVisible(true);
+		
+		
+		
+		
 	}
 		
 	public View()
