@@ -14,8 +14,39 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class View extends JFrame{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import org.jboss.logging.Logger.Level;
+
+import mapping.Administrator;
+import mapping.AdministratorDetails;
+import mapping.Complaint;
+import mapping.Decision;
+import mapping.DetailedRaport;
+import mapping.MapConst;
+import mapping.Repair;
+import mapping.Repair_Service;
+import mapping.ReportedProduct;
+import mapping.Service;
+import mapping.Shop;
+import mapping.User;
+
+
+public class View extends JFrame{
+	
+	 EntityManagerFactory entityManagerFactory =
+	 Persistence.createEntityManagerFactory("myDatabase");
+	 EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+	// entityManager.getTransaction().begin();
+
+	 
 	JPanel jp = new JPanel();
 	JPanel jp2 = new JPanel();
 	JPanel jpshop = new JPanel();
@@ -125,6 +156,8 @@ public class View extends JFrame{
 	}
 		
 	public void InsertUser(){
+		
+		entityManager.getTransaction().begin();
 				
 		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
@@ -177,8 +210,14 @@ public class View extends JFrame{
                     if(!input2.equals(""))
                     { 
                                                              
-                    System.out.println(input2);
-                 
+                    	 User user = new User(jtname.getText(), jtname.getText(), jtstreet.getText(), jtcity.getText(), jtmail.getText(),
+                    	 jtpostcode.getText(), jtphone.getText());
+                    
+                    	 entityManager.persist(user);
+                     	 entityManager.getTransaction().commit();
+                      	
+                     	 entityManager.close();
+                                                                          
                     }
                     
                                                                                      
@@ -205,6 +244,8 @@ public class View extends JFrame{
 	}
 	
 	public void InsertAdminData(){
+		
+		
 		
 		final JFrame frameAddAdminDate = new JFrame ("Dodaj Admina");
 		frameAddAdminDate.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
@@ -331,6 +372,12 @@ public class View extends JFrame{
 		
 	public void InsertAdmin(final int day,final int month,final int year){
 		
+		// EntityManagerFactory entityManagerFactory =
+		// Persistence.createEntityManagerFactory("myDatabase");
+		// EntityManager entityManager = entityManagerFactory.createEntityManager();
+				
+		entityManager.getTransaction().begin();
+		
 		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Admina");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
@@ -435,7 +482,7 @@ public class View extends JFrame{
                        System.out.println(day+" "+month+" "+year);
                        
                        
-                       //
+                       
                        
                        Calendar calendar = Calendar.getInstance();
                        calendar.clear();
@@ -444,13 +491,25 @@ public class View extends JFrame{
                        calendar.set(Calendar.DATE, day);
                        Date date = calendar.getTime();
                     		   
-                       //	
-                       
-                                                                                                     
+                                                                                                                                                 
                        System.out.println("data zatrudnienia"+date.toString());
                        
                        System.out.println("data narodzin"+date2.toString());
-              
+                       
+                   	 Administrator administrator = new Administrator(date);
+                   	 AdministratorDetails administratorDetails = new
+                   	 AdministratorDetails(jtname.getText(), jtsurname.getText(), jtstreet.getText(),
+                   	 jtcity.getText(), jtpostcode.getText(), jtphone.getText(), date2, jtpsl.getText());
+                   	 administrator.setAdministratorDetails(administratorDetails);
+                   	 administratorDetails.setAdministrator(administrator);
+                   	 entityManager.persist(administrator);
+                   	 entityManager.persist(administratorDetails);
+                   	 
+                 	 entityManager.getTransaction().commit();
+                 	
+                 	 entityManager.close();
+                 	// entityManagerFactory.close();
+                                                                                                       
                        }
                        
                        
@@ -485,6 +544,8 @@ public class View extends JFrame{
 	      	
 	public void InsertShop(){
 				
+		entityManager.getTransaction().begin();
+		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Sklep");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 270);
@@ -537,6 +598,15 @@ public class View extends JFrame{
                     	   
                       
                        System.out.println("dodano sklep");
+                       
+                       
+                   	   Shop shop = new Shop(jtshopName.getText(), jtstreet.getText(),jtcity.getText(), jtpostcode.getText(), jtphone.getText(),"nip sklepu");
+                    	   
+                  	  entityManager.persist(shop);
+                 	  entityManager.getTransaction().commit();
+                  	
+                 	  entityManager.close();
+                       
               
                        }
                                               
@@ -565,6 +635,8 @@ public class View extends JFrame{
 	}
 		
 	public void InsertService(){
+		
+		entityManager.getTransaction().begin();
 		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Serwis");
 		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
@@ -609,6 +681,14 @@ public class View extends JFrame{
                     	                       	                      	   
                        System.out.println("dodano serwis");  
                        
+                   	 Service service = new Service(jtserviceName.getText(),jtstreet.getText(),jtcity.getText(),jtpostcode.getText(),jtphone.getText()); 
+                                           
+                   	  entityManager.persist(service);
+                  	  entityManager.getTransaction().commit();
+                   	
+                  	  entityManager.close();
+                        
+                      
                        }
                                                          
                        frameAddAdmin.dispose();                       
