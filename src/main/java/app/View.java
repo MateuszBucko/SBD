@@ -5,12 +5,17 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.Closeable;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -39,8 +44,9 @@ import mapping.User;
 
 public class View extends JFrame {
 
-	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
-	EntityManager entityManager = entityManagerFactory.createEntityManager();
+	private static final EntityManagerFactory entityManagerFactory = Persistence
+			.createEntityManagerFactory("myDatabase");
+	private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
 	/**
 	 * Panels
@@ -102,6 +108,10 @@ public class View extends JFrame {
 	JButton enterButton = new JButton("Enter");
 	JButton nextButton = new JButton("Dalej");
 
+	public static EntityManager getEntitymanager() {
+		return entityManager;
+	}
+
 	public void menuPanel() {
 
 		mainMenuPanel.setBounds(10, 11, 1245, 65);
@@ -114,6 +124,7 @@ public class View extends JFrame {
 
 				InsertUser();
 
+
 			}
 		});
 
@@ -122,6 +133,7 @@ public class View extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 
 				InsertAdminData();
+
 
 			}
 		});
@@ -137,6 +149,7 @@ public class View extends JFrame {
 		JButton addRaportButton = new JButton("Add Raport");
 		addRaportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 			}
 		});
 
@@ -158,10 +171,9 @@ public class View extends JFrame {
 
 	public void InsertUser() {
 
-		entityManager.getTransaction().begin();
-
 		final JFrame frameAddAdmin = new JFrame("Dodaj U¿ytkownika");
-		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameAddAdmin.addWindowListener(getDialogWindowsListener(frameAddAdmin));
+		frameAddAdmin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 300);
 
 		birthTextField.setColumns(17);
@@ -198,6 +210,9 @@ public class View extends JFrame {
 
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				entityManager.getTransaction().begin();
+
 				String input2 = nameTextField.getText();
 
 				if (!input2.equals("")) {
@@ -208,8 +223,6 @@ public class View extends JFrame {
 
 					entityManager.persist(user);
 					entityManager.getTransaction().commit();
-
-					entityManager.close();
 
 				}
 
@@ -236,9 +249,10 @@ public class View extends JFrame {
 
 	public void InsertAdminData() {
 
-		final JFrame frameAddAdminDate = new JFrame("Dodaj Admina");
-		frameAddAdminDate.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdminDate.setBounds(100, 100, 380, 297);
+		final JFrame addAdminDataFrame = new JFrame("Dodaj administratora");
+		addAdminDataFrame.addWindowListener(getDialogWindowsListener(addAdminDataFrame));
+		addAdminDataFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addAdminDataFrame.setBounds(100, 100, 380, 297);
 
 		adminDataPanel.setBounds(0, 0, 315, 297);
 		getContentPane().add(adminDataPanel);
@@ -302,18 +316,17 @@ public class View extends JFrame {
 
 				}
 
-				if (!day.equals("")) {
+				if (!day.equals("") && !month.equals("") && !year.equals("")) {
 
 					System.out.println("dzieñ: " + day);
 					// jl.setText(input);
 
 					InsertAdmin(dayint, monthint, yearint);
-
 				}
 
 				//
 
-				frameAddAdminDate.dispose();
+				addAdminDataFrame.dispose();
 
 				adminDayTextField.setText(null);
 				adminMonthTextField.setText(null);
@@ -325,27 +338,20 @@ public class View extends JFrame {
 		nextButton.setBounds(87, 213, 89, 23);
 		adminDataPanel.add(nextButton);
 
-		frameAddAdminDate.getContentPane().add(adminDataPanel);
+		addAdminDataFrame.getContentPane().add(adminDataPanel);
 
 		// frameAddAdmin.pack();
-		frameAddAdminDate.setVisible(true);
+		addAdminDataFrame.setVisible(true);
 
 	}
 
 	public void InsertAdmin(final int day, final int month, final int year) {
 
-		// EntityManagerFactory entityManagerFactory =
-		// Persistence.createEntityManagerFactory("myDatabase");
-		// EntityManager entityManager =
-		// entityManagerFactory.createEntityManager();
-
-		entityManager.getTransaction().begin();
-
-		final JFrame addAdminFrame = new JFrame("Dodaj Admina");
-		addAdminFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		final JFrame addAdminFrame = new JFrame("Dodaj szczegó³y admina");
+		addAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addAdminFrame.addWindowListener(getDialogWindowsListener(addAdminFrame));
 		addAdminFrame.setBounds(100, 100, 350, 400);
 
-		// jtbirth.setColumns(17);
 		cityTextField.setColumns(20);
 		nameTextField.setColumns(20);
 		phoneTextField.setColumns(20);
@@ -391,6 +397,9 @@ public class View extends JFrame {
 
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				entityManager.getTransaction().begin();
+
 				String input = nameTextField.getText();
 
 				int dayint = 0;
@@ -457,12 +466,12 @@ public class View extends JFrame {
 							postcodeTextField.getText(), phoneTextField.getText(), date2, peselTextField.getText());
 					administrator.setAdministratorDetails(administratorDetails);
 					administratorDetails.setAdministrator(administrator);
+
 					entityManager.persist(administrator);
 					entityManager.persist(administratorDetails);
 
 					entityManager.getTransaction().commit();
 
-					entityManager.close();
 					// entityManagerFactory.close();
 
 				}
@@ -493,11 +502,11 @@ public class View extends JFrame {
 
 	public void InsertShop() {
 
-		entityManager.getTransaction().begin();
-
-		final JFrame frameAddAdmin = new JFrame("Dodaj Sklep");
-		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 270);
+		final JFrame addShopFrame = new JFrame("Dodaj Sklep");
+		
+		addShopFrame.addWindowListener(getDialogWindowsListener(addShopFrame));
+		addShopFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addShopFrame.setBounds(100, 100, 350, 270);
 
 		cityTextField.setColumns(20);
 
@@ -531,6 +540,9 @@ public class View extends JFrame {
 
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				entityManager.getTransaction().begin();
+
 				String input = shopNameTextField.getText();
 
 				if (!input.equals("")) {
@@ -539,16 +551,13 @@ public class View extends JFrame {
 
 					Shop shop = new Shop(shopNameTextField.getText(), streetTextField.getText(),
 							cityTextField.getText(), postcodeTextField.getText(), phoneTextField.getText(),
-							"nip sklepu");
+							shopNipTextField.getText());
 
 					entityManager.persist(shop);
 					entityManager.getTransaction().commit();
-
-					entityManager.close();
-
 				}
 
-				frameAddAdmin.dispose();
+				addShopFrame.dispose();
 
 				cityTextField.setText("");
 				phoneTextField.setText("");
@@ -562,19 +571,18 @@ public class View extends JFrame {
 
 		shopPanel.setBounds(100, 100, 350, 400);
 
-		frameAddAdmin.getContentPane().add(shopPanel);
+		addShopFrame.getContentPane().add(shopPanel);
 
-		frameAddAdmin.setVisible(true);
+		addShopFrame.setVisible(true);
 
 	}
 
 	public void InsertService() {
 
-		entityManager.getTransaction().begin();
-
-		final JFrame frameAddAdmin = new JFrame("Dodaj Serwis");
-		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 270);
+		final JFrame addServiceFrame = new JFrame("Dodaj Serwis");
+		addServiceFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addServiceFrame.addWindowListener(getDialogWindowsListener(addServiceFrame));
+		addServiceFrame.setBounds(100, 100, 350, 270);
 
 		cityTextField.setColumns(20);
 		phoneTextField.setColumns(20);
@@ -601,6 +609,9 @@ public class View extends JFrame {
 
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				entityManager.getTransaction().begin();
+
 				String input = serviceNameTextField.getText();
 
 				if (!input.equals("")) {
@@ -614,11 +625,9 @@ public class View extends JFrame {
 					entityManager.persist(service);
 					entityManager.getTransaction().commit();
 
-					entityManager.close();
-
 				}
 
-				frameAddAdmin.dispose();
+				addServiceFrame.dispose();
 
 				cityTextField.setText("");
 				phoneTextField.setText("");
@@ -630,9 +639,9 @@ public class View extends JFrame {
 
 		servicePanel.setBounds(100, 100, 350, 400);
 
-		frameAddAdmin.getContentPane().add(servicePanel);
+		addServiceFrame.getContentPane().add(servicePanel);
 
-		frameAddAdmin.setVisible(true);
+		addServiceFrame.setVisible(true);
 
 	}
 
@@ -641,10 +650,42 @@ public class View extends JFrame {
 		setTitle("ProgramSBD");
 		setVisible(true);
 		setBounds(0, 0, 1600, 900);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
+
+		WindowListener exitListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?",
+						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					entityManager.close();
+					System.exit(0);
+				}
+			}
+		};
+		addWindowListener(exitListener);
 
 		menuPanel();
 
+	}
+	
+	public WindowListener getDialogWindowsListener(final JFrame thisFrame)
+	{
+		WindowListener exitListener = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close window?",
+						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (confirm == 0) {
+					if(entityManager.getTransaction().isActive())
+					{
+						entityManager.getTransaction().rollback();		
+					}
+					thisFrame.dispose();
+				}
+			}
+		};
+		return exitListener;
 	}
 }
