@@ -28,16 +28,16 @@ public class AddServiceWindow {
 
 	JPanel servicePanel = new JPanel();
 
-	JLabel nameLabel = new JLabel("Podaj imi�");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko");
-	JLabel streetLabel = new JLabel("Podaj ulic�");
-	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy");
-	JLabel cityLabel = new JLabel("Podaj miasto");
-	JLabel phoneLabel = new JLabel("Podaj telefon");
-	JLabel birthLabel = new JLabel("Data urodzenia");
-	JLabel peselLabel = new JLabel("Podaj PESEL");
-	JLabel mailLabel = new JLabel(" Podaj e-mail");
-	JLabel serviceNameLabel = new JLabel("Podaj nazw� serwisu");
+	JLabel nameLabel = new JLabel("Podaj imię: ");
+	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
+	JLabel streetLabel = new JLabel("Podaj ulicę: ");
+	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
+	JLabel cityLabel = new JLabel("Podaj miasto: ");
+	JLabel phoneLabel = new JLabel("Podaj telefon: ");
+	JLabel birthLabel = new JLabel("Data urodzenia: ");
+	JLabel peselLabel = new JLabel("Podaj PESEL: ");
+	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
+	JLabel serviceNameLabel = new JLabel("Podaj nazwę serwisu: ");
 
 	JButton enterButton = new JButton("Enter");
 

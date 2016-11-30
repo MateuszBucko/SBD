@@ -1,44 +1,28 @@
 package app;
 
-import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.Closeable;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import dialogWindows.AddAdminWindow;
 import dialogWindows.AddServiceWindow;
 import dialogWindows.AddShopWindow;
 import dialogWindows.AddUserWindow;
-import mapping.Administrator;
-import mapping.AdministratorDetails;
-import mapping.Service;
-import mapping.Shop;
 
 
 public class View extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JPanel mainMenuPanel = new JPanel();
 	
 
@@ -101,6 +85,7 @@ public class View extends JFrame {
 
 	public View() {
 
+		new Utils();
 		setTitle("ProgramSBD");
 		setVisible(true);
 		setBounds(0, 0, 1600, 900);

@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import app.View;
 import mapping.User;
 import app.Utils;
 
@@ -26,21 +25,21 @@ public class AddUserWindow {
 	JTextField peselTextField = new JTextField();
 	JTextField mailTextField = new JTextField();
 
-	JLabel nameLabel = new JLabel("Podaj imi�");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko");
-	JLabel streetLabel = new JLabel("Podaj ulic�");
-	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy");
-	JLabel cityLabel = new JLabel("Podaj miasto");
-	JLabel phoneLabel = new JLabel("Podaj telefon");
-	JLabel birthLabel = new JLabel("Data urodzenia");
-	JLabel peselLabel = new JLabel("Podaj PESEL");
-	JLabel mailLabel = new JLabel("Podaj e-mail");
+	JLabel nameLabel = new JLabel("Podaj imię: ");
+	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
+	JLabel streetLabel = new JLabel("Podaj ulicę: ");
+	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
+	JLabel cityLabel = new JLabel("Podaj miasto: ");
+	JLabel phoneLabel = new JLabel("Podaj telefon: ");
+	JLabel birthLabel = new JLabel("Data urodzenia: ");
+	JLabel peselLabel = new JLabel("Podaj PESEL: ");
+	JLabel mailLabel = new JLabel("Podaj e-mail: ");
 
 	JButton enterButton = new JButton("Enter");
 
 	public AddUserWindow() {
 
-		final JFrame frameAddAdmin = new JFrame("Dodaj U�ytkownika");
+		final JFrame frameAddAdmin = new JFrame("Dodaj Użytkownika");
 		frameAddAdmin.addWindowListener(Utils.getDialogWindowsListener(frameAddAdmin,entityManager));
 		frameAddAdmin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 300);

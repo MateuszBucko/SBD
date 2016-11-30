@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Utils {
+	
+	
 	private static final EntityManagerFactory entityManagerFactory = Persistence
 			.createEntityManagerFactory("myDatabase");
 	

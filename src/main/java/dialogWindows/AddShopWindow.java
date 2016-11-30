@@ -17,18 +17,18 @@ public class AddShopWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel nameLabel = new JLabel("Podaj imi�");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko");
-	JLabel streetLabel = new JLabel("Podaj ulic�");
-	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy");
-	JLabel cityLabel = new JLabel("Podaj miasto");
-	JLabel phoneLabel = new JLabel("Podaj telefon");
-	JLabel birthLabel = new JLabel("Data urodzenia");
-	JLabel peselLabel = new JLabel("Podaj PESEL");
-	JLabel mailLabel = new JLabel(" Podaj e-mail");
-	JLabel shopNameLabel = new JLabel("Podaj nazw� sklepu");
-	JLabel shopNipLabel = new JLabel("Podaj numer NIP");
-	JLabel serviceNameLabel = new JLabel("Podaj nazw� serwisu");
+	JLabel nameLabel = new JLabel("Podaj imię: ");
+	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
+	JLabel streetLabel = new JLabel("Podaj ulicę: ");
+	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
+	JLabel cityLabel = new JLabel("Podaj miasto: ");
+	JLabel phoneLabel = new JLabel("Podaj telefon: ");
+	JLabel birthLabel = new JLabel("Data urodzenia: ");
+	JLabel peselLabel = new JLabel("Podaj PESEL: ");
+	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
+	JLabel shopNameLabel = new JLabel("Podaj nazwę sklepu: ");
+	JLabel shopNipLabel = new JLabel("Podaj numer NIP: ");
+	JLabel serviceNameLabel = new JLabel("Podaj nazwę serwisu: ");
 	
 	JTextField nameTextField = new JTextField();
 	JTextField surnameTextField = new JTextField();

@@ -16,10 +16,10 @@ public class AddAdminWindow {
 	
 	private static EntityManager entityManager;
 
-	JLabel addAdminDateLabel = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
-	JLabel addAdminDayLabel = new JLabel("Dzie�:");
-	JLabel addAdminMonthLabel = new JLabel("Miesi�c:");
-	JLabel addAdminYearLabel = new JLabel("Rok:");
+	JLabel addAdminDateLabel = new JLabel("Podaj datę zatrudnienia administratora: ");
+	JLabel addAdminDayLabel = new JLabel("Dzień: ");
+	JLabel addAdminMonthLabel = new JLabel("Miesiąc: ");
+	JLabel addAdminYearLabel = new JLabel("Rok: ");
 
 	JPanel adminDataPanel = new JPanel();
 

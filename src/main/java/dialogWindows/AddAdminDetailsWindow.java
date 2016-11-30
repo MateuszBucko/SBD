@@ -35,27 +35,27 @@ public class AddAdminDetailsWindow {
 
 	JPanel adminPanel = new JPanel();
 
-	JLabel nameLabel = new JLabel("Podaj imi�");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko");
-	JLabel streetLabel = new JLabel("Podaj ulic�");
-	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy");
-	JLabel cityLabel = new JLabel("Podaj miasto");
-	JLabel phoneLabel = new JLabel("Podaj telefon");
-	JLabel birthLabel = new JLabel("Data urodzenia");
-	JLabel peselLabel = new JLabel("Podaj PESEL");
-	JLabel mailLabel = new JLabel(" Podaj e-mail");
-	JLabel addAdminDateLabel = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
-	JLabel addAdminDayLabel = new JLabel("Dzie�:");
-	JLabel addAdminMonthLabel = new JLabel("Miesi�c:");
-	JLabel addAdminYearLabel = new JLabel("Rok:");
+	JLabel nameLabel = new JLabel("Podaj imię: ");
+	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
+	JLabel streetLabel = new JLabel("Podaj ulicę: ");
+	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
+	JLabel cityLabel = new JLabel("Podaj miasto: ");
+	JLabel phoneLabel = new JLabel("Podaj telefon: ");
+	JLabel birthLabel = new JLabel("Data urodzenia: ");
+	JLabel peselLabel = new JLabel("Podaj PESEL: ");
+	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
+	JLabel addAdminDateLabel = new JLabel("Podaj datę zatrudnienia administratora: ");
+	JLabel addAdminDayLabel = new JLabel("Dzień: ");
+	JLabel addAdminMonthLabel = new JLabel("Miesiąc: ");
+	JLabel addAdminYearLabel = new JLabel("Rok: ");
 
 	JButton enterButton = new JButton("Enter");
 
 	public AddAdminDetailsWindow(final int day, final int month, final int year) {
-		final JFrame addAdminFrame = new JFrame("Dodaj szczeg�y admina");
+		final JFrame addAdminFrame = new JFrame("Dodaj dane szczegółowe administratora");
 		addAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addAdminFrame.addWindowListener(Utils.getDialogWindowsListener(addAdminFrame, entityManager));
-		addAdminFrame.setBounds(100, 100, 350, 400);
+		addAdminFrame.setBounds(100, 100, 370, 400);
 
 		cityTextField.setColumns(20);
 		nameTextField.setColumns(20);
