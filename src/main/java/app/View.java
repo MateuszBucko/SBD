@@ -37,693 +37,614 @@ import mapping.Service;
 import mapping.Shop;
 import mapping.User;
 
+public class View extends JFrame {
 
-public class View extends JFrame{
-	
-	 EntityManagerFactory entityManagerFactory =
-	 Persistence.createEntityManagerFactory("myDatabase");
-	 EntityManager entityManager = entityManagerFactory.createEntityManager();
+	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myDatabase");
+	EntityManager entityManager = entityManagerFactory.createEntityManager();
 
-	// entityManager.getTransaction().begin();
+	/**
+	 * Panels
+	 */
+	JPanel adminPanel = new JPanel();
+	JPanel userPanel = new JPanel();
+	JPanel shopPanel = new JPanel();
+	JPanel servicePanel = new JPanel();
+	JPanel mainMenuPanel = new JPanel();
+	JPanel adminDataPanel = new JPanel();
 
-	 
-	JPanel jp = new JPanel();
-	JPanel jp2 = new JPanel();
-	JPanel jpshop = new JPanel();
-	JPanel jpservice = new JPanel();
+	/**
+	 * Labels
+	 */
 
-	JPanel panel_1 = new JPanel();
-	JPanel panel_2 = new JPanel();
- 			
-	JLabel jladdAdminDate = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
-	JLabel jladdAdminDay = new JLabel("Dzie\u0144:");
-	JLabel jladdAdminMonth = new JLabel("Miesi\u0105c:");
-	JLabel jladdAdminYear = new JLabel("Rok:");
-	
-	JLabel jlname = new JLabel("          Podaj imiê");
-	JLabel jlsurname = new JLabel("Podaj nazwisko");
-	JLabel jlstreet = new JLabel("         Podaj ulicê");
-	JLabel jlpostcode = new JLabel("Podaj pod pocztowy");
-	JLabel jlcity = new JLabel("     Podaj miasto");
-	JLabel jlphone = new JLabel("     Podaj telefon");
-	JLabel jlbirth = new JLabel(" Data urodzenia");
-	JLabel jlpsl = new JLabel("    Podaj PESEL");
-	
-	JLabel jlmail = new JLabel(" Podaj e-mail");
-	
-	JLabel jlshopName = new JLabel("Podaj nazwê sklepu");
-	JLabel jlshopNIP = new JLabel("Podaj numer NIP");
-	
-	JLabel jlserviceName = new JLabel("Podaj nazwê serwisu");
-	 			
-	JTextField jtname = new JTextField();
-	JTextField jtsurname = new JTextField();
-	JTextField jtstreet = new JTextField();
-	JTextField jtpostcode = new JTextField();
-	JTextField jtcity = new JTextField();
-	JTextField jtphone = new JTextField();
-	JTextField jtbirth = new JTextField();
-	JTextField jtpsl = new JTextField();
-	JTextField jtmail = new JTextField();	
-	JTextField jtAdminDay = new JTextField();
-	JTextField jtAdminMonth = new JTextField();
-	JTextField jtAdminYear = new JTextField();
-	JTextField jtshopName = new JTextField();
-	JTextField jtshopNIP = new JTextField();
-	JTextField jtserviceName = new JTextField();
-	
-    JButton jb = new JButton("Enter");  
-    JButton btnNewButton = new JButton("Dalej");
-    
-      
-	public void menuPanel(){
-			
-		panel_1.setBounds(10, 11, 1245, 65);
-		getContentPane().add(panel_1);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+	// admin
+	JLabel addAdminDateLabel = new JLabel("Podaj dat\u0119 zatrudnienia administratora");
+	JLabel addAdminDayLabel = new JLabel("Dzieñ:");
+	JLabel addAdminMonthLabel = new JLabel("Miesi¹c:");
+	JLabel addAdminYearLabel = new JLabel("Rok:");
+
+	JLabel nameLabel = new JLabel("Podaj imiê");
+	JLabel surnameLabel = new JLabel("Podaj nazwisko");
+	JLabel streetLabel = new JLabel("Podaj ulicê");
+	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy");
+	JLabel cityLabel = new JLabel("Podaj miasto");
+	JLabel phoneLabel = new JLabel("Podaj telefon");
+	JLabel birthLabel = new JLabel("Data urodzenia");
+	JLabel peselLabel = new JLabel("Podaj PESEL");
+	JLabel mailLabel = new JLabel(" Podaj e-mail");
+	JLabel shopNameLabel = new JLabel("Podaj nazwê sklepu");
+	JLabel shopNipLabel = new JLabel("Podaj numer NIP");
+	JLabel serviceNameLabel = new JLabel("Podaj nazwê serwisu");
+
+	/**
+	 * Text fields
+	 */
+
+	JTextField nameTextField = new JTextField();
+	JTextField surnameTextField = new JTextField();
+	JTextField streetTextField = new JTextField();
+	JTextField postcodeTextField = new JTextField();
+	JTextField cityTextField = new JTextField();
+	JTextField phoneTextField = new JTextField();
+	JTextField birthTextField = new JTextField();
+	JTextField peselTextField = new JTextField();
+	JTextField mailTextField = new JTextField();
+	JTextField adminDayTextField = new JTextField();
+	JTextField adminMonthTextField = new JTextField();
+	JTextField adminYearTextField = new JTextField();
+	JTextField shopNameTextField = new JTextField();
+	JTextField shopNipTextField = new JTextField();
+	JTextField serviceNameTextField = new JTextField();
+
+	/**
+	 * Buttons
+	 */
+
+	JButton enterButton = new JButton("Enter");
+	JButton nextButton = new JButton("Dalej");
+
+	public void menuPanel() {
+
+		mainMenuPanel.setBounds(10, 11, 1245, 65);
+		getContentPane().add(mainMenuPanel);
+		mainMenuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
 		JButton addUserPanel = new JButton("Add User");
 		addUserPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				InsertUser();
-				
+
 			}
 		});
-		
-				
-		JButton addAdminPanel = new JButton("Add Admin");
-		addAdminPanel.addActionListener(new ActionListener() {
+
+		JButton addAdminButton = new JButton("Add Admin");
+		addAdminButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				InsertAdminData();	
-				
+
+				InsertAdminData();
+
 			}
 		});
-		
-		JButton addShopPanel = new JButton("Add Shop");
-		addShopPanel.addActionListener(new ActionListener() {
+
+		JButton addShopButton = new JButton("Add Shop");
+		addShopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				InsertShop();
 			}
 		});
-		
-		
-		JButton addRaportPanel = new JButton("Add Raport");
-		addRaportPanel.addActionListener(new ActionListener() {
+
+		JButton addRaportButton = new JButton("Add Raport");
+		addRaportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-				
-		
-		JButton addServicePanel = new JButton("Add Service");
-		addServicePanel.addActionListener(new ActionListener() {
+
+		JButton addServiceButton = new JButton("Add Service");
+		addServiceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				InsertService();
-				
+
 			}
 		});
-		
-		
-		
-		panel_1.add(addAdminPanel);
-		panel_1.add(addUserPanel);
-		panel_1.add(addShopPanel);
-		panel_1.add(addRaportPanel);
-		panel_1.add(addServicePanel);
+
+		mainMenuPanel.add(addAdminButton);
+		mainMenuPanel.add(addUserPanel);
+		mainMenuPanel.add(addShopButton);
+		mainMenuPanel.add(addRaportButton);
+		mainMenuPanel.add(addServiceButton);
 	}
-		
-	public void InsertUser(){
-		
+
+	public void InsertUser() {
+
 		entityManager.getTransaction().begin();
-				
-		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
+
+		final JFrame frameAddAdmin = new JFrame("Dodaj U¿ytkownika");
+		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 300);
-   		
-		jtbirth.setColumns(17);
-		jtcity.setColumns(20);
-		jtname.setColumns(20);
-		jtphone.setColumns(20);
-		jtpostcode.setColumns(18);
-		jtstreet.setColumns(20);
-		jtsurname.setColumns(20);	
-		jtmail.setColumns(20);
 
-		
-		
-		jp2.add(jlname);
-		jp2.add(jtname);
-				
-		jp2.add(jlsurname);
-		jp2.add(jtsurname);
-				
-		jp2.add(jlstreet);
-		jp2.add(jtstreet);
-				
-		jp2.add(jlcity);
-		jp2.add(jtcity);
-				
-		jp2.add(jlpostcode);
-		jp2.add(jtpostcode);
-		
-		jp2.add(jlphone);
-		jp2.add(jtphone);
-						
+		birthTextField.setColumns(17);
+		cityTextField.setColumns(20);
+		nameTextField.setColumns(20);
+		phoneTextField.setColumns(20);
+		postcodeTextField.setColumns(18);
+		streetTextField.setColumns(20);
+		surnameTextField.setColumns(20);
+		mailTextField.setColumns(20);
 
-		
-		jp2.add(jlmail);
-		jp2.add(jtmail);
-		
-				
-		jp2.add(jb);
-		
-        jb.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent e)
-                {
-                    String input2 = jtname.getText();
-                              
-                    
-                    if(!input2.equals(""))
-                    { 
-                                                             
-                    	 User user = new User(jtname.getText(), jtname.getText(), jtstreet.getText(), jtcity.getText(), jtmail.getText(),
-                    	 jtpostcode.getText(), jtphone.getText());
-                    
-                    	 entityManager.persist(user);
-                     	 entityManager.getTransaction().commit();
-                      	
-                     	 entityManager.close();
-                                                                          
-                    }
-                    
-                                                                                     
-                    frameAddAdmin.dispose();  
-                    
-                    jtbirth.setText("");
-               		jtcity.setText("");
-               		jtname.setText("");
-               		jtphone.setText("");
-               		jtpostcode.setText("");
-               		jtmail.setText("");
-               		jtstreet.setText("");
-               		jtsurname.setText("");
+		userPanel.add(nameLabel);
+		userPanel.add(nameTextField);
 
-                }
-        });
-        
-                             
-        jp2.setBounds(550, 100, 800, 800);    
-        
-        frameAddAdmin.getContentPane().add(jp2);         
-        frameAddAdmin.setVisible(true);
-           	
-	}
-	
-	public void InsertAdminData(){
-		
-		
-		
-		final JFrame frameAddAdminDate = new JFrame ("Dodaj Admina");
-		frameAddAdminDate.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdminDate.setBounds(100, 100, 380, 297);
-		
-		
-		panel_2.setBounds(0, 0, 315, 297);
-		getContentPane().add(panel_2);
-		panel_2.setLayout(null);
-		
-		
-		jladdAdminDate.setBounds(65, 51, 257, 14);
-		panel_2.add(jladdAdminDate);
-		
-		
-		jladdAdminDay.setBounds(74, 90, 46, 14);
-		panel_2.add(jladdAdminDay);
-		
-		
-		jladdAdminMonth.setBounds(65, 132, 100, 14);
-		panel_2.add(jladdAdminMonth);
-		
-		
-		jladdAdminYear.setBounds(74, 174, 29, 14);
-		panel_2.add(jladdAdminYear);
-		
-		
-		jtAdminDay.setBounds(130, 87, 46, 20);
-		panel_2.add(jtAdminDay);
-		jtAdminDay.setColumns(2);
-		
-		
-		jtAdminMonth.setBounds(130, 129, 46, 20);
-		panel_2.add(jtAdminMonth);
-		jtAdminMonth.setColumns(2);
-		
-		
-		jtAdminYear.setBounds(130, 171, 46, 20);
-		panel_2.add(jtAdminYear);
-		jtAdminYear.setColumns(4);
-		
-		
+		userPanel.add(surnameLabel);
+		userPanel.add(surnameTextField);
 
-		
-		
-		btnNewButton.addActionListener(new ActionListener() {
+		userPanel.add(streetLabel);
+		userPanel.add(streetTextField);
+
+		userPanel.add(cityLabel);
+		userPanel.add(cityTextField);
+
+		userPanel.add(postcodeLabel);
+		userPanel.add(postcodeTextField);
+
+		userPanel.add(phoneLabel);
+		userPanel.add(phoneTextField);
+
+		userPanel.add(mailLabel);
+		userPanel.add(mailTextField);
+
+		userPanel.add(enterButton);
+
+		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				int dayint=0;
+				String input2 = nameTextField.getText();
+
+				if (!input2.equals("")) {
+
+					User user = new User(nameTextField.getText(), nameTextField.getText(), streetTextField.getText(),
+							cityTextField.getText(), mailTextField.getText(), postcodeTextField.getText(),
+							phoneTextField.getText());
+
+					entityManager.persist(user);
+					entityManager.getTransaction().commit();
+
+					entityManager.close();
+
+				}
+
+				frameAddAdmin.dispose();
+
+				birthTextField.setText("");
+				cityTextField.setText("");
+				nameTextField.setText("");
+				phoneTextField.setText("");
+				postcodeTextField.setText("");
+				mailTextField.setText("");
+				streetTextField.setText("");
+				surnameTextField.setText("");
+
+			}
+		});
+
+		userPanel.setBounds(550, 100, 800, 800);
+
+		frameAddAdmin.getContentPane().add(userPanel);
+		frameAddAdmin.setVisible(true);
+
+	}
+
+	public void InsertAdminData() {
+
+		final JFrame frameAddAdminDate = new JFrame("Dodaj Admina");
+		frameAddAdminDate.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameAddAdminDate.setBounds(100, 100, 380, 297);
+
+		adminDataPanel.setBounds(0, 0, 315, 297);
+		getContentPane().add(adminDataPanel);
+		adminDataPanel.setLayout(null);
+
+		addAdminDateLabel.setBounds(65, 51, 257, 14);
+		adminDataPanel.add(addAdminDateLabel);
+
+		addAdminDayLabel.setBounds(74, 90, 46, 14);
+		adminDataPanel.add(addAdminDayLabel);
+
+		addAdminMonthLabel.setBounds(65, 132, 100, 14);
+		adminDataPanel.add(addAdminMonthLabel);
+
+		addAdminYearLabel.setBounds(74, 174, 29, 14);
+		adminDataPanel.add(addAdminYearLabel);
+
+		adminDayTextField.setBounds(130, 87, 46, 20);
+		adminDataPanel.add(adminDayTextField);
+		adminDayTextField.setColumns(2);
+
+		adminMonthTextField.setBounds(130, 129, 46, 20);
+		adminDataPanel.add(adminMonthTextField);
+		adminMonthTextField.setColumns(2);
+
+		adminYearTextField.setBounds(130, 171, 46, 20);
+		adminDataPanel.add(adminYearTextField);
+		adminYearTextField.setColumns(4);
+
+		nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				int dayint = 0;
 				int monthint = 0;
 				int yearint = 0;
-				 
-				
-				String day = jtAdminDay.getText();
-				
-				
-				
-                if(!day.equals(""))
-                { 
-             	                	   
-               // jl.setText(input);
-                	 dayint = Integer.parseInt(day);
-       
-                }
-				
-							
-				
-				String month = jtAdminMonth.getText();
-								
-                if(!month.equals(""))
-                { 
-             	                	   
-              //  jl.setText(input);
-                	 monthint = Integer.parseInt(month);
-       
-                }
-				
-				
-				
-				String year = jtAdminYear.getText();
-				
-				if(!year.equals(""))
-                { 
-              	   
-              //  jl.setText(input);
-               	 yearint = Integer.parseInt(year);
-       
-                }
-				
-				
-                if(!day.equals(""))
-                { 
-             	   
-                	System.out.println("dzieñ: "+day);
-              //  jl.setText(input);
-                                          
-                	InsertAdmin(dayint,monthint,yearint);
-       
-                }
-					
-				
-			//	
-				
+
+				String day = adminDayTextField.getText();
+
+				if (!day.equals("")) {
+
+					// jl.setText(input);
+					dayint = Integer.parseInt(day);
+
+				}
+
+				String month = adminMonthTextField.getText();
+
+				if (!month.equals("")) {
+
+					// jl.setText(input);
+					monthint = Integer.parseInt(month);
+
+				}
+
+				String year = adminYearTextField.getText();
+
+				if (!year.equals("")) {
+
+					// jl.setText(input);
+					yearint = Integer.parseInt(year);
+
+				}
+
+				if (!day.equals("")) {
+
+					System.out.println("dzieñ: " + day);
+					// jl.setText(input);
+
+					InsertAdmin(dayint, monthint, yearint);
+
+				}
+
+				//
+
 				frameAddAdminDate.dispose();
-				
-				jtAdminDay.setText(null);
-				jtAdminMonth.setText(null);
-				jtAdminYear.setText(null);
-				
+
+				adminDayTextField.setText(null);
+				adminMonthTextField.setText(null);
+				adminYearTextField.setText(null);
+
 			}
 		});
-		
-		btnNewButton.setBounds(87, 213, 89, 23);
-		panel_2.add(btnNewButton);
-		
-        frameAddAdminDate.getContentPane().add(panel_2); 
-        
-      //  frameAddAdmin.pack();
-        frameAddAdminDate.setVisible(true);
-		
-		
+
+		nextButton.setBounds(87, 213, 89, 23);
+		adminDataPanel.add(nextButton);
+
+		frameAddAdminDate.getContentPane().add(adminDataPanel);
+
+		// frameAddAdmin.pack();
+		frameAddAdminDate.setVisible(true);
+
 	}
-		
-	public void InsertAdmin(final int day,final int month,final int year){
-		
+
+	public void InsertAdmin(final int day, final int month, final int year) {
+
 		// EntityManagerFactory entityManagerFactory =
 		// Persistence.createEntityManagerFactory("myDatabase");
-		// EntityManager entityManager = entityManagerFactory.createEntityManager();
-				
+		// EntityManager entityManager =
+		// entityManagerFactory.createEntityManager();
+
 		entityManager.getTransaction().begin();
-		
-		
-		final JFrame frameAddAdmin = new JFrame ("Dodaj Admina");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 400);
-		
-	//	jtbirth.setColumns(17);
-		jtcity.setColumns(20);
-		jtname.setColumns(20);
-		jtphone.setColumns(20);
-		jtpostcode.setColumns(18);
-		jtpsl.setColumns(20);
-		jtstreet.setColumns(20);
-		jtsurname.setColumns(20);	
-		jtAdminDay.setColumns(2);
-		jtAdminMonth.setColumns(2);
-		jtAdminYear.setColumns(4);
-		
-		
-		jp.add(jlname);
-		jp.add(jtname);
-				
-		jp.add(jlsurname);
-		jp.add(jtsurname);
-				
-		jp.add(jlstreet);
-		jp.add(jtstreet);
-				
-		jp.add(jlcity);
-		jp.add(jtcity);
-				
-		jp.add(jlpostcode);
-		jp.add(jtpostcode);
-		
-		jp.add(jlphone);
-		jp.add(jtphone);
-		
-		
-		jp.add(jlbirth);
-		
-		jp.add(jladdAdminDay);
-		jp.add(jtAdminDay);
-		jp.add(jladdAdminMonth);
-		jp.add(jtAdminMonth);
-		jp.add(jladdAdminYear);
-		jp.add(jtAdminYear);
-		
-		
-		jp.add(jlpsl);
-		jp.add(jtpsl);
-				
-		jp.add(jb);
-		
-        jb.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent e)
-                {
-                       String input = jtname.getText();       
-                                             
-                       int dayint=0;
-       				   int monthint = 0;
-       				   int yearint = 0;
-       				 
-       				
-       				String day2 = jtAdminDay.getText();
-       				   				    				
-                       if(!day2.equals("")){ dayint = Integer.parseInt(day2); }
-       				    							    				
-       				String month2 = jtAdminMonth.getText();
-       								
-                       if(!month2.equals("")){ monthint = Integer.parseInt(month2); }
-       				   			    				
-       				String year2 = jtAdminYear.getText();
-       				
-       				if(!year2.equals("")){ yearint = Integer.parseInt(year2); }
-       				
-       				
-       				 // Data urodzenia
-                       
-                       Calendar calendar2 = Calendar.getInstance();
-                       calendar2.clear();
-                       
-                       if(!year2.equals("")){
-                       calendar2.set(Calendar.MONTH, monthint-1);
-                       calendar2.set(Calendar.YEAR, yearint);
-                       calendar2.set(Calendar.DATE, dayint);
-                       }
-                                                                     
-                       Date date2 = calendar2.getTime();
-                       
-                       //
-                                                               
-                       if(!year2.equals("")){
-                    	   
-                       	System.out.println(date2.toString());
-                       	
-                       }
-                       
-                                                                       
-                       if(!input.equals(""))
-                       { 
-                    	                       	                                                    
-                       System.out.println(day+" "+month+" "+year);
-                       
-                       
-                       
-                       
-                       Calendar calendar = Calendar.getInstance();
-                       calendar.clear();
-                       calendar.set(Calendar.MONTH, month-1);
-                       calendar.set(Calendar.YEAR, year);
-                       calendar.set(Calendar.DATE, day);
-                       Date date = calendar.getTime();
-                    		   
-                                                                                                                                                 
-                       System.out.println("data zatrudnienia"+date.toString());
-                       
-                       System.out.println("data narodzin"+date2.toString());
-                       
-                   	 Administrator administrator = new Administrator(date);
-                   	 AdministratorDetails administratorDetails = new
-                   	 AdministratorDetails(jtname.getText(), jtsurname.getText(), jtstreet.getText(),
-                   	 jtcity.getText(), jtpostcode.getText(), jtphone.getText(), date2, jtpsl.getText());
-                   	 administrator.setAdministratorDetails(administratorDetails);
-                   	 administratorDetails.setAdministrator(administrator);
-                   	 entityManager.persist(administrator);
-                   	 entityManager.persist(administratorDetails);
-                   	 
-                 	 entityManager.getTransaction().commit();
-                 	
-                 	 entityManager.close();
-                 	// entityManagerFactory.close();
-                                                                                                       
-                       }
-                       
-                       
-                       frameAddAdmin.dispose();                       
-                       
-              		
-            		jtcity.setText("");
-            		jtname.setText("");
-            		jtphone.setText("");
-            		jtpostcode.setText("");
-            		jtpsl.setText("");
-            		jtstreet.setText("");
-            		jtsurname.setText("");
-    				jtAdminDay.setText(null);
-    				jtAdminMonth.setText(null);
-    				jtAdminYear.setText(null);
-                                        
-                }
-        });
-        
-        
-                    
-        jp.setBounds(100, 100, 350, 800);          
-     
-        
-        frameAddAdmin.getContentPane().add(jp); 
-        
-      
-        frameAddAdmin.setVisible(true);
-	
+
+		final JFrame addAdminFrame = new JFrame("Dodaj Admina");
+		addAdminFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		addAdminFrame.setBounds(100, 100, 350, 400);
+
+		// jtbirth.setColumns(17);
+		cityTextField.setColumns(20);
+		nameTextField.setColumns(20);
+		phoneTextField.setColumns(20);
+		postcodeTextField.setColumns(18);
+		peselTextField.setColumns(20);
+		streetTextField.setColumns(20);
+		surnameTextField.setColumns(20);
+		adminDayTextField.setColumns(2);
+		adminMonthTextField.setColumns(2);
+		adminYearTextField.setColumns(4);
+
+		adminPanel.add(nameLabel);
+		adminPanel.add(nameTextField);
+
+		adminPanel.add(surnameLabel);
+		adminPanel.add(surnameTextField);
+
+		adminPanel.add(streetLabel);
+		adminPanel.add(streetTextField);
+
+		adminPanel.add(cityLabel);
+		adminPanel.add(cityTextField);
+
+		adminPanel.add(postcodeLabel);
+		adminPanel.add(postcodeTextField);
+
+		adminPanel.add(phoneLabel);
+		adminPanel.add(phoneTextField);
+
+		adminPanel.add(birthLabel);
+
+		adminPanel.add(addAdminDayLabel);
+		adminPanel.add(adminDayTextField);
+		adminPanel.add(addAdminMonthLabel);
+		adminPanel.add(adminMonthTextField);
+		adminPanel.add(addAdminYearLabel);
+		adminPanel.add(adminYearTextField);
+
+		adminPanel.add(peselLabel);
+		adminPanel.add(peselTextField);
+
+		adminPanel.add(enterButton);
+
+		enterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String input = nameTextField.getText();
+
+				int dayint = 0;
+				int monthint = 0;
+				int yearint = 0;
+
+				String day2 = adminDayTextField.getText();
+
+				if (!day2.equals("")) {
+					dayint = Integer.parseInt(day2);
+				}
+
+				String month2 = adminMonthTextField.getText();
+
+				if (!month2.equals("")) {
+					monthint = Integer.parseInt(month2);
+				}
+
+				String year2 = adminYearTextField.getText();
+
+				if (!year2.equals("")) {
+					yearint = Integer.parseInt(year2);
+				}
+
+				// Data urodzenia
+
+				Calendar calendar2 = Calendar.getInstance();
+				calendar2.clear();
+
+				if (!year2.equals("")) {
+					calendar2.set(Calendar.MONTH, monthint - 1);
+					calendar2.set(Calendar.YEAR, yearint);
+					calendar2.set(Calendar.DATE, dayint);
+				}
+
+				Date date2 = calendar2.getTime();
+
+				//
+
+				if (!year2.equals("")) {
+
+					System.out.println(date2.toString());
+
+				}
+
+				if (!input.equals("")) {
+
+					System.out.println(day + " " + month + " " + year);
+
+					Calendar calendar = Calendar.getInstance();
+					calendar.clear();
+					calendar.set(Calendar.MONTH, month - 1);
+					calendar.set(Calendar.YEAR, year);
+					calendar.set(Calendar.DATE, day);
+					Date date = calendar.getTime();
+
+					System.out.println("data zatrudnienia" + date.toString());
+
+					System.out.println("data narodzin" + date2.toString());
+
+					Administrator administrator = new Administrator(date);
+					AdministratorDetails administratorDetails = new AdministratorDetails(nameTextField.getText(),
+							surnameTextField.getText(), streetTextField.getText(), cityTextField.getText(),
+							postcodeTextField.getText(), phoneTextField.getText(), date2, peselTextField.getText());
+					administrator.setAdministratorDetails(administratorDetails);
+					administratorDetails.setAdministrator(administrator);
+					entityManager.persist(administrator);
+					entityManager.persist(administratorDetails);
+
+					entityManager.getTransaction().commit();
+
+					entityManager.close();
+					// entityManagerFactory.close();
+
+				}
+
+				addAdminFrame.dispose();
+
+				cityTextField.setText("");
+				nameTextField.setText("");
+				phoneTextField.setText("");
+				postcodeTextField.setText("");
+				peselTextField.setText("");
+				streetTextField.setText("");
+				surnameTextField.setText("");
+				adminDayTextField.setText(null);
+				adminMonthTextField.setText(null);
+				adminYearTextField.setText(null);
+
+			}
+		});
+
+		adminPanel.setBounds(100, 100, 350, 800);
+
+		addAdminFrame.getContentPane().add(adminPanel);
+
+		addAdminFrame.setVisible(true);
+
 	}
-	      	
-	public void InsertShop(){
-				
+
+	public void InsertShop() {
+
 		entityManager.getTransaction().begin();
-		
-		final JFrame frameAddAdmin = new JFrame ("Dodaj Sklep");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
+
+		final JFrame frameAddAdmin = new JFrame("Dodaj Sklep");
+		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 270);
-		
 
-		jtcity.setColumns(20);
-	
-		jtphone.setColumns(20);
-		jtpostcode.setColumns(18);
+		cityTextField.setColumns(20);
 
-		jtstreet.setColumns(20);
-	
-		jtshopName.setColumns(18);
-		jtshopNIP.setColumns(20);
-		
-		
-		
-		jpshop.add(jlshopName);
-		jpshop.add(jtshopName);
-		
-				
-		jpshop.add(jlstreet);
-		jpshop.add(jtstreet);
-				
-		jpshop.add(jlcity);
-		jpshop.add(jtcity);
-				
-		jpshop.add(jlpostcode);
-		jpshop.add(jtpostcode);
-		
-		jpshop.add(jlphone);
-		jpshop.add(jtphone);
-		
+		phoneTextField.setColumns(20);
+		postcodeTextField.setColumns(18);
 
-		jpshop.add(jlshopNIP);
-		jpshop.add(jtshopNIP);
+		streetTextField.setColumns(20);
 
-				
-		jpshop.add(jb);
-		
-        jb.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent e)
-                {
-                       String input = jtshopName.getText();
-       
-                       
-                       if(!input.equals(""))
-                       { 
-                    	   
-                      
-                       System.out.println("dodano sklep");
-                       
-                       
-                   	   Shop shop = new Shop(jtshopName.getText(), jtstreet.getText(),jtcity.getText(), jtpostcode.getText(), jtphone.getText(),"nip sklepu");
-                    	   
-                  	  entityManager.persist(shop);
-                 	  entityManager.getTransaction().commit();
-                  	
-                 	  entityManager.close();
-                       
-              
-                       }
-                                              
-                       frameAddAdmin.dispose();                       
-                                      
-            		jtcity.setText("");            	
-            		jtphone.setText("");
-            		jtpostcode.setText("");            	
-            		jtstreet.setText("");            
-            		jtshopName.setText("");            		
-            		jtshopNIP.setText("");
-                                        
-                }
-        });
-        
-        
-                    
-        jpshop.setBounds(100, 100, 350, 400);          
-     
-        
-        frameAddAdmin.getContentPane().add(jpshop); 
-        
-      
-        frameAddAdmin.setVisible(true);
-	
+		shopNameTextField.setColumns(18);
+		shopNipTextField.setColumns(20);
+
+		shopPanel.add(shopNameLabel);
+		shopPanel.add(shopNameTextField);
+
+		shopPanel.add(streetLabel);
+		shopPanel.add(streetTextField);
+
+		shopPanel.add(cityLabel);
+		shopPanel.add(cityTextField);
+
+		shopPanel.add(postcodeLabel);
+		shopPanel.add(postcodeTextField);
+
+		shopPanel.add(phoneLabel);
+		shopPanel.add(phoneTextField);
+
+		shopPanel.add(shopNipLabel);
+		shopPanel.add(shopNipTextField);
+
+		shopPanel.add(enterButton);
+
+		enterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String input = shopNameTextField.getText();
+
+				if (!input.equals("")) {
+
+					System.out.println("dodano sklep");
+
+					Shop shop = new Shop(shopNameTextField.getText(), streetTextField.getText(),
+							cityTextField.getText(), postcodeTextField.getText(), phoneTextField.getText(),
+							"nip sklepu");
+
+					entityManager.persist(shop);
+					entityManager.getTransaction().commit();
+
+					entityManager.close();
+
+				}
+
+				frameAddAdmin.dispose();
+
+				cityTextField.setText("");
+				phoneTextField.setText("");
+				postcodeTextField.setText("");
+				streetTextField.setText("");
+				shopNameTextField.setText("");
+				shopNipTextField.setText("");
+
+			}
+		});
+
+		shopPanel.setBounds(100, 100, 350, 400);
+
+		frameAddAdmin.getContentPane().add(shopPanel);
+
+		frameAddAdmin.setVisible(true);
+
 	}
-		
-	public void InsertService(){
-		
+
+	public void InsertService() {
+
 		entityManager.getTransaction().begin();
-		
-		final JFrame frameAddAdmin = new JFrame ("Dodaj Serwis");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 270);
-		
 
-		jtcity.setColumns(20);	
-		jtphone.setColumns(20);
-		jtpostcode.setColumns(18);
-		jtstreet.setColumns(20);	
-		jtserviceName.setColumns(17);
-								
-		jpservice.add(jlserviceName);
-		jpservice.add(jtserviceName);
-		
-				
-		jpservice.add(jlstreet);
-		jpservice.add(jtstreet);
-				
-		jpservice.add(jlcity);
-		jpservice.add(jtcity);
-				
-		jpservice.add(jlpostcode);
-		jpservice.add(jtpostcode);
-		
-		jpservice.add(jlphone);
-		jpservice.add(jtphone);
-		
-				
-		jpservice.add(jb);
-		
-        jb.addActionListener(new ActionListener()
-        {
-                public void actionPerformed(ActionEvent e)
-                {
-                       String input = jtserviceName.getText();
-       
-                       
-                       if(!input.equals(""))
-                       {                    
-                    	   // dodawanie do bazy danych tutaj
-                    	                       	                      	   
-                       System.out.println("dodano serwis");  
-                       
-                   	 Service service = new Service(jtserviceName.getText(),jtstreet.getText(),jtcity.getText(),jtpostcode.getText(),jtphone.getText()); 
-                                           
-                   	  entityManager.persist(service);
-                  	  entityManager.getTransaction().commit();
-                   	
-                  	  entityManager.close();
-                        
-                      
-                       }
-                                                         
-                       frameAddAdmin.dispose();                       
-                                      
-            		jtcity.setText("");            	
-            		jtphone.setText("");
-            		jtpostcode.setText("");            	
-            		jtstreet.setText("");            
-            		jtserviceName.setText("");            		            		                                        
-                }
-        });
-        
-                           
-        jpservice.setBounds(100, 100, 350, 400);          
-             
-        frameAddAdmin.getContentPane().add(jpservice); 
-              
-        frameAddAdmin.setVisible(true);
-		
-		
-		
-		
+		final JFrame frameAddAdmin = new JFrame("Dodaj Serwis");
+		frameAddAdmin.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frameAddAdmin.setBounds(100, 100, 350, 270);
+
+		cityTextField.setColumns(20);
+		phoneTextField.setColumns(20);
+		postcodeTextField.setColumns(18);
+		streetTextField.setColumns(20);
+		serviceNameTextField.setColumns(17);
+
+		servicePanel.add(serviceNameLabel);
+		servicePanel.add(serviceNameTextField);
+
+		servicePanel.add(streetLabel);
+		servicePanel.add(streetTextField);
+
+		servicePanel.add(cityLabel);
+		servicePanel.add(cityTextField);
+
+		servicePanel.add(postcodeLabel);
+		servicePanel.add(postcodeTextField);
+
+		servicePanel.add(phoneLabel);
+		servicePanel.add(phoneTextField);
+
+		servicePanel.add(enterButton);
+
+		enterButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String input = serviceNameTextField.getText();
+
+				if (!input.equals("")) {
+					// dodawanie do bazy danych tutaj
+
+					System.out.println("dodano serwis");
+
+					Service service = new Service(serviceNameTextField.getText(), streetTextField.getText(),
+							cityTextField.getText(), postcodeTextField.getText(), phoneTextField.getText());
+
+					entityManager.persist(service);
+					entityManager.getTransaction().commit();
+
+					entityManager.close();
+
+				}
+
+				frameAddAdmin.dispose();
+
+				cityTextField.setText("");
+				phoneTextField.setText("");
+				postcodeTextField.setText("");
+				streetTextField.setText("");
+				serviceNameTextField.setText("");
+			}
+		});
+
+		servicePanel.setBounds(100, 100, 350, 400);
+
+		frameAddAdmin.getContentPane().add(servicePanel);
+
+		frameAddAdmin.setVisible(true);
+
 	}
-		
-	public View()
-	{
-		
+
+	public View() {
+
 		setTitle("ProgramSBD");
-		setVisible(true);			
-		setBounds(0, 0, 1600, 900);		
+		setVisible(true);
+		setBounds(0, 0, 1600, 900);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		
 
-	   menuPanel();	         
-		
-	}	
+		menuPanel();
+
+	}
 }
