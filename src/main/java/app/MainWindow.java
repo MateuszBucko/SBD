@@ -20,53 +20,57 @@ public class MainWindow extends JPanel {
 	private static Button addUserButton, addShopButton , addressButton;
 
 	public static void main(String[] args) {
+		
+		View view = new View();
 		// buttons
 
-		JPanel panel = new JPanel();
-		panel.setLayout(null);
-		panel.setBackground(Color.magenta);
-
-		addUserButton = new Button("Dodaj u¿ytkownika");
-		addUserButton.setBounds(10, 10, 120, 30);
-		addUserButton.setBackground(Color.BLACK);
-		addUserButton.setForeground(Color.WHITE);
-		panel.add(addUserButton);
-
-		JFrame mainFrame = new JFrame("Reklamacje");
-		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainFrame.setSize(800, 600);
-		mainFrame.add(panel);
-		mainFrame.setVisible(true);
+//		JPanel panel = new JPanel();
+//		panel.setLayout(null);
+//		panel.setBackground(Color.magenta);
+//
+//		addUserButton = new Button("Dodaj u¿ytkownika");
+//		addUserButton.setBounds(10, 10, 120, 30);
+//		addUserButton.setBackground(Color.BLACK);
+//		addUserButton.setForeground(Color.WHITE);
+//		panel.add(addUserButton);
+//
+//		JFrame mainFrame = new JFrame("Reklamacje");
+//		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		mainFrame.setSize(800, 600);
+//		mainFrame.add(panel);
+//		mainFrame.setVisible(true);
+		
+		
 
 		// listenery
-		addUserButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JTextField firstName = new JTextField(30);
-				JTextField lastName = new JTextField(30);
-				JTextField address = new JTextField(30);
-
-				JPanel userPanel = new JPanel();
-				userPanel.setPreferredSize(new Dimension(400, 60));
-				userPanel.setLayout(new GridLayout(3, 2));
-				userPanel.add(new JLabel("Imiê: "));
-				userPanel.add(firstName);
-				userPanel.add(Box.createVerticalStrut(15));
-				userPanel.add(new JLabel("Nazwisko: "));
-				userPanel.add(lastName);
-				userPanel.add(Box.createVerticalStrut(15));
-				userPanel.add(new JLabel("Adres: "));
-				userPanel.add(address);
-				
-				
-				int userAddResult = JOptionPane.showConfirmDialog(userPanel, userPanel, "Dodaj u¿ytkownika",
-						JOptionPane.OK_CANCEL_OPTION);
-				if(userAddResult == JOptionPane.OK_OPTION){
-					System.out.println(firstName.getText());
-					System.out.println(lastName.getText());
-				}
-
-			}
-		});
+//		addUserButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				JTextField firstName = new JTextField(30);
+//				JTextField lastName = new JTextField(30);
+//				JTextField address = new JTextField(30);
+//
+//				JPanel userPanel = new JPanel();
+//				userPanel.setPreferredSize(new Dimension(400, 60));
+//				userPanel.setLayout(new GridLayout(3, 2));
+//				userPanel.add(new JLabel("Imiê: "));
+//				userPanel.add(firstName);
+//				userPanel.add(Box.createVerticalStrut(15));
+//				userPanel.add(new JLabel("Nazwisko: "));
+//				userPanel.add(lastName);
+//				userPanel.add(Box.createVerticalStrut(15));
+//				userPanel.add(new JLabel("Adres: "));
+//				userPanel.add(address);
+//				
+//				
+//				int userAddResult = JOptionPane.showConfirmDialog(userPanel, userPanel, "Dodaj u¿ytkownika",
+//						JOptionPane.OK_CANCEL_OPTION);
+//				if(userAddResult == JOptionPane.OK_OPTION){
+//					System.out.println(firstName.getText());
+//					System.out.println(lastName.getText());
+//				}
+//
+//			}
+//		});
 	}
 
 }

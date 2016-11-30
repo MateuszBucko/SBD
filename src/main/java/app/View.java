@@ -127,7 +127,7 @@ public class View extends JFrame{
 	public void InsertUser(){
 				
 		final JFrame frameAddAdmin = new JFrame ("Dodaj U¿ytkownika");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 300);
    		
 		jtbirth.setColumns(17);
@@ -207,7 +207,7 @@ public class View extends JFrame{
 	public void InsertAdminData(){
 		
 		final JFrame frameAddAdminDate = new JFrame ("Dodaj Admina");
-		frameAddAdminDate.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdminDate.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdminDate.setBounds(100, 100, 380, 297);
 		
 		
@@ -333,7 +333,7 @@ public class View extends JFrame{
 		
 		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Admina");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 400);
 		
 	//	jtbirth.setColumns(17);
@@ -486,7 +486,7 @@ public class View extends JFrame{
 	public void InsertShop(){
 				
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Sklep");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 270);
 		
 
@@ -567,7 +567,7 @@ public class View extends JFrame{
 	public void InsertService(){
 		
 		final JFrame frameAddAdmin = new JFrame ("Dodaj Serwis");
-		frameAddAdmin.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		frameAddAdmin.setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
 		frameAddAdmin.setBounds(100, 100, 350, 270);
 		
 
