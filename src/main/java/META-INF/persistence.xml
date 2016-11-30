@@ -9,7 +9,7 @@
 			<property name="javax.persistence.jdbc.user" value="mateusz_bucko" />
 			<property name="javax.persistence.jdbc.password" value="mateusz_bucko" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@212.33.90.213:1521:xe" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle8iDialect" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 		</properties>
 	</persistence-unit>
