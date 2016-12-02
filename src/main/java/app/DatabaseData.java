@@ -17,7 +17,7 @@ import mapping.Service;
 import mapping.Shop;
 import mapping.User;
 
-public class DataBaseData {
+public class DatabaseData {
 	private static EntityManager entityManager = Utils.createEntityManager();
 
 	public static ArrayList<Administrator> getAllAdministrators() {
@@ -80,4 +80,6 @@ public class DataBaseData {
 		TypedQuery<User> usersQuery = entityManager.createQuery("select u from Uzytkownik u", User.class);
 		return (ArrayList<User>) usersQuery.getResultList();
 	}
+	
+	
 }
