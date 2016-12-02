@@ -15,6 +15,8 @@ import dialogWindows.AddAdminWindow;
 import dialogWindows.AddServiceWindow;
 import dialogWindows.AddShopWindow;
 import dialogWindows.AddUserWindow;
+import dialogWindows.AddProductWindow;
+import dialogWindows.AddComplaintWindow;
 
 
 public class View extends JFrame {
@@ -75,12 +77,32 @@ public class View extends JFrame {
 
 			}
 		});
+		
+		JButton addProduct = new JButton("Add Product");
+		addProduct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				new AddProductWindow();
+
+			}
+		});
+		
+		JButton addComplaint = new JButton("Add Complaint");
+		addComplaint.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				new AddComplaintWindow();
+
+			}
+		});
 
 		mainMenuPanel.add(addAdminButton);
 		mainMenuPanel.add(addUserPanel);
 		mainMenuPanel.add(addShopButton);
 		mainMenuPanel.add(addRaportButton);
 		mainMenuPanel.add(addServiceButton);
+		mainMenuPanel.add(addProduct);
+		mainMenuPanel.add(addComplaint);
 	}
 
 	public View() {
