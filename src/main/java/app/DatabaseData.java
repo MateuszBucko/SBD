@@ -80,6 +80,12 @@ public class DatabaseData {
 		TypedQuery<User> usersQuery = entityManager.createQuery("select u from Uzytkownik u", User.class);
 		return (ArrayList<User>) usersQuery.getResultList();
 	}
-	
-	
+
+	public static ArrayList<Complaint> getComplaintsBaseOnDecision(char decision) {
+		
+		TypedQuery<Complaint> complaintQuery = entityManager.createQuery(
+				"Select c From Reklamacja c Where (Select d.ifPositive From Decyzja d Where c.decision.idDecision = d.idDecision) = '"+decision+"'",
+				Complaint.class);
+		return (ArrayList<Complaint>) complaintQuery.getResultList();
+	}
 }
