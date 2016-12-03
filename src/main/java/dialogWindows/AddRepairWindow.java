@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import mapping.*;
 import javax.persistence.EntityManager;
@@ -28,8 +29,10 @@ public class AddRepairWindow {
 	JLabel complaintInfo2 = new JLabel();
 	JLabel complaintInfo3 = new JLabel();
 	JLabel complaintInfo4 = new JLabel();
+	JLabel complaintInfo5 = new JLabel();
 		
 	JComboBox complaintComboBox = new JComboBox();
+	JComboBox complaintComboBox2 = new JComboBox();
 	
 	//JButton enterButton = new JButton("Enter");
 	
@@ -45,6 +48,13 @@ public class AddRepairWindow {
 	ArrayList<String> lista = new ArrayList<String>();				
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
+	
+	ArrayList<String> lista2 = new ArrayList<String>();				
+	ArrayList<Service> listaserwis = new ArrayList<Service>();	
+	
+	
+	ArrayList<Repair> listarepair = new ArrayList<Repair>();	
+	
 	public AddRepairWindow() {
 		final JFrame addrepairFrame = new JFrame("Dodaj reklamacj");
 
@@ -52,6 +62,8 @@ public class AddRepairWindow {
 		addrepairFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addrepairFrame.setBounds(100, 100, 400, 350);
 					
+		
+		
 		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('2');	
 		
 		for(Complaint x : listareklamacji){			
@@ -59,38 +71,112 @@ public class AddRepairWindow {
 			lista.add(x.getComplaintDate().toString()+" "+x.getDescription());			
 		}
 		
+		
+		
+		listaserwis = DatabaseData.getAllServices();	
+		
+		for(Service x : listaserwis){			
+						
+			lista2.add(x.getName()+" "+x.getCity());			
+		}
+		
+		
+		
+		
+		
 		complaintComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
+		
+		complaintComboBox2.setModel(new DefaultComboBoxModel(lista2.toArray()));
+		
 		complaintPanel1.add(complaintLabel);		
         complaintPanel1.add(complaintComboBox);                        
 		complaintPanel.add(complaintPanel1);
 						
-		final JButton AcceptButton = new JButton("Przyjmij reklamację");
+		final JButton AcceptButton = new JButton("Przekaż do serwisu");
 		AcceptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				entityManager = Utils.createEntityManager();
 
 				entityManager.getTransaction().begin();
-				
+								
 				int complaintID = complaintComboBox.getSelectedIndex();
 				
 				Complaint prod = listareklamacji.get(complaintID);
+							
+				listarepair = DatabaseData.getAllRepairs();
 				
-				Complaint complaint = entityManager.find(Complaint.class, prod.getComplaintId());
+				int repairID = 0;
+				
+				int prodID;
+				
+				prodID = prod.getComplaintId();
+				
+				System.out.println("prod"+prodID);
+				
+				if(prod.getComplaintId()>=0)
+				{
+				
+				for(Repair x : listarepair)
+				{			
+					
+					Complaint comp = x.getComplaint();
+					
+					int compID = comp.getComplaintId();
+					
+					System.out.println("compID" + compID);
+										
+					if(compID>=0)
+					{
+						
+					if(compID==prodID)
+					{												
+						repairID = x.getRepairId();						
+					}								
+					
+					}
+					
+					
+				}
+				
+				
+				}
+				
+				
+				int serviceID = complaintComboBox2.getSelectedIndex();
+				
+				Service serwis = listaserwis.get(serviceID);
+				
+				Service serwis2 = entityManager.find( Service.class, serwis.getSeriveId());
 				
 				Decision dec = prod.getDecision();
 				
 				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
 				
-				decision.setIfPositive(MapConst.ACCEPTED);
+				decision.setIfPositive(MapConst.IN_SERVICE);
 				
-				Repair repair = new Repair(new Date());
 				
-				repair.setComplaint(complaint);
-								
+				
+				System.out.println("repairID"+repairID);
+				
+				Repair repair = entityManager.find(Repair.class, repairID);
+			
+				
+			    Repair_Service repserv = new Repair_Service("opis",new Date());
+			    
+			    repserv.setRepair(repair);
+			    repserv.setService(serwis2);
+				
+			    List<Repair_Service> repairService = new ArrayList<Repair_Service>();
+			    repairService.add(repserv);
+			    
+			    serwis2.setRepairService(repairService);
+			    repair.setRepairService(repairService);
+			    
+			    entityManager.persist(repair);
+			    entityManager.persist(serwis2);				
+				entityManager.persist(repserv);
 				entityManager.persist(decision);
-				
-				entityManager.persist(repair);
 												
 			    entityManager.getTransaction().commit();	
 			    
@@ -98,31 +184,6 @@ public class AddRepairWindow {
 			}
 		});
 		
-		final JButton DeclineButton = new JButton("Odrzuć reklamację");
-		DeclineButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				entityManager = Utils.createEntityManager();
-
-				entityManager.getTransaction().begin();
-				
-				int complaintID = complaintComboBox.getSelectedIndex();
-				
-				Complaint prod = listareklamacji.get(complaintID);
-				
-                Decision dec = prod.getDecision();
-				
-				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
-				
-				decision.setIfPositive(MapConst.DECLINE);
-				
-				entityManager.persist(decision);
-											 				
-			  	entityManager.getTransaction().commit();		
-			  	
-			  	addrepairFrame.dispose();
-			}
-		});
 								
 		JButton addDecision = new JButton("Add Decision");
 		addDecision.addActionListener(new ActionListener() {
@@ -167,9 +228,14 @@ public class AddRepairWindow {
 	            
 	            complaintPanel5.add(complaintInfo3);
 	            
-	            complaintPanel6.add(AcceptButton);
+	            complaintInfo5.setText("Wybierz serwis");
 	            
-	            complaintPanel6.add(DeclineButton);	           	            
+	            
+	            complaintPanel6.add(complaintInfo5);
+	            
+	            complaintPanel6.add(complaintComboBox2);	 
+	            
+	            complaintPanel7.add(AcceptButton);
 	            
 	            complaintPanel.add(complaintPanel3);
 	            
@@ -178,6 +244,8 @@ public class AddRepairWindow {
 	            complaintPanel.add(complaintPanel5);
 	            
 	            complaintPanel.add(complaintPanel6);
+	            
+	            complaintPanel.add(complaintPanel7);
 	            
 	            complaintPanel.revalidate();
 	     	            
