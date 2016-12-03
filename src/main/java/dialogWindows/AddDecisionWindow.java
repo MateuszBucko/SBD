@@ -1,31 +1,20 @@
 package dialogWindows;
 
-
 import java.awt.FlowLayout;
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-
 import mapping.*;
-
 import javax.persistence.EntityManager;
-
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import dialogWindows.AddDecisionDetailsWindow;
-
 import app.DatabaseData;
 import app.Utils;
-
 
 public class AddDecisionWindow {
 	
@@ -40,7 +29,7 @@ public class AddDecisionWindow {
 		
 	JComboBox complaintComboBox = new JComboBox();
 	
-	JButton enterButton = new JButton("Enter");
+	//JButton enterButton = new JButton("Enter");
 	
 	JPanel complaintPanel = new JPanel();	
 	JPanel complaintPanel1 = new JPanel(new FlowLayout());
@@ -54,7 +43,6 @@ public class AddDecisionWindow {
 	ArrayList<String> lista = new ArrayList<String>();				
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
-
 	public AddDecisionWindow() {
 		final JFrame adddecisionFrame = new JFrame("Dodaj reklamacj");
 
@@ -66,48 +54,62 @@ public class AddDecisionWindow {
 		
 		for(Complaint x : listareklamacji){			
 						
-			lista.add(x.getComplaintDate().toString()+" "+x.getDescription());
-			
+			lista.add(x.getComplaintDate().toString()+" "+x.getDescription());			
 		}
 		
-
 		complaintComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-			
 		complaintPanel1.add(complaintLabel);		
-        complaintPanel1.add(complaintComboBox);        
-        
-        
-        		
-	//	complaintPanel1.add(enterButton);
-
-		
+        complaintPanel1.add(complaintComboBox);                        
 		complaintPanel.add(complaintPanel1);
-		
-		enterButton.addActionListener(new ActionListener() {
+						
+		final JButton AcceptButton = new JButton("Przyjmij reklamację");
+		AcceptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-								
 
-				if (lista.size()>0) {
-					
+				entityManager = Utils.createEntityManager();
 
-					System.out.println("dodano sklep");
-
-										
-					int complaintID = complaintComboBox.getSelectedIndex();
-					
+				entityManager.getTransaction().begin();
+				
+				int complaintID = complaintComboBox.getSelectedIndex();
+				
+				Complaint prod = listareklamacji.get(complaintID);
+				
+				Decision dec = prod.getDecision();
+				
+				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
+				
+				decision.setIfPositive(MapConst.ACCEPTED);
+				
+				entityManager.persist(decision);
 												
-		            Complaint prod = listareklamacji.get(complaintID);
-		            
-		            new AddDecisionDetailsWindow(prod.getComplaintId());
-		            		            										
-				}
-
-				adddecisionFrame.dispose();
-
+			    entityManager.getTransaction().commit();								
 			}
 		});
 		
-		
+		final JButton DeclineButton = new JButton("Odrzuć reklamację");
+		DeclineButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				entityManager = Utils.createEntityManager();
+
+				entityManager.getTransaction().begin();
+				
+				int complaintID = complaintComboBox.getSelectedIndex();
+				
+				Complaint prod = listareklamacji.get(complaintID);
+				
+                Decision dec = prod.getDecision();
+				
+				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
+				
+				decision.setIfPositive(MapConst.DECLINE);
+				
+				entityManager.persist(decision);
+											 				
+			  	entityManager.getTransaction().commit();								
+			}
+		});
+								
 		JButton addDecision = new JButton("Add Decision");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +118,6 @@ public class AddDecisionWindow {
 
 				entityManager.getTransaction().begin();
 
-				//new AddDecisionWindow();
 				int complaintID = complaintComboBox.getSelectedIndex();
 				
 				System.out.println(complaintID);
@@ -131,19 +132,13 @@ public class AddDecisionWindow {
 	            System.out.println(ID);
 	            
 	            String compstr = prod.getComplaintId() + " " + prod.getDescription() + " " +prod.getComplaintDate().toString();
-	            	            
-	            
+	            	            	            
 	            ReportedProduct repprod = prod.getReportedProduct();
-	            
-	            
-	            
+	            	          	            
 	            String compstr2 = repprod.getName()+" "+repprod.getModel()+" "+repprod.getProducer();
-	            
-	            
-	            
+	            	            	            
 	            Shop shop = repprod.getShop();
-	            
-	            
+	            	            
 	            String compstr3 = shop.getName()+" "+shop.getPhone();
 	            
 	            complaintInfo.setText(compstr);
@@ -158,38 +153,37 @@ public class AddDecisionWindow {
 	            
 	            complaintPanel5.add(complaintInfo3);
 	            
+	            complaintPanel6.add(AcceptButton);
+	            
+	            complaintPanel6.add(DeclineButton);	           	            
+	            
 	            complaintPanel.add(complaintPanel3);
 	            
 	            complaintPanel.add(complaintPanel4);
 	            
 	            complaintPanel.add(complaintPanel5);
 	            
-	            complaintPanel.revalidate();
-	     
+	            complaintPanel.add(complaintPanel6);
 	            
+	            complaintPanel.revalidate();
+	     	            
 	            entityManager.getTransaction().commit();
 				
 				}
+				
+				//adddecisionFrame.dispose();
 			}
 		});
 		
-		
-		
 		complaintPanel2.add(addDecision);
-     
-		
+     		
 		complaintPanel.add(complaintPanel2);
 		
-		
-		//complaintPanel.add(addDecision);
-
 		complaintPanel.setBounds(100, 100, 350, 400);
 
 		adddecisionFrame.getContentPane().add(complaintPanel);
 
 		adddecisionFrame.setVisible(true);
-
 	}
 	
-
 }
