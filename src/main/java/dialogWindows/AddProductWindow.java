@@ -178,19 +178,12 @@ private EntityManager entityManager;
 					
 
 					System.out.println("dodano sklep");
-//
-					int elementId = userComboBox.getSelectedIndex();
-					
-					String tempString = (String) userComboBox.getItemAt(elementId);
-					
-					String tempCut = tempString.substring(0, 4);
+
 					
 					int shopID = shopComboBox.getSelectedIndex();
 					
 					int userID = userComboBox.getSelectedIndex();
-					
-					System.out.println(tempCut);
-					
+													
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
 					calendar.set(Calendar.DATE, dayint);

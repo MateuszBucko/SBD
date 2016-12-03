@@ -32,6 +32,11 @@ public class AddDecisionWindow {
 	private EntityManager entityManager;
 	
 	JLabel complaintLabel = new JLabel("Wybierz produkt: ");
+	
+	JLabel complaintInfo = new JLabel();
+	JLabel complaintInfo2 = new JLabel();
+	JLabel complaintInfo3 = new JLabel();
+	JLabel complaintInfo4 = new JLabel();
 		
 	JComboBox complaintComboBox = new JComboBox();
 	
@@ -39,6 +44,12 @@ public class AddDecisionWindow {
 	
 	JPanel complaintPanel = new JPanel();	
 	JPanel complaintPanel1 = new JPanel(new FlowLayout());
+	JPanel complaintPanel2 = new JPanel(new FlowLayout());
+	JPanel complaintPanel3 = new JPanel(new FlowLayout());
+	JPanel complaintPanel4 = new JPanel(new FlowLayout());
+	JPanel complaintPanel5 = new JPanel(new FlowLayout());
+	JPanel complaintPanel6 = new JPanel(new FlowLayout());
+	JPanel complaintPanel7 = new JPanel(new FlowLayout());
 	
 	ArrayList<String> lista = new ArrayList<String>();				
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
@@ -64,11 +75,14 @@ public class AddDecisionWindow {
 			
 		complaintPanel1.add(complaintLabel);		
         complaintPanel1.add(complaintComboBox);        
-        complaintPanel.add(complaintPanel1);
+        
         
         		
-		complaintPanel.add(enterButton);
+	//	complaintPanel1.add(enterButton);
 
+		
+		complaintPanel.add(complaintPanel1);
+		
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
@@ -97,21 +111,77 @@ public class AddDecisionWindow {
 		JButton addDecision = new JButton("Add Decision");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				entityManager = Utils.createEntityManager();
+
+				entityManager.getTransaction().begin();
 
 				//new AddDecisionWindow();
 				int complaintID = complaintComboBox.getSelectedIndex();
 				
+				System.out.println(complaintID);
+				
+				if(complaintID>=0)
+				{
 				
 	            Complaint prod = listareklamacji.get(complaintID);
 	            
-	            new AddDecisionDetailsWindow(prod.getComplaintId());
+	            int ID = prod.getComplaintId();
+	            
+	            System.out.println(ID);
+	            
+	            String compstr = prod.getComplaintId() + " " + prod.getDescription() + " " +prod.getComplaintDate().toString();
+	            	            
+	            
+	            ReportedProduct repprod = prod.getReportedProduct();
+	            
+	            
+	            
+	            String compstr2 = repprod.getName()+" "+repprod.getModel()+" "+repprod.getProducer();
+	            
+	            
+	            
+	            Shop shop = repprod.getShop();
+	            
+	            
+	            String compstr3 = shop.getName()+" "+shop.getPhone();
+	            
+	            complaintInfo.setText(compstr);
+	            
+	            complaintInfo2.setText(compstr2);
+	            
+	            complaintInfo3.setText(compstr3);
+	            
+	            complaintPanel3.add(complaintInfo);
+	            
+	            complaintPanel4.add(complaintInfo2);
+	            
+	            complaintPanel5.add(complaintInfo3);
+	            
+	            complaintPanel.add(complaintPanel3);
+	            
+	            complaintPanel.add(complaintPanel4);
+	            
+	            complaintPanel.add(complaintPanel5);
+	            
+	            complaintPanel.revalidate();
+	     
+	            
+	            entityManager.getTransaction().commit();
 				
-				
+				}
 			}
 		});
 		
 		
-		complaintPanel.add(addDecision);
+		
+		complaintPanel2.add(addDecision);
+     
+		
+		complaintPanel.add(complaintPanel2);
+		
+		
+		//complaintPanel.add(addDecision);
 
 		complaintPanel.setBounds(100, 100, 350, 400);
 
