@@ -1,12 +1,8 @@
 package app;
 import java.util.ArrayList;
-
-import javax.persistence.EntityManager;
 import javax.swing.JPanel;
-
-import mapping.Administrator;
 import mapping.Complaint;
-import mapping.Decision;
+
 
 public class MainWindow extends JPanel {
 

@@ -140,4 +140,10 @@ public class AdministratorDetails {
 		this.administrator = administrator;
 	}
 
+	@Override
+	public String toString() {
+		return "id: "+idAdministratora + " imię: " + firstName + " nazwisko: " + lastName;
+	}
+
+	
 }

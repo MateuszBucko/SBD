@@ -28,7 +28,7 @@ public class DatabaseData {
 
 	public static ArrayList<AdministratorDetails> getAllAdministratorDetails() {
 		TypedQuery<AdministratorDetails> administratorDetailsQuery = entityManager
-				.createQuery("select a from Administrator_Szczegoly a", AdministratorDetails.class);
+				.createQuery("select a.administratorDetails from Administrator a", AdministratorDetails.class);
 		return (ArrayList<AdministratorDetails>) administratorDetailsQuery.getResultList();
 	}
 
