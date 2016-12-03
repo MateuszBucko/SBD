@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import dialogWindows.AddDecisionDetailsWindow;
 
 import app.DatabaseData;
 import app.Utils;
@@ -83,7 +84,7 @@ public class AddDecisionWindow {
 												
 		            Complaint prod = listareklamacji.get(complaintID);
 		            
-		            
+		            new AddDecisionDetailsWindow(prod.getComplaintId());
 		            		            										
 				}
 
@@ -91,6 +92,26 @@ public class AddDecisionWindow {
 
 			}
 		});
+		
+		
+		JButton addDecision = new JButton("Add Decision");
+		addDecision.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				//new AddDecisionWindow();
+				int complaintID = complaintComboBox.getSelectedIndex();
+				
+				
+	            Complaint prod = listareklamacji.get(complaintID);
+	            
+	            new AddDecisionDetailsWindow(prod.getComplaintId());
+				
+				
+			}
+		});
+		
+		
+		complaintPanel.add(addDecision);
 
 		complaintPanel.setBounds(100, 100, 350, 400);
 

@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 
 import org.hibernate.Session;
 
+import app.DatabaseData;
 import app.Utils;
 
 public class AddComplaintWindow {
@@ -36,9 +37,9 @@ private EntityManager entityManager;
 	JLabel productLabel = new JLabel("Wybierz produkt: ");
 	JLabel adminLabel = new JLabel("Wybierz administratora: ");
 	JLabel describeLabel = new JLabel("Opis reklamacji: ");
-	JLabel addcomplaintDateLabel = new JLabel("Podaj datê zg³oszenia: ");
-	JLabel addcomplaintDayLabel = new JLabel("Dzieñ:");
-	JLabel addcomplaintMonthLabel = new JLabel("Miesi¹c:");
+	JLabel addcomplaintDateLabel = new JLabel("Podaj datï¿½ zgï¿½oszenia: ");
+	JLabel addcomplaintDayLabel = new JLabel("Dzieï¿½:");
+	JLabel addcomplaintMonthLabel = new JLabel("Miesiï¿½c:");
 	JLabel addcomplaintYearLabel = new JLabel("Rok:");
 			
 	JTextField describeTextField = new JTextField();
@@ -59,6 +60,12 @@ private EntityManager entityManager;
 	JPanel complaintPanel4 = new JPanel(new FlowLayout());
 	JPanel complaintPanel5 = new JPanel(new FlowLayout());
 	JPanel complaintPanel6 = new JPanel(new FlowLayout());
+	
+	ArrayList<String> lista = new ArrayList<String>();				
+	ArrayList<ReportedProduct> listaprodukt = new ArrayList<ReportedProduct>();	
+	
+	ArrayList<String> lista2 = new ArrayList<String>();		
+	ArrayList<AdministratorDetails> listaadmin = new ArrayList<AdministratorDetails>();	
 
 	public AddComplaintWindow() {
 		final JFrame addcomplaintFrame = new JFrame("Dodaj reklamacj");
@@ -74,30 +81,30 @@ private EntityManager entityManager;
 		complaintMonthTextField.setColumns(2);
 		complaintYearTextField.setColumns(4);
 		
-//
-		ArrayList<String> lista = new ArrayList<String>();		
-		lista.add("to bedzie d³uga lista");
-		lista.add("123 dwaddddddddddddddddddddddd");
-		lista.add("456 trzy");
-		lista.add("142 cztery");
-		lista.add("923 piêc");
-		lista.add("421 szeœæ");		
+
+			
+		listaprodukt = DatabaseData.getAllReportedProducts();	
+		
+		for(ReportedProduct x : listaprodukt){			
+		lista.add(x.getName());				
+		}
+		
+
 		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-	//	
+	
 		
 		complaintPanel1.add(productLabel);		
         complaintPanel1.add(shopComboBox);        
         complaintPanel.add(complaintPanel1);
         
         
-        // Lista uzytkownikow
-		ArrayList<String> lista2 = new ArrayList<String>();		
-		lista2.add("123 jeden");
-		lista2.add("123 dwa");
-		lista2.add("456 trzy");
-		lista2.add("142 cztery");
-		lista2.add("923 piêc");
-		lista2.add("421 szeœæ");		
+		listaadmin = DatabaseData.getAllAdministratorDetails();	
+		
+		for(AdministratorDetails x : listaadmin){			
+		lista2.add(x.getFirstName());				
+		}
+		
+	
 		userComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
 		//
 		
@@ -109,13 +116,6 @@ private EntityManager entityManager;
 		complaintPanel3.add(describeTextField);
 		complaintPanel.add(complaintPanel3);
 		
-	//	complaintPanel4.add(modelLabel);
-	//	complaintPanel4.add(modelTextField);
-	//	complaintPanel.add(complaintPanel4);
-
-	//	complaintPanel5.add(producerLabel);
-	//	complaintPanel5.add(producerTextField);
-	//	complaintPanel.add(complaintPanel5);
 
 		complaintPanel4.add(addcomplaintDateLabel);
 		complaintPanel4.add(addcomplaintDayLabel);
@@ -171,21 +171,13 @@ private EntityManager entityManager;
 					
 
 					System.out.println("dodano sklep");
-//
-					int elementId = userComboBox.getSelectedIndex();
+
+
 					
-					String tempString = (String) userComboBox.getItemAt(elementId);
 					
-					String tempCut = tempString.substring(0, 4);
-														
-					System.out.println(tempCut);
+					int productID = shopComboBox.getSelectedIndex();
 					
-					String omg = " 435 ";
-					
-					int omg2 = Integer.parseInt(omg.trim());
-					
-					System.out.println(omg2);
-					
+					int adminID = userComboBox.getSelectedIndex();
 					
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
@@ -195,20 +187,31 @@ private EntityManager entityManager;
 													            
 		            Complaint complaint = new Complaint(describeTextField.getText(),date);
 		            
-					Administrator admin = entityManager.find( Administrator.class, 119);
-					ReportedProduct repoprod = entityManager.find( ReportedProduct.class, 53 );
+		            
+		            AdministratorDetails admdet = listaadmin.get(adminID);
+		            ReportedProduct prod = listaprodukt.get(productID);
+		            
+		            
+		            
+		            System.out.println(admdet.getIdAdministratora());
+					 
+					 Administrator admin = entityManager.find( Administrator.class, admdet.getIdAdministratora());
+					 ReportedProduct prod2 = entityManager.find( ReportedProduct.class, prod.getProductId());
+		            
+					//Administrator admin = entityManager.find( Administrator.class, 119);
+				//	ReportedProduct repoprod = entityManager.find( ReportedProduct.class, 53 );
 					
 					Decision decision = new Decision(MapConst.YES);
 					
 					complaint.setAdministrator(admin);
-					complaint.setReportedProduct(repoprod);
+					complaint.setReportedProduct(prod2);
 					complaint.setDecision(decision);
 					
 					List<Complaint> complaints = new ArrayList<Complaint>();
 					complaints.add(complaint);
 					
 					admin.setComplaints(complaints);
-					repoprod.setComplaints(complaints);
+					prod2.setComplaints(complaints);
 					
 					entityManager.persist(decision);
 					entityManager.persist(complaint);

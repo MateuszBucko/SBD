@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import mapping.Administrator;
 import mapping.ReportedProduct;
 import mapping.Shop;
 import mapping.User;
+import app.DatabaseData;
 
 import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
@@ -31,13 +33,13 @@ public class AddProductWindow {
 private EntityManager entityManager;
 	
 	JLabel shopLabel = new JLabel("Wybierz sklep: ");
-	JLabel userLabel = new JLabel("Wybierz u¿ytkownika: ");
+	JLabel userLabel = new JLabel("Wybierz uï¿½ytkownika: ");
 	JLabel nameLabel = new JLabel("Nazwa produktu: ");
 	JLabel modelLabel = new JLabel("Model produktu: ");
 	JLabel producerLabel = new JLabel("Producent produktu: ");
-	JLabel addproductDateLabel = new JLabel("Podaj datê zakupu: ");
-	JLabel addproductDayLabel = new JLabel("Dzieñ:");
-	JLabel addproductMonthLabel = new JLabel("Miesi¹c:");
+	JLabel addproductDateLabel = new JLabel("Podaj datï¿½ zakupu: ");
+	JLabel addproductDayLabel = new JLabel("Dzieï¿½:");
+	JLabel addproductMonthLabel = new JLabel("Miesiï¿½c:");
 	JLabel addproductYearLabel = new JLabel("Rok:");
 			
 	JTextField nameTextField = new JTextField();
@@ -59,6 +61,12 @@ private EntityManager entityManager;
 	JPanel productPanel4 = new JPanel(new FlowLayout());
 	JPanel productPanel5 = new JPanel(new FlowLayout());
 	JPanel productPanel6 = new JPanel(new FlowLayout());
+	
+	ArrayList<String> lista = new ArrayList<String>();				
+	ArrayList<Shop> listasklep = new ArrayList<Shop>();	
+	
+	ArrayList<String> lista2 = new ArrayList<String>();		
+	ArrayList<User> listauzyt = new ArrayList<User>();	
 
 	public AddProductWindow() {
 		final JFrame addProductFrame = new JFrame("Dodaj Sklep");
@@ -74,30 +82,29 @@ private EntityManager entityManager;
 		productMonthTextField.setColumns(2);
 		productYearTextField.setColumns(4);
 		
-//
-		ArrayList<String> lista = new ArrayList<String>();		
-		lista.add("to bedzie d³uga lista");
-		lista.add("123 dwaddddddddddddddddddddddd");
-		lista.add("456 trzy");
-		lista.add("142 cztery");
-		lista.add("923 piêc");
-		lista.add("421 szeœæ");		
-		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-	//	
+	
+		listasklep = DatabaseData.getAllShops();	
 		
+		for(Shop x : listasklep){			
+		lista.add(x.getName());				
+		}
+		
+	
+		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));	
+		
+	
 		productPanel1.add(shopLabel);		
         productPanel1.add(shopComboBox);        
         productPanel.add(productPanel1);
         
         
-        // Lista uzytkownikow
-		ArrayList<String> lista2 = new ArrayList<String>();		
-		lista2.add("123 jeden");
-		lista2.add("123 dwa");
-		lista2.add("456 trzy");
-		lista2.add("142 cztery");
-		lista2.add("923 piêc");
-		lista2.add("421 szeœæ");		
+		
+		listauzyt = DatabaseData.getAllUsers();		
+		for(User x : listauzyt){			
+		lista2.add(x.getFirstName());				
+		}
+				
+
 		userComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
 		//
 		
@@ -177,7 +184,11 @@ private EntityManager entityManager;
 					String tempString = (String) userComboBox.getItemAt(elementId);
 					
 					String tempCut = tempString.substring(0, 4);
-														
+					
+					int shopID = shopComboBox.getSelectedIndex();
+					
+					int userID = userComboBox.getSelectedIndex();
+					
 					System.out.println(tempCut);
 					
 					calendar.set(Calendar.MONTH, monthint - 1);
@@ -191,23 +202,25 @@ private EntityManager entityManager;
 
 					ReportedProduct reportedProduct_1 = new ReportedProduct(nameTextField.getText(),modelTextField.getText(),producerTextField.getText(),date);
 					
-					 Shop shop = entityManager.find( Shop.class, 51);
-					 User user = entityManager.find( User.class, 52 );
+					 Shop shop = listasklep.get(shopID);
+					 User user = listauzyt.get(userID);
+					 
+					 Shop shop2 = entityManager.find( Shop.class, shop.getShopId());
+					 User user2 = entityManager.find( User.class, user.getUserId());
 					 
 					 reportedProduct_1.setUser(user);
 					 reportedProduct_1.setShop(shop);
 					 
 					 List<ReportedProduct> reportedProducts = new ArrayList<ReportedProduct>();
 					 reportedProducts.add(reportedProduct_1);
-					 user.setReportedProducts(reportedProducts);
-					 shop.setReportedProducts(reportedProducts);
+					 user2.setReportedProducts(reportedProducts);
+					 shop2.setReportedProducts(reportedProducts);
 					
-					 entityManager.persist(shop);
-					 entityManager.persist(user);
+					 entityManager.persist(shop2);
+					 entityManager.persist(user2);
 					 entityManager.persist(reportedProduct_1);
 					 
-					
-		
+							
 			  		entityManager.getTransaction().commit();
 				}
 
