@@ -4,6 +4,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
+
 import mapping.*;
 import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
@@ -74,15 +76,25 @@ public class AddDecisionWindow {
 				
 				Complaint prod = listareklamacji.get(complaintID);
 				
+				Complaint complaint = entityManager.find(Complaint.class, prod.getComplaintId());
+				
 				Decision dec = prod.getDecision();
 				
 				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
 				
 				decision.setIfPositive(MapConst.ACCEPTED);
 				
+				Repair repair = new Repair(new Date());
+				
+				repair.setComplaint(complaint);
+								
 				entityManager.persist(decision);
+				
+				entityManager.persist(repair);
 												
-			    entityManager.getTransaction().commit();								
+			    entityManager.getTransaction().commit();	
+			    
+			    adddecisionFrame.dispose();
 			}
 		});
 		
@@ -106,7 +118,9 @@ public class AddDecisionWindow {
 				
 				entityManager.persist(decision);
 											 				
-			  	entityManager.getTransaction().commit();								
+			  	entityManager.getTransaction().commit();		
+			  	
+			  	adddecisionFrame.dispose();
 			}
 		});
 								

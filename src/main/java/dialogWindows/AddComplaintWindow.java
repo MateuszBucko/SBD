@@ -201,11 +201,11 @@ private EntityManager entityManager;
 					//Administrator admin = entityManager.find( Administrator.class, 119);
 				//	ReportedProduct repoprod = entityManager.find( ReportedProduct.class, 53 );
 					
-					Decision decision = new Decision(MapConst.YES);
+					Decision decision = new Decision(MapConst.NEW);
 					
 					complaint.setAdministrator(admin);
 					complaint.setReportedProduct(prod2);
-					complaint.setDecision(decision);
+					complaint.setDecision(decision);     
 					
 					List<Complaint> complaints = new ArrayList<Complaint>();
 					complaints.add(complaint);

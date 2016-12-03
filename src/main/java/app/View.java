@@ -19,6 +19,7 @@ import dialogWindows.DeleteAdminWindow;
 import dialogWindows.AddProductWindow;
 import dialogWindows.AddComplaintWindow;
 import dialogWindows.AddDecisionWindow;
+import dialogWindows.AddRepairWindow;
 
 
 public class View extends JFrame {
@@ -99,11 +100,20 @@ public class View extends JFrame {
 		});
 		
 		
-		JButton addDecision = new JButton("Add Complaint");
+		JButton addDecision = new JButton("Add Decision");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				new AddDecisionWindow();
+
+			}
+		});
+		
+		JButton addRepair = new JButton("Add Repair");
+		addRepair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				new AddRepairWindow();
 
 			}
 		});
@@ -125,6 +135,7 @@ public class View extends JFrame {
 		mainMenuPanel.add(addProduct);
 		mainMenuPanel.add(addComplaint);
 		mainMenuPanel.add(addDecision);
+		mainMenuPanel.add(addRepair);
 		mainMenuPanel.add(deleteAdmin);
 	}
 
