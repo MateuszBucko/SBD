@@ -123,6 +123,7 @@ public class EditAdminWindow {
 
 				refreshComboBox();
 				adminComboBox.repaint();
+				clearTextFields();
 			}
 		});
 
@@ -184,5 +185,18 @@ public class EditAdminWindow {
 		ArrayList<AdministratorDetails> adminList = DatabaseData.getAllAdministratorDetails();
 
 		adminComboBox.setModel(new DefaultComboBoxModel(adminList.toArray()));
+	}
+	private void clearTextFields()
+	{
+		nameTextField.setText("");
+		surnameTextField.setText("");
+		streetTextField.setText("");
+		postcodeTextField.setText("");
+		cityTextField.setText("");
+		phoneTextField.setText("");
+		peselTextField.setText("");
+		adminDayTextField.setText("");
+		adminMonthTextField.setText("");
+		adminYearTextField.setText("");
 	}
 }
