@@ -62,7 +62,7 @@ public class DatabaseData {
 
 	public static ArrayList<ReportedProduct> getAllReportedProducts() {
 		TypedQuery<ReportedProduct> reportedProductsQuery = entityManager
-				.createQuery("select p from Produkt_Zglaszany p", ReportedProduct.class);
+				.createQuery("select p from Produkt_zglaszany p", ReportedProduct.class);
 		return (ArrayList<ReportedProduct>) reportedProductsQuery.getResultList();
 	}
 
