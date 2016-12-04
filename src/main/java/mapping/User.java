@@ -120,5 +120,10 @@ public class User {
 		this.reportedProducts = reportedProducts;
 	}
 
+	@Override
+	public String toString() {
+		return "ID: "+userId + " Imię: " + firstName + " Nazwisko: "+lastName;
+	}
+
 	
 }
