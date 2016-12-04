@@ -88,7 +88,7 @@ public class AddUserWindow {
 
 				if (!input2.equals("")) {
 
-					User user = new User(nameTextField.getText(), nameTextField.getText(), streetTextField.getText(),
+					User user = new User(nameTextField.getText(), surnameTextField.getText(), streetTextField.getText(),
 							cityTextField.getText(), mailTextField.getText(), postcodeTextField.getText(),
 							phoneTextField.getText());
 

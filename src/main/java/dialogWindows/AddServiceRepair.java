@@ -42,18 +42,18 @@ public class AddServiceRepair{
 	JPanel complaintPanel = new JPanel();	
 	JPanel complaintPanel1 = new JPanel(new FlowLayout());
 	JPanel complaintPanel2 = new JPanel(new FlowLayout());
-
+	JPanel complaintPanel3 = new JPanel(new FlowLayout());
 	
-	ArrayList<String> lista = new ArrayList<String>();				
+		
+	
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
-//	ArrayList<Complaint> listareklamacji2 = new ArrayList<Complaint>();	
 	
 	
 	ArrayList<String> lista2 = new ArrayList<String>();				
 	ArrayList<Service> listaserwis = new ArrayList<Service>();	
 	
-//	ArrayList<Repair> listanapraw = new ArrayList<Repair>();
+
 					
 	public AddServiceRepair() {
 		final JFrame addservicerepairFrame = new JFrame("Dodaj reklamacj");
@@ -62,22 +62,7 @@ public class AddServiceRepair{
 		addservicerepairFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addservicerepairFrame.setBounds(100, 100, 400, 350);
 					
-		
-		
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('3');	
-		
-		for(Complaint x : listareklamacji){			
-						
-			lista.add(x.getComplaintId()+" ");			
-		}
-		
-	//	listareklamacji2 = DatabaseData.getComplaintsBaseOnDecision('5');	
-		
-	//	for(Complaint x : listareklamacji2){			
-						
-	//		lista.add(x.getComplaintDate().toString()+" "+x.getDescription());			
-	//	}
-		
+				
 		listaserwis = DatabaseData.getAllServices();	
 		
 		for(Service x : listaserwis){			
@@ -90,7 +75,7 @@ public class AddServiceRepair{
 		
 		complaintComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
 		
-		complaintComboBox2.setModel(new DefaultComboBoxModel(lista.toArray()));
+	//	complaintComboBox2.setModel(new DefaultComboBoxModel(lista.toArray()));
 		
 		complaintPanel1.add(complaintLabel);		
         complaintPanel1.add(complaintComboBox);                        
@@ -128,6 +113,8 @@ public class AddServiceRepair{
 				entityManager = Utils.createEntityManager();
 				entityManager.getTransaction().begin();
 				
+				ArrayList<String> listareklamacji = new ArrayList<String>();
+				
 				ArrayList<Repair> listanapraw = new ArrayList<Repair>();
 				
 				int serviceID = complaintComboBox.getSelectedIndex();
@@ -157,8 +144,10 @@ public class AddServiceRepair{
                 	  complaintInfo2.setText("Brak przedmiotów do naprawy");
                 	  
   
-                	  complaintPanel2.remove(complaintComboBox2);                	  
-                	  complaintPanel.remove(complaintComboBox2);
+                	  complaintPanel3.remove(complaintComboBox2);  
+                	  
+                	  
+                	//  complaintPanel.remove(complaintComboBox2);
                 	  
                 	  
                 	  
@@ -167,8 +156,8 @@ public class AddServiceRepair{
                   {
                 	  complaintInfo2.setText("przedmiotów do naprawy");
                 	  
-                	  complaintPanel2.add(complaintComboBox2);                	                  	  
-                	  complaintPanel.add(complaintComboBox2);
+                	 // complaintPanel2.add(complaintComboBox2);                	                  	  
+                	 // complaintPanel.add(complaintComboBox2);
                    	  
                 	  for(Repair x:listanapraw){
                 		  
@@ -177,20 +166,31 @@ public class AddServiceRepair{
                 		
                 		Complaint compl = x.getComplaint();
                 		
-                		
+                	
                 		
                 	//	compl.getComplaintId();
                 		
                 		  
-                		System.out.println(repairID);  
+                		System.out.println(compl.getComplaintId());  
+                		
+                		ReportedProduct repro = compl.getReportedProduct();
+                		
+                		listareklamacji.add(""+compl.getComplaintId()+" "+repro.getName()+" "+compl.getDescription());
+                		
+   
                 		
                 		
                 	  }
                 	  
+                  		complaintComboBox2.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));             		
+              		    complaintPanel3.add(complaintComboBox2);                	                  	  
+                 	    complaintPanel.add(complaintPanel3);
                 	  
                   }
 				  
-				
+				complaintPanel3.revalidate();
+				complaintPanel3.repaint();
+                  
 				complaintPanel2.revalidate();
 				complaintPanel2.repaint();
 				
@@ -211,7 +211,7 @@ public class AddServiceRepair{
      	
     	  complaintPanel2.add(complaintInfo2);    
     	  
-      	  complaintPanel.add(complaintPanel2);
+      	 complaintPanel.add(complaintPanel2);
 		complaintPanel.setBounds(100, 100, 350, 400);
 
 		addservicerepairFrame.getContentPane().add(complaintPanel);
