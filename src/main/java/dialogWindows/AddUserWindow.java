@@ -39,11 +39,11 @@ public class AddUserWindow {
 
 	public AddUserWindow() {
 
-		final JFrame frameAddAdmin = new JFrame("Dodaj Użytkownika");
-		frameAddAdmin.addWindowListener(Utils.getDialogWindowsListener(frameAddAdmin,entityManager));
-		frameAddAdmin.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frameAddAdmin.setBounds(100, 100, 350, 300);
-		frameAddAdmin.setVisible(true);
+		final JFrame frameAddUser = new JFrame("Dodaj Użytkownika");
+		frameAddUser.addWindowListener(Utils.getDialogWindowsListener(frameAddUser,entityManager));
+		frameAddUser.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frameAddUser.setBounds(100, 100, 350, 300);
+		frameAddUser.setVisible(true);
 
 		birthTextField.setColumns(17);
 		cityTextField.setColumns(20);
@@ -97,7 +97,7 @@ public class AddUserWindow {
 
 				}
 
-				frameAddAdmin.dispose();
+				frameAddUser.dispose();
 
 				birthTextField.setText("");
 				cityTextField.setText("");
@@ -113,8 +113,8 @@ public class AddUserWindow {
 
 		userPanel.setBounds(550, 100, 800, 800);
 
-		frameAddAdmin.getContentPane().add(userPanel);
-		frameAddAdmin.setVisible(true);
+		frameAddUser.getContentPane().add(userPanel);
+		frameAddUser.setVisible(true);
 
 	}
 

@@ -17,6 +17,7 @@ import dialogWindows.AddShopWindow;
 import dialogWindows.AddUserWindow;
 import dialogWindows.DeleteAdminWindow;
 import dialogWindows.EditAdminWindow;
+import dialogWindows.EditUserWindow;
 import dialogWindows.AddProductWindow;
 import dialogWindows.AddComplaintWindow;
 import dialogWindows.AddDecisionWindow;
@@ -145,6 +146,15 @@ public class View extends JFrame {
 				
 			}
 		});
+		
+		JButton changeUserData = new JButton("Zmień Użytkownika");
+		changeUserData.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new EditUserWindow();
+				
+			}
+		});
 
 		mainMenuPanel.add(addAdminButton);
 		mainMenuPanel.add(addUserPanel);
@@ -158,6 +168,7 @@ public class View extends JFrame {
 		mainMenuPanel.add(addServiceRepair);
 		mainMenuPanel.add(deleteAdmin);
 		mainMenuPanel.add(changeAdminData);
+		mainMenuPanel.add(changeUserData);
 	}
 
 	public View() {
