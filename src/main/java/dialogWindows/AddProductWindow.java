@@ -66,7 +66,7 @@ private EntityManager entityManager;
 	ArrayList<Shop> listasklep = new ArrayList<Shop>();	
 	
 	ArrayList<String> lista2 = new ArrayList<String>();		
-	ArrayList<User> listauzyt = new ArrayList<User>();	
+	ArrayList<User> listauzytkownikow = new ArrayList<User>();	
 
 	public AddProductWindow() {
 		final JFrame addProductFrame = new JFrame("Dodaj Sklep");
@@ -84,13 +84,7 @@ private EntityManager entityManager;
 		
 	
 		listasklep = DatabaseData.getAllShops();	
-		
-		for(Shop x : listasklep){			
-		lista.add(x.getName());				
-		}
-		
-	
-		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));	
+		shopComboBox.setModel(new DefaultComboBoxModel(listasklep.toArray()));	
 		
 	
 		productPanel1.add(shopLabel);		
@@ -99,13 +93,8 @@ private EntityManager entityManager;
         
         
 		
-		listauzyt = DatabaseData.getAllUsers();		
-		for(User x : listauzyt){			
-		lista2.add(x.getFirstName());				
-		}
-				
-
-		userComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
+		listauzytkownikow = DatabaseData.getAllUsers();
+		userComboBox.setModel(new DefaultComboBoxModel(listauzytkownikow.toArray()));
 		//
 		
 		productPanel2.add(userLabel);
@@ -178,11 +167,6 @@ private EntityManager entityManager;
 					
 
 					System.out.println("dodano sklep");
-
-					
-					int shopID = shopComboBox.getSelectedIndex();
-					
-					int userID = userComboBox.getSelectedIndex();
 													
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
@@ -195,22 +179,21 @@ private EntityManager entityManager;
 
 					ReportedProduct reportedProduct_1 = new ReportedProduct(nameTextField.getText(),modelTextField.getText(),producerTextField.getText(),date);
 					
-					 Shop shop = listasklep.get(shopID);
-					 User user = listauzyt.get(userID);
+					 Shop shop = (Shop) shopComboBox.getSelectedItem();
+					 User user = (User) userComboBox.getSelectedItem();
 					 
-					 Shop shop2 = entityManager.find( Shop.class, shop.getShopId());
-					 User user2 = entityManager.find( User.class, user.getUserId());
+					
 					 
 					 reportedProduct_1.setUser(user);
 					 reportedProduct_1.setShop(shop);
 					 
 					 List<ReportedProduct> reportedProducts = new ArrayList<ReportedProduct>();
 					 reportedProducts.add(reportedProduct_1);
-					 user2.setReportedProducts(reportedProducts);
-					 shop2.setReportedProducts(reportedProducts);
+					 user.setReportedProducts(reportedProducts);
+					 shop.setReportedProducts(reportedProducts);
 					
-					 entityManager.persist(shop2);
-					 entityManager.persist(user2);
+					 entityManager.merge(shop);
+					 entityManager.merge(user);
 					 entityManager.persist(reportedProduct_1);
 					 
 							

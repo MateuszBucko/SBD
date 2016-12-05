@@ -115,4 +115,11 @@ public class ReportedProduct {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "ID: " + productId + ", Nazwa: " + name;
+	}
+	
+	
+
 }

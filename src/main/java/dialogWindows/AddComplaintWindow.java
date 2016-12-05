@@ -48,8 +48,8 @@ private EntityManager entityManager;
 	JTextField complaintMonthTextField = new JTextField();
 	JTextField complaintYearTextField = new JTextField();
 		
-	JComboBox shopComboBox = new JComboBox();
-	JComboBox userComboBox = new JComboBox();
+	JComboBox productComboBox = new JComboBox();
+	JComboBox adminComboBox = new JComboBox();
 	
 	JButton enterButton = new JButton("Enter");
 	
@@ -85,31 +85,23 @@ private EntityManager entityManager;
 			
 		listaprodukt = DatabaseData.getAllReportedProducts();	
 		
-		for(ReportedProduct x : listaprodukt){			
-		lista.add(x.getName());				
-		}
+		
 		
 
-		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-	
-		
+		productComboBox.setModel(new DefaultComboBoxModel(listaprodukt.toArray()));
+			
 		complaintPanel1.add(productLabel);		
-        complaintPanel1.add(shopComboBox);        
+        complaintPanel1.add(productComboBox);        
         complaintPanel.add(complaintPanel1);
         
         
 		listaadmin = DatabaseData.getAllAdministratorDetails();	
 		
-		for(AdministratorDetails x : listaadmin){			
-		lista2.add(x.getFirstName());				
-		}
-		
-	
-		userComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
+		adminComboBox.setModel(new DefaultComboBoxModel(listaadmin.toArray()));
 		//
 		
 		complaintPanel2.add(adminLabel);
-        complaintPanel2.add(userComboBox);        
+        complaintPanel2.add(adminComboBox);        
         complaintPanel.add(complaintPanel2);
 		
 		complaintPanel3.add(describeLabel);
@@ -167,17 +159,8 @@ private EntityManager entityManager;
 
 				String input = describeTextField.getText();
 
-				if (!input.equals("")) {
+				if (!input.equals("")) {				
 					
-
-					System.out.println("dodano sklep");
-
-
-					
-					
-					int productID = shopComboBox.getSelectedIndex();
-					
-					int adminID = userComboBox.getSelectedIndex();
 					
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
@@ -188,31 +171,30 @@ private EntityManager entityManager;
 		            Complaint complaint = new Complaint(describeTextField.getText(),date);
 		            
 		            
-		            AdministratorDetails admdet = listaadmin.get(adminID);
-		            ReportedProduct prod = listaprodukt.get(productID);
+		            AdministratorDetails admininistratorDetails = (AdministratorDetails) adminComboBox.getSelectedItem();
+		            Administrator administrator = admininistratorDetails.getAdministrator();
+		            ReportedProduct reportedProduct = (ReportedProduct) productComboBox.getSelectedItem();
 		            
 		            
-		            
-		            System.out.println(admdet.getIdAdministratora());
-					 
-					 Administrator admin = entityManager.find( Administrator.class, admdet.getIdAdministratora());
-					 ReportedProduct prod2 = entityManager.find( ReportedProduct.class, prod.getProductId());
 		            
 					//Administrator admin = entityManager.find( Administrator.class, 119);
 				//	ReportedProduct repoprod = entityManager.find( ReportedProduct.class, 53 );
 					
 					Decision decision = new Decision(MapConst.NEW);
 					
-					complaint.setAdministrator(admin);
-					complaint.setReportedProduct(prod2);
+					complaint.setAdministrator(admininistratorDetails.getAdministrator());
+					complaint.setReportedProduct(reportedProduct);
 					complaint.setDecision(decision);     
 					
 					List<Complaint> complaints = new ArrayList<Complaint>();
 					complaints.add(complaint);
 					
-					admin.setComplaints(complaints);
-					prod2.setComplaints(complaints);
 					
+					administrator.setComplaints(complaints);
+					reportedProduct.setComplaints(complaints);
+					
+					entityManager.merge(reportedProduct);
+					entityManager.merge(administrator);
 					entityManager.persist(decision);
 					entityManager.persist(complaint);
 					
