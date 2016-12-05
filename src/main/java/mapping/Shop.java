@@ -107,4 +107,13 @@ public class Shop {
 		this.reportedProducts = reportedProducts;
 	}
 
+	@Override
+	public String toString() {
+		return "ID: " + shopId + "  Nazwa: " + name;
+	}
+	
+	
+	
+	
+
 }

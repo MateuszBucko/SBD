@@ -31,9 +31,9 @@ import app.DatabaseData;
 import app.Utils;
 
 public class AddComplaintWindow {
-	
-private EntityManager entityManager;
-	
+
+	private EntityManager entityManager;
+
 	JLabel productLabel = new JLabel("Wybierz produkt: ");
 	JLabel adminLabel = new JLabel("Wybierz administratora: ");
 	JLabel describeLabel = new JLabel("Opis reklamacji: ");
@@ -41,81 +41,69 @@ private EntityManager entityManager;
 	JLabel addcomplaintDayLabel = new JLabel("Dzie�:");
 	JLabel addcomplaintMonthLabel = new JLabel("Miesi�c:");
 	JLabel addcomplaintYearLabel = new JLabel("Rok:");
-			
+
 	JTextField describeTextField = new JTextField();
 
 	JTextField complaintDayTextField = new JTextField();
 	JTextField complaintMonthTextField = new JTextField();
 	JTextField complaintYearTextField = new JTextField();
-		
-	JComboBox shopComboBox = new JComboBox();
-	JComboBox userComboBox = new JComboBox();
-	
+
+	JComboBox productComboBox = new JComboBox();
+	JComboBox adminComboBox = new JComboBox();
+
 	JButton enterButton = new JButton("Enter");
-	
-	JPanel complaintPanel = new JPanel();	
+
+	JPanel complaintPanel = new JPanel();
 	JPanel complaintPanel1 = new JPanel(new FlowLayout());
 	JPanel complaintPanel2 = new JPanel(new FlowLayout());
 	JPanel complaintPanel3 = new JPanel(new FlowLayout());
 	JPanel complaintPanel4 = new JPanel(new FlowLayout());
 	JPanel complaintPanel5 = new JPanel(new FlowLayout());
 	JPanel complaintPanel6 = new JPanel(new FlowLayout());
-	
-	ArrayList<String> lista = new ArrayList<String>();				
-	ArrayList<ReportedProduct> listaprodukt = new ArrayList<ReportedProduct>();	
-	
-	ArrayList<String> lista2 = new ArrayList<String>();		
-	ArrayList<AdministratorDetails> listaadmin = new ArrayList<AdministratorDetails>();	
+
+	ArrayList<ReportedProduct> productList = new ArrayList<ReportedProduct>();
+
+	ArrayList<AdministratorDetails> adminDetailsList = new ArrayList<AdministratorDetails>();
 
 	public AddComplaintWindow() {
 		final JFrame addcomplaintFrame = new JFrame("Dodaj reklamacj");
 
-		addcomplaintFrame.addWindowListener(Utils.getDialogWindowsListener(addcomplaintFrame,entityManager));
+		addcomplaintFrame.addWindowListener(Utils.getDialogWindowsListener(addcomplaintFrame, entityManager));
 		addcomplaintFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addcomplaintFrame.setBounds(100, 100, 400, 350);
-		
+
 		describeTextField.setColumns(20);
-	//	describeTextField.setSize(100, 100);
+		// describeTextField.setSize(100, 100);
 
 		complaintDayTextField.setColumns(2);
 		complaintMonthTextField.setColumns(2);
 		complaintYearTextField.setColumns(4);
+
+		productList = DatabaseData.getAllReportedProducts();
+
+		productComboBox.setModel(new DefaultComboBoxModel(productList.toArray()));
+		
+		if(productList.size() > 0) productComboBox.setSelectedIndex(0);
 		
 
-			
-		listaprodukt = DatabaseData.getAllReportedProducts();	
+		complaintPanel1.add(productLabel);
+		complaintPanel1.add(productComboBox);
+		complaintPanel.add(complaintPanel1);
+
+		adminDetailsList = DatabaseData.getAllAdministratorDetails();
+
+		adminComboBox.setModel(new DefaultComboBoxModel(adminDetailsList.toArray()));
 		
-		for(ReportedProduct x : listaprodukt){			
-		lista.add(x.getName());				
-		}
+		if(adminDetailsList.size() >0) adminComboBox.setSelectedIndex(0);
 		
 
-		shopComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-	
-		
-		complaintPanel1.add(productLabel);		
-        complaintPanel1.add(shopComboBox);        
-        complaintPanel.add(complaintPanel1);
-        
-        
-		listaadmin = DatabaseData.getAllAdministratorDetails();	
-		
-		for(AdministratorDetails x : listaadmin){			
-		lista2.add(x.getFirstName());				
-		}
-		
-	
-		userComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
-		//
-		
 		complaintPanel2.add(adminLabel);
-        complaintPanel2.add(userComboBox);        
-        complaintPanel.add(complaintPanel2);
-		
+		complaintPanel2.add(adminComboBox);
+		complaintPanel.add(complaintPanel2);
+
 		complaintPanel3.add(describeLabel);
 		complaintPanel3.add(describeTextField);
 		complaintPanel.add(complaintPanel3);
-		
 
 		complaintPanel4.add(addcomplaintDateLabel);
 		complaintPanel4.add(addcomplaintDayLabel);
@@ -127,18 +115,14 @@ private EntityManager entityManager;
 
 		complaintPanel.add(complaintPanel4);
 
-
-		
 		complaintPanel.add(enterButton);
 
 		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				entityManager = Utils.createEntityManager();
 
+				entityManager = Utils.createEntityManager();
 				entityManager.getTransaction().begin();
-				
-				
+
 				int dayint = 0;
 				int monthint = 0;
 				int yearint = 0;
@@ -160,72 +144,61 @@ private EntityManager entityManager;
 				if (!year2.equals("")) {
 					yearint = Integer.parseInt(year2);
 				}
-				
+
 				Calendar calendar = Calendar.getInstance();
 				calendar.clear();
-				
 
 				String input = describeTextField.getText();
 
 				if (!input.equals("")) {
-					
 
-					System.out.println("dodano sklep");
-
-
-					
-					
-					int productID = shopComboBox.getSelectedIndex();
-					
-					int adminID = userComboBox.getSelectedIndex();
-					
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
 					calendar.set(Calendar.DATE, dayint);
-				
-				    Date date = calendar.getTime();
-													            
-		            Complaint complaint = new Complaint(describeTextField.getText(),date);
-		            
-		            
-		            AdministratorDetails admdet = listaadmin.get(adminID);
-		            ReportedProduct prod = listaprodukt.get(productID);
-		            
-		            
-		            
-		            System.out.println(admdet.getIdAdministratora());
-					 
-					 Administrator admin = entityManager.find( Administrator.class, admdet.getIdAdministratora());
-					 ReportedProduct prod2 = entityManager.find( ReportedProduct.class, prod.getProductId());
-		            
-					//Administrator admin = entityManager.find( Administrator.class, 119);
-				//	ReportedProduct repoprod = entityManager.find( ReportedProduct.class, 53 );
-					
+
+					Date date = calendar.getTime();
+
+					Complaint complaint = new Complaint(describeTextField.getText(), date);
+
+					AdministratorDetails admininistratorDetails = (AdministratorDetails) adminComboBox
+							.getSelectedItem();
+					Administrator administrator = admininistratorDetails.getAdministrator();
+					ReportedProduct reportedProduct = (ReportedProduct) productComboBox.getSelectedItem();
+
+					// Administrator admin = entityManager.find(
+					// Administrator.class, 119);
+					// ReportedProduct repoprod = entityManager.find(
+					// ReportedProduct.class, 53 );
+
 					Decision decision = new Decision(MapConst.NEW);
-					
-					complaint.setAdministrator(admin);
-					complaint.setReportedProduct(prod2);
-					complaint.setDecision(decision);     
-					
+
+					complaint.setAdministrator(admininistratorDetails.getAdministrator());
+					complaint.setReportedProduct(reportedProduct);
+					complaint.setDecision(decision);
+
 					List<Complaint> complaints = new ArrayList<Complaint>();
 					complaints.add(complaint);
-					
-					admin.setComplaints(complaints);
-					prod2.setComplaints(complaints);
-					
+
+					administrator.setComplaints(complaints);
+					reportedProduct.setComplaints(complaints);
+
+					entityManager.merge(reportedProduct);
+					entityManager.merge(administrator);
 					entityManager.persist(decision);
 					entityManager.persist(complaint);
-					
-				    entityManager.getTransaction().commit();
 
-										
+					entityManager.getTransaction().commit();
+					
+					refreshLists();
+					productComboBox.repaint();
+					adminComboBox.repaint();
+
 				}
 
-				addcomplaintFrame.dispose();
-
 				describeTextField.setText("");
-
-			//	streetTextField.setText("");
+				complaintDayTextField.setText("");
+				complaintMonthTextField.setText("");
+				complaintYearTextField.setText("");
 
 
 			}
@@ -238,6 +211,12 @@ private EntityManager entityManager;
 		addcomplaintFrame.setVisible(true);
 
 	}
-	
+
+	private void refreshLists() {
+		productList = DatabaseData.getAllReportedProducts();
+		productComboBox.setModel(new DefaultComboBoxModel(productList.toArray()));
+		adminDetailsList = DatabaseData.getAllAdministratorDetails();
+		adminComboBox.setModel(new DefaultComboBoxModel(adminDetailsList.toArray()));
+	}
 
 }
