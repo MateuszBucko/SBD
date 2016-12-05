@@ -189,9 +189,9 @@ public class AddRepairWindow {
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				entityManager = Utils.createEntityManager();
+			//	entityManager = Utils.createEntityManager();
 
-				entityManager.getTransaction().begin();
+			//	entityManager.getTransaction().begin();
 
 				int complaintID = complaintComboBox.getSelectedIndex();
 				
@@ -249,7 +249,7 @@ public class AddRepairWindow {
 	            
 	            complaintPanel.revalidate();
 	     	            
-	            entityManager.getTransaction().commit();
+	    //        entityManager.getTransaction().commit();
 				
 				}
 				

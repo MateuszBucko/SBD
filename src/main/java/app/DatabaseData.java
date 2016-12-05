@@ -50,7 +50,7 @@ public class DatabaseData {
 	}
 
 	public static ArrayList<Repair_Service> getAllRepairSerive() {
-		TypedQuery<Repair_Service> repairServiceQuery = entityManager.createQuery("select s from Serwis_Naprawa s",
+		TypedQuery<Repair_Service> repairServiceQuery = entityManager.createQuery("select s from Serwis_naprawa s",
 				Repair_Service.class);
 		return (ArrayList<Repair_Service>) repairServiceQuery.getResultList();
 	}
