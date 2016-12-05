@@ -8,6 +8,7 @@ import java.util.Date;
 
 import mapping.*;
 import javax.persistence.EntityManager;
+import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -41,8 +42,7 @@ public class AddDecisionWindow {
 	JPanel complaintPanel5 = new JPanel(new FlowLayout());
 	JPanel complaintPanel6 = new JPanel(new FlowLayout());
 	JPanel complaintPanel7 = new JPanel(new FlowLayout());
-	
-	ArrayList<String> lista = new ArrayList<String>();				
+					
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
 	public AddDecisionWindow() {
@@ -53,145 +53,102 @@ public class AddDecisionWindow {
 		adddecisionFrame.setBounds(100, 100, 400, 350);
 					
 		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
 		
-		for(Complaint x : listareklamacji){			
-						
-			lista.add(x.getComplaintDate().toString()+" "+x.getDescription());			
-		}
+		if(listareklamacji.size() > 0) complaintComboBox.setSelectedItem(0);
 		
-		complaintComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
+		
 		complaintPanel1.add(complaintLabel);		
         complaintPanel1.add(complaintComboBox);                        
 		complaintPanel.add(complaintPanel1);
 						
-		final JButton AcceptButton = new JButton("Przyjmij reklamację");
+		
+		 complaintPanel3.add(complaintInfo);
+         
+         complaintPanel4.add(complaintInfo2);
+         
+         complaintPanel5.add(complaintInfo3);
+         
+         final JButton AcceptButton = new JButton("Przyjmij reklamację");
+         final JButton DeclineButton = new JButton("Odrzuć reklamację");
+         
+         complaintPanel6.add(AcceptButton);
+         
+         complaintPanel6.add(DeclineButton);	           	            
+         
+         complaintPanel.add(complaintPanel3);
+         
+         complaintPanel.add(complaintPanel4);
+         
+         complaintPanel.add(complaintPanel5);
+         
+         complaintPanel.add(complaintPanel6);
+         
+		
 		AcceptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
 				entityManager = Utils.createEntityManager();
-
 				entityManager.getTransaction().begin();
 				
-				int complaintID = complaintComboBox.getSelectedIndex();
+				Complaint complaint = (Complaint) complaintComboBox.getSelectedItem();				
 				
-				Complaint prod = listareklamacji.get(complaintID);
-				
-				Complaint complaint = entityManager.find(Complaint.class, prod.getComplaintId());
-				
-				Decision dec = prod.getDecision();
-				
-				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
-				
+				Decision decision = complaint.getDecision();
 				decision.setIfPositive(MapConst.ACCEPTED);
 				
-				Repair repair = new Repair(new Date());
-				
+				Repair repair = new Repair(new Date());	
 				repair.setComplaint(complaint);
 								
-				entityManager.persist(decision);
-				
+				entityManager.merge(decision);
 				entityManager.persist(repair);
-												
+				entityManager.persist(repair);
 			    entityManager.getTransaction().commit();	
+			    refreshLists();
 			    
-			    adddecisionFrame.dispose();
 			}
 		});
 		
-		final JButton DeclineButton = new JButton("Odrzuć reklamację");
+		
 		DeclineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
 				entityManager = Utils.createEntityManager();
-
 				entityManager.getTransaction().begin();
 				
-				int complaintID = complaintComboBox.getSelectedIndex();
-				
-				Complaint prod = listareklamacji.get(complaintID);
-				
-                Decision dec = prod.getDecision();
-				
-				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
-				
+				Complaint complaint = (Complaint) complaintComboBox.getSelectedItem();		
+				Decision decision = complaint.getDecision();
 				decision.setIfPositive(MapConst.DECLINE);
-				
-				entityManager.persist(decision);
-											 				
-			  	entityManager.getTransaction().commit();		
-			  	
-			  	adddecisionFrame.dispose();
-			}
-		});
 								
-		JButton addDecision = new JButton("Add Decision");
-		addDecision.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				entityManager = Utils.createEntityManager();
-
-				entityManager.getTransaction().begin();
-
-				int complaintID = complaintComboBox.getSelectedIndex();
-				
-				System.out.println(complaintID);
-				
-				if(complaintID>=0)
-				{
-				
-	            Complaint prod = listareklamacji.get(complaintID);
-	            
-	            int ID = prod.getComplaintId();
-	            
-	            System.out.println(ID);
-	            
-	            String compstr = prod.getComplaintId() + " " + prod.getDescription() + " " +prod.getComplaintDate().toString();
-	            	            	            
-	            ReportedProduct repprod = prod.getReportedProduct();
-	            	          	            
-	            String compstr2 = repprod.getName()+" "+repprod.getModel()+" "+repprod.getProducer();
-	            	            	            
-	            Shop shop = repprod.getShop();
-	            	            
-	            String compstr3 = shop.getName()+" "+shop.getPhone();
-	            
-	            complaintInfo.setText(compstr);
-	            
-	            complaintInfo2.setText(compstr2);
-	            
-	            complaintInfo3.setText(compstr3);
-	            
-	            complaintPanel3.add(complaintInfo);
-	            
-	            complaintPanel4.add(complaintInfo2);
-	            
-	            complaintPanel5.add(complaintInfo3);
-	            
-	            complaintPanel6.add(AcceptButton);
-	            
-	            complaintPanel6.add(DeclineButton);	           	            
-	            
-	            complaintPanel.add(complaintPanel3);
-	            
-	            complaintPanel.add(complaintPanel4);
-	            
-	            complaintPanel.add(complaintPanel5);
-	            
-	            complaintPanel.add(complaintPanel6);
-	            
-	            complaintPanel.revalidate();
-	     	            
-	            entityManager.getTransaction().commit();
-	            
-	            entityManager.close();
-				
-				}
-				
-				//adddecisionFrame.dispose();
+				entityManager.merge(decision);
+			    entityManager.getTransaction().commit();	
+			    refreshLists();
+			  	
 			}
 		});
 		
-		complaintPanel2.add(addDecision);
+		complaintComboBox.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				 	Complaint complaint = (Complaint) complaintComboBox.getSelectedItem();
+		            
+		            String compstr = complaint.getComplaintId() + " " + complaint.getDescription() + " " +complaint.getComplaintDate().toString();
+		            	            	            
+		            ReportedProduct reportedProduct = complaint.getReportedProduct();
+		            	          	            
+		            String compstr2 = reportedProduct.getName()+" "+reportedProduct.getModel()+" "+reportedProduct.getProducer();
+		            	            	            
+		            Shop shop = reportedProduct.getShop();
+		            	            
+		            String compstr3 = shop.getName()+" "+shop.getPhone();
+		            
+		            complaintInfo.setText(compstr);
+		            
+		            complaintInfo2.setText(compstr2);
+		            
+		            complaintInfo3.setText(compstr3);
+				
+			}
+		});
+		
      		
 		complaintPanel.add(complaintPanel2);
 		
@@ -200,6 +157,20 @@ public class AddDecisionWindow {
 		adddecisionFrame.getContentPane().add(complaintPanel);
 
 		adddecisionFrame.setVisible(true);
+	}
+	
+	private void refreshLists()
+	{
+		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintComboBox.repaint();
+		if(listareklamacji.size() == 0){
+			complaintInfo.setText("");
+            
+            complaintInfo2.setText("");
+            
+            complaintInfo3.setText("");
+		}
 	}
 	
 }

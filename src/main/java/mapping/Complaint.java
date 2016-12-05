@@ -94,4 +94,11 @@ public class Complaint {
 		this.decision = decision;
 	}
 
+	@Override
+	public String toString() {
+		return "ID:" + complaintId + ", Produkt: " + reportedProduct;
+	}
+	
+	
+
 }
