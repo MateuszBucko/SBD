@@ -182,6 +182,8 @@ public class AddDecisionWindow {
 	            complaintPanel.revalidate();
 	     	            
 	            entityManager.getTransaction().commit();
+	            
+	            entityManager.close();
 				
 				}
 				
