@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import com.fasterxml.classmate.members.ResolvedParameterizedMember;
 
@@ -30,9 +31,12 @@ public class AddServiceRepair{
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel("");
-	JLabel complaintInfo3 = new JLabel();
+	JLabel complaintInfo3 = new JLabel("");
 	JLabel complaintInfo4 = new JLabel();
 	JLabel complaintInfo5 = new JLabel();
+	
+	
+	JTextField textbox = new JTextField();
 		
 	JComboBox complaintComboBox = new JComboBox();
 	JComboBox complaintComboBox2 = new JComboBox();
@@ -43,17 +47,17 @@ public class AddServiceRepair{
 	JPanel complaintPanel1 = new JPanel(new FlowLayout());
 	JPanel complaintPanel2 = new JPanel(new FlowLayout());
 	JPanel complaintPanel3 = new JPanel(new FlowLayout());
+	JPanel complaintPanel4 = new JPanel(new FlowLayout());
+	JPanel complaintPanel5 = new JPanel(new FlowLayout());	
 	
-		
-	
-	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
+ // ArrayList<Complaint> listareklamacji2 = new ArrayList<Complaint>();	
 	
 	
 	
 	ArrayList<String> lista2 = new ArrayList<String>();				
 	ArrayList<Service> listaserwis = new ArrayList<Service>();	
 	
-
+	ArrayList<Repair_Service> listaserwisnaprawy= new ArrayList<Repair_Service>();	
 					
 	public AddServiceRepair() {
 		final JFrame addservicerepairFrame = new JFrame("Dodaj reklamacj");
@@ -83,7 +87,7 @@ public class AddServiceRepair{
 		
 
 						
-		final JButton AcceptButton = new JButton("Przekaż do serwisu");
+	/*	final JButton AcceptButton = new JButton("Przekaż do serwisu");
 		AcceptButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -101,7 +105,172 @@ public class AddServiceRepair{
 			    
 			    
 			}
+		});        */
+		
+		
+		
+
+		final JButton InsertButton2 = new JButton("Wymaga kolejnej naprawy");
+		InsertButton2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				entityManager = Utils.createEntityManager();
+				entityManager.getTransaction().begin();	
+				
+			String zmienna =  (String) complaintComboBox2.getItemAt(complaintComboBox2.getSelectedIndex());
+			
+			String zmienna2 = zmienna.substring(0, 4);
+			
+			String zmienna3 = zmienna2.trim();
+			
+			int idreklamacji = Integer.parseInt(zmienna3);
+			
+			int idnaprawy=0;
+			
+			Complaint reklamacja2 = entityManager.find( Complaint.class,idreklamacji);
+			
+			Decision dec = reklamacja2.getDecision();
+			
+			Decision dec2 = entityManager.find( Decision.class, dec.getIdDecision());
+			
+			
+			dec2.setIfPositive(MapConst.NEXT_REPAIR);
+			
+			entityManager.persist(dec2);
+			
+			
+			ArrayList<Repair> listareklamacji2 = new ArrayList<Repair>();	
+			
+			listareklamacji2 = DatabaseData.getAllRepairs();
+			
+			for(Repair x : listareklamacji2){
+				
+				Complaint comp = x.getComplaint();
+				
+				if(comp.getComplaintId()==idreklamacji)
+					idnaprawy=x.getRepairId();
+								
+			}
+			
+			
+			Service ser = listaserwis.get(complaintComboBox.getSelectedIndex());
+			
+			
+			
+			System.out.println(idnaprawy+"omg omg serwis"+ser.getSeriveId());
+			
+			
+			int idserwisu = ser.getSeriveId();
+			
+			
+			listaserwisnaprawy = DatabaseData.getAllRepairSerive();
+			
+			int idserwisnaprawy = 0;
+			
+			for(Repair_Service x:listaserwisnaprawy){
+				
+				Repair rep1 = x.getRepair();
+			    Service serv1 = x.getService();	
+			
+				if( rep1.getRepairId()==idnaprawy && serv1.getSeriveId()==idserwisu)
+				{
+					
+				     x.setDescription("opis nowy");
+				     x.setRepairDate(new Date());
+									
+					entityManager.merge(x);
+				}
+								
+			}
+			
+			
+			entityManager.getTransaction().commit();
+			addservicerepairFrame.dispose();    	
+			}
 		});
+		
+		
+		
+		
+		final JButton InsertButton = new JButton("Naprawa Zakonczona");
+		InsertButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				entityManager = Utils.createEntityManager();
+				entityManager.getTransaction().begin();	
+				
+			String zmienna =  (String) complaintComboBox2.getItemAt(complaintComboBox2.getSelectedIndex());
+			
+			String zmienna2 = zmienna.substring(0, 4);
+			
+			String zmienna3 = zmienna2.trim();
+			
+			int idreklamacji = Integer.parseInt(zmienna3);
+			
+			int idnaprawy=0;
+			
+			Complaint reklamacja2 = entityManager.find( Complaint.class,idreklamacji);
+			
+			
+			Decision dec = reklamacja2.getDecision();
+			
+			dec.setIfPositive(MapConst.FOR_RAPORT);
+			
+			entityManager.merge(dec);
+			
+			ArrayList<Repair> listareklamacji2 = new ArrayList<Repair>();	
+			
+			listareklamacji2 = DatabaseData.getAllRepairs();
+			
+			for(Repair x : listareklamacji2){
+				
+				Complaint comp = x.getComplaint();
+				
+				if(comp.getComplaintId()==idreklamacji)
+					idnaprawy=x.getRepairId();
+								
+			}
+			
+			
+			Service ser = listaserwis.get(complaintComboBox.getSelectedIndex());
+			
+			
+			
+			System.out.println(idnaprawy+"omg omg serwis"+ser.getSeriveId());
+			
+			
+			int idserwisu = ser.getSeriveId();
+			
+			
+			listaserwisnaprawy = DatabaseData.getAllRepairSerive();
+			
+			int idserwisnaprawy = 0;
+			
+			for(Repair_Service x:listaserwisnaprawy){
+				
+				Repair rep1 = x.getRepair();
+			    Service serv1 = x.getService();	
+			
+				if( rep1.getRepairId()==idnaprawy && serv1.getSeriveId()==idserwisu)
+				{
+					
+				     x.setDescription("opis nowy");
+				     x.setRepairDate(new Date());
+									
+					entityManager.merge(x);
+				}
+								
+			}
+			
+			
+			entityManager.getTransaction().commit();
+			addservicerepairFrame.dispose();    	
+			}
+		});
+		
+		
+		
+		
 		
 		
 		
@@ -141,20 +310,21 @@ public class AddServiceRepair{
 				
                   if(listanapraw.isEmpty())
                   {
-                	  complaintInfo2.setText("Brak przedmiotów do naprawy");
+                	  complaintInfo2.setText("Przedmiotów do naprawy: "+listanapraw.size());
                 	  
   
                 	  complaintPanel3.remove(complaintComboBox2);  
                 	  
+                	  complaintPanel4.remove(textbox);
                 	  
-                	//  complaintPanel.remove(complaintComboBox2);
+                	  complaintPanel5.remove(InsertButton);
                 	  
-                	  
-                	  
+                	  complaintPanel5.remove(InsertButton2);
+               	  
                   }
                   else
                   {
-                	  complaintInfo2.setText("przedmiotów do naprawy");
+                	//  complaintInfo2.setText("Przedmiotów do naprawy: "+listanapraw.size());
                 	  
                 	 // complaintPanel2.add(complaintComboBox2);                	                  	  
                 	 // complaintPanel.add(complaintComboBox2);
@@ -166,28 +336,71 @@ public class AddServiceRepair{
                 		
                 		Complaint compl = x.getComplaint();
                 		
-                	
-                		
-                	//	compl.getComplaintId();
-                		
-                		  
+                	                                		  
                 		System.out.println(compl.getComplaintId());  
                 		
                 		ReportedProduct repro = compl.getReportedProduct();
                 		
-                		listareklamacji.add(""+compl.getComplaintId()+" "+repro.getName()+" "+compl.getDescription());
+                		Decision decide = compl.getDecision();
+                		
+                		
+                		
+                		if(decide.getIfPositive()==MapConst.IN_SERVICE)
+                			
+                		listareklamacji.add(""+compl.getComplaintId()+"    "+repro.getName()+" "+compl.getDescription());
                 		
    
+                		if(listareklamacji.isEmpty())
+                		{
+                			complaintInfo2.setText("Przedmiotów do naprawy: "+listareklamacji.size());
+                      	  
+                			  
+                      	  complaintPanel3.remove(complaintComboBox2);  
+                      	  
+                      	  complaintPanel4.remove(textbox);
+                      	  
+                      	  complaintPanel5.remove(InsertButton);
+                      	  
+                      	  complaintPanel5.remove(InsertButton2);
+                			
+                			
+                		}
                 		
-                		
+                		else{
+                			
+                			
+                			complaintInfo2.setText("Przedmiotów do naprawy: "+listareklamacji.size());
+                			
+                      		complaintComboBox2.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));             		
+                  		    complaintPanel3.add(complaintComboBox2);         
+
+                  		    textbox.setColumns(30);
+                  		    
+                  		    complaintPanel4.add(textbox);
+                  		                		 
+                  		    complaintPanel5.add(InsertButton);
+                  		    
+                  		    complaintPanel5.add(InsertButton2);
+                  		    
+                     	    complaintPanel.add(complaintPanel3);
+                     	    
+                    	    complaintPanel.add(complaintPanel4);
+                     	    
+                    	    complaintPanel.add(complaintPanel5);
+                			
+                			
+                		}
+                		               		                         	               		
                 	  }
-                	  
-                  		complaintComboBox2.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));             		
-              		    complaintPanel3.add(complaintComboBox2);                	                  	  
-                 	    complaintPanel.add(complaintPanel3);
-                	  
+                 	    
                   }
 				  
+                complaintPanel5.revalidate();
+                complaintPanel5.repaint();  
+                  
+                complaintPanel4.revalidate();
+                complaintPanel4.repaint();
+                  
 				complaintPanel3.revalidate();
 				complaintPanel3.repaint();
                   
