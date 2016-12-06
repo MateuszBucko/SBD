@@ -19,6 +19,8 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
@@ -73,7 +75,13 @@ public class AddRaportWindow {
          
          complaintPanel5.add(complaintInfo3);
          
+         final JTextField txtField = new JTextField();
+         
+         txtField.setColumns(20);
+         
          final JButton AcceptButton = new JButton("Przyjmij reklamację");
+         
+         complaintPanel6.add(txtField);
          
          complaintPanel6.add(AcceptButton);
          
@@ -97,16 +105,8 @@ public class AddRaportWindow {
 		        String fileName = "";
 
 		        try {
-		            // Assume default encoding.
-		       //     FileWriter fileWriter =
-		      //          new FileWriter(fileName);
 
-		      //      bufferedWriter = new BufferedWriter(fileWriter);
-
-
-					
-
-		            
+	            
 				entityManager = Utils.createEntityManager();
 				entityManager.getTransaction().begin();
 				
@@ -128,7 +128,8 @@ public class AddRaportWindow {
 				
 			    User user = repr.getUser();
 				
-				
+				Shop shop = repr.getShop();
+			    
 			    fileName = user.getEmail()+"_"+complaint.getComplaintId()+".txt";
 			    
 			    FileWriter fileWriter = new FileWriter(fileName);
@@ -136,68 +137,102 @@ public class AddRaportWindow {
 		       bufferedWriter = new BufferedWriter(fileWriter);
 				
 				
+		       bufferedWriter.write("Witam serdecznie,");
 				
+		       bufferedWriter.newLine();
+		       bufferedWriter.newLine();
+		       
+		       bufferedWriter.write("Uprzejmie informujemy, że zlecenie gwarancyjne o numerze "+complaint.getComplaintId()+" zostało wydane.");
+		       
+		       bufferedWriter.newLine();
+		       bufferedWriter.newLine();
 				
-				Decision decision = complaint.getDecision();
+			   Decision decision = complaint.getDecision();
 			
 				
+				bufferedWriter.write("Przedmiot zlecenia: "+repr.getName()+" "+repr.getModel()+" "+repr.getProducer() );
 				
+				bufferedWriter.newLine();
 				
+				bufferedWriter.write("Miejsce zakupu: "+shop.getName()+" "+shop.getCity()+" "+shop.getAddress()+" "+shop.getPhone());
+				
+				bufferedWriter.newLine();
+				
+				bufferedWriter.write("Data zgłoszenia: "+complaint.getComplaintDate().toString());
 				
 				Repair repair2 = entityManager.find(Repair.class, repairID);
+				
+				bufferedWriter.newLine();
+				
+				bufferedWriter.write("Data przekazania do naprawy: "+repair2.getNotificationDate().toString());
+				
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
+				
+				bufferedWriter.write("Przebyte naprawy: ");
 				
 				List<Repair_Service> listanapraw = repair2.getRepairService();
 				
 				for(Repair_Service rs: listanapraw){
-					
-					
-					
+														
 					System.out.println(rs.getDescription());
 					
 					bufferedWriter.newLine();
+					bufferedWriter.newLine();
 					
+					Service serv = rs.getService();
 					
-					bufferedWriter.write(rs.getDescription());
+					bufferedWriter.write("Serwis: "+serv.getName()+" "+serv.getCity()+" "+serv.getAddress()+" "+serv.getPhone());
 					
+					bufferedWriter.newLine();
+							
+					bufferedWriter.write(rs.getDescription());		
 					
+					bufferedWriter.newLine();
+					
+					bufferedWriter.write("Data naprawy: "+rs.getRepairDate().toString());
 				}
 				
+				
 				bufferedWriter.newLine();
-				
-				
-				System.out.println("id decyzji..."+decision.getIdDecision());
-				
-				bufferedWriter.write("id decyzji..."+decision.getIdDecision());
+								
 				
 				
 				
-				
-				
-				
+				Decision entdec = entityManager.find(Decision.class, decision.getIdDecision());
+						
 				System.out.println("id naprawy..."+repairID);
 				
+				DetailedRaport detailedRaport = new DetailedRaport(txtField.getText());
+				
+				entdec.setDetailedRaport(detailedRaport);
+				
+				detailedRaport.setDecision(entdec);
+				
+				entdec.setIfPositive(MapConst.END);
+				
+				entityManager.persist(entdec);
+				entityManager.persist(detailedRaport);
+
+				bufferedWriter.newLine();
+				bufferedWriter.newLine();
+				bufferedWriter.write("Rezultat zlecenia: "+txtField.getText());
 				
 				
-				
-				
-				
+				txtField.setText("");
 				
 		     	//	decision.setIfPositive(MapConst.END);
 				bufferedWriter.close();		       															
 			    entityManager.getTransaction().commit();	
 			    refreshLists();
-			    
-				    
-			    
+			    				    			    
 		        }
 		        catch(IOException ex) {
 		            System.out.println(
 		                "Error writing to file '"
 		                + fileName + "'");
 		            
-		        }
-			    
-			    			    
+		        }			    			    			    
 			}
 		});
 		
@@ -247,6 +282,7 @@ public class AddRaportWindow {
             complaintInfo2.setText("");
             
             complaintInfo3.setText("");
+            
 		}
 	}
 	
