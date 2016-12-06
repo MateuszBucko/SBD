@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 @Entity(name = "Administrator")
 public class Administrator {
 	@Id
@@ -23,7 +25,7 @@ public class Administrator {
 	@Column(name = "Data_zatrudnienia")
 	private Date hireDate;
 
-	@OneToOne(mappedBy = "administrator", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "administrator", cascade=CascadeType.ALL)
 	private AdministratorDetails administratorDetails;
 
 	@OneToMany(mappedBy = "administrator")
