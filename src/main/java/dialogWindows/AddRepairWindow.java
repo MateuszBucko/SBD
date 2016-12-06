@@ -48,7 +48,7 @@ public class AddRepairWindow {
 	ArrayList<String> lista = new ArrayList<String>();				
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
-	
+		
 	ArrayList<String> lista2 = new ArrayList<String>();				
 	ArrayList<Service> listaserwis = new ArrayList<Service>();	
 	
@@ -179,6 +179,7 @@ public class AddRepairWindow {
 				entityManager.persist(decision);
 												
 			    entityManager.getTransaction().commit();	
+			    refreshLists();
 			    
 			    addrepairFrame.dispose();
 			}
@@ -267,5 +268,20 @@ public class AddRepairWindow {
 
 		addrepairFrame.setVisible(true);
 	}
+	
+	
+	private void refreshLists() {
+		
+		listareklamacji =  DatabaseData.getComplaintsBaseOnDecision('2');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		
+		
+		listaserwis = DatabaseData.getAllServices();
+		complaintComboBox2.setModel(new DefaultComboBoxModel(listaserwis.toArray()));
+		
+		
+	}
+	
+	
 	
 }

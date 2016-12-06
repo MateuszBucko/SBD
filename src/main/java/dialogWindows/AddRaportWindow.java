@@ -3,8 +3,12 @@ package dialogWindows;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import mapping.*;
 import javax.persistence.EntityManager;
@@ -19,7 +23,7 @@ import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
 
-public class AddDecisionWindow {
+public class AddRaportWindow {
 	
 	private EntityManager entityManager;
 	
@@ -45,14 +49,14 @@ public class AddDecisionWindow {
 					
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
-	public AddDecisionWindow() {
-		final JFrame adddecisionFrame = new JFrame("Dodaj reklamacj");
+	public AddRaportWindow() {
+		final JFrame addRaportFrame = new JFrame("Dodaj reklamacj");
 
-		adddecisionFrame.addWindowListener(Utils.getDialogWindowsListener(adddecisionFrame,entityManager));
-		adddecisionFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		adddecisionFrame.setBounds(100, 100, 400, 350);
+		addRaportFrame.addWindowListener(Utils.getDialogWindowsListener(addRaportFrame,entityManager));
+		addRaportFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addRaportFrame.setBounds(100, 100, 400, 350);
 					
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
+		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('4');	
 		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
 		
 		if(listareklamacji.size() > 0) complaintComboBox.setSelectedItem(0);
@@ -70,12 +74,10 @@ public class AddDecisionWindow {
          complaintPanel5.add(complaintInfo3);
          
          final JButton AcceptButton = new JButton("Przyjmij reklamację");
-         final JButton DeclineButton = new JButton("Odrzuć reklamację");
          
          complaintPanel6.add(AcceptButton);
          
-         complaintPanel6.add(DeclineButton);	           	            
-         
+          	                     
          complaintPanel.add(complaintPanel3);
          
          complaintPanel.add(complaintPanel4);
@@ -86,45 +88,121 @@ public class AddDecisionWindow {
          
 		
 		AcceptButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			private BufferedWriter bufferedWriter;
 
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+		        String fileName = "";
+
+		        try {
+		            // Assume default encoding.
+		       //     FileWriter fileWriter =
+		      //          new FileWriter(fileName);
+
+		      //      bufferedWriter = new BufferedWriter(fileWriter);
+
+
+					
+
+		            
 				entityManager = Utils.createEntityManager();
 				entityManager.getTransaction().begin();
 				
 				Complaint complaint = (Complaint) complaintComboBox.getSelectedItem();				
 				
-				Decision decision = complaint.getDecision();
-				decision.setIfPositive(MapConst.ACCEPTED);
+				ArrayList<Repair> repair = DatabaseData.getAllRepairs();
 				
-				Repair repair = new Repair(new Date());	
-				repair.setComplaint(complaint);
-								
-				entityManager.merge(decision);
-				entityManager.persist(repair);
-				entityManager.persist(repair);
+				int repairID=0;
+				
+				for(Repair r:repair){					
+					Complaint tempcompl = r.getComplaint();
+									
+					if(tempcompl.getComplaintId()==complaint.getComplaintId())
+					repairID=r.getRepairId();						
+				}
+				
+				
+				ReportedProduct repr = complaint.getReportedProduct();
+				
+			    User user = repr.getUser();
+				
+				
+			    fileName = user.getEmail()+"_"+complaint.getComplaintId()+".txt";
+			    
+			    FileWriter fileWriter = new FileWriter(fileName);
+
+		       bufferedWriter = new BufferedWriter(fileWriter);
+				
+				
+				
+				
+				Decision decision = complaint.getDecision();
+			
+				
+				
+				
+				
+				Repair repair2 = entityManager.find(Repair.class, repairID);
+				
+				List<Repair_Service> listanapraw = repair2.getRepairService();
+				
+				for(Repair_Service rs: listanapraw){
+					
+					
+					
+					System.out.println(rs.getDescription());
+					
+					bufferedWriter.newLine();
+					
+					
+					bufferedWriter.write(rs.getDescription());
+					
+					
+				}
+				
+				bufferedWriter.newLine();
+				
+				
+				System.out.println("id decyzji..."+decision.getIdDecision());
+				
+				bufferedWriter.write("id decyzji..."+decision.getIdDecision());
+				
+				
+				
+				
+				
+				
+				System.out.println("id naprawy..."+repairID);
+				
+				
+				
+				
+				
+				
+				
+		     	//	decision.setIfPositive(MapConst.END);
+				bufferedWriter.close();		       															
 			    entityManager.getTransaction().commit();	
 			    refreshLists();
 			    
+				    
+			    
+		        }
+		        catch(IOException ex) {
+		            System.out.println(
+		                "Error writing to file '"
+		                + fileName + "'");
+		            
+		        }
+			    
+			    			    
 			}
 		});
 		
 		
-		DeclineButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				entityManager = Utils.createEntityManager();
-				entityManager.getTransaction().begin();
-				
-				Complaint complaint = (Complaint) complaintComboBox.getSelectedItem();		
-				Decision decision = complaint.getDecision();
-				decision.setIfPositive(MapConst.DECLINE);
-								
-				entityManager.merge(decision);
-			    entityManager.getTransaction().commit();	
-			    refreshLists();
-			  	
-			}
-		});
-		
+
 		complaintComboBox.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
@@ -144,26 +222,24 @@ public class AddDecisionWindow {
 		            
 		            complaintInfo2.setText(compstr2);
 		            
-		            complaintInfo3.setText(compstr3);
-				
+		            complaintInfo3.setText(compstr3);		
 			}
 		});
-		
-     		
+		    		
 		complaintPanel.add(complaintPanel2);
 		
 		complaintPanel.setBounds(100, 100, 350, 400);
 
-		adddecisionFrame.getContentPane().add(complaintPanel);
+		addRaportFrame.getContentPane().add(complaintPanel);
 
-		adddecisionFrame.setVisible(true);
+		addRaportFrame.setVisible(true);
 	}
+	
 	
 	private void refreshLists()
 	{
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
+		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('4');	
 		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
-		
 		complaintComboBox.repaint();
 		if(listareklamacji.size() == 0){
 			complaintInfo.setText("");

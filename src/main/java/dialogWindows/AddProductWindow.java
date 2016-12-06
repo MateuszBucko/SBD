@@ -214,6 +214,7 @@ public class AddProductWindow {
 	private void refreshLists() {
 		listasklep = DatabaseData.getAllShops();
 		shopComboBox.setModel(new DefaultComboBoxModel(listasklep.toArray()));
+		
 		listauzytkownikow = DatabaseData.getAllUsers();
 		userComboBox.setModel(new DefaultComboBoxModel(listauzytkownikow.toArray()));
 	}

@@ -79,35 +79,11 @@ public class AddServiceRepair{
 		
 		complaintComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
 		
-	//	complaintComboBox2.setModel(new DefaultComboBoxModel(lista.toArray()));
+
 		
 		complaintPanel1.add(complaintLabel);		
         complaintPanel1.add(complaintComboBox);                        
 		complaintPanel.add(complaintPanel1);
-		
-
-						
-	/*	final JButton AcceptButton = new JButton("Przekaż do serwisu");
-		AcceptButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-
-				entityManager = Utils.createEntityManager();
-				entityManager.getTransaction().begin();
-
-				
-		
-
-												
-			    entityManager.getTransaction().commit();				    
-			    addservicerepairFrame.dispose();
-			    
-			    
-			}
-		});        */
-		
-		
 		
 
 		final JButton InsertButton2 = new JButton("Wymaga kolejnej naprawy");
@@ -134,7 +110,7 @@ public class AddServiceRepair{
 			Decision dec2 = entityManager.find( Decision.class, dec.getIdDecision());
 			
 			
-			dec2.setIfPositive(MapConst.NEXT_REPAIR);
+			dec2.setIfPositive(MapConst.IN_SERVICE);
 			
 			entityManager.persist(dec2);
 			
@@ -175,7 +151,7 @@ public class AddServiceRepair{
 				if( rep1.getRepairId()==idnaprawy && serv1.getSeriveId()==idserwisu)
 				{
 					
-				     x.setDescription("opis nowy");
+				     x.setDescription(textbox.getText());
 				     x.setRepairDate(new Date());
 									
 					entityManager.merge(x);
@@ -254,7 +230,7 @@ public class AddServiceRepair{
 				if( rep1.getRepairId()==idnaprawy && serv1.getSeriveId()==idserwisu)
 				{
 					
-				     x.setDescription("opis nowy");
+				     x.setDescription(textbox.getText());
 				     x.setRepairDate(new Date());
 									
 					entityManager.merge(x);
@@ -297,8 +273,10 @@ public class AddServiceRepair{
 				{	         
 					Service prod = listaserwis.get(serviceID);
 	     
-	            
-	               List<Repair_Service> lista = prod.getRepairService();
+	               Service prod2 = entityManager.find(Service.class, prod.getSeriveId());
+					
+					
+	               List<Repair_Service> lista = prod2.getRepairService();
 	            
 	               
 	                for(Repair_Service x:lista){
@@ -416,15 +394,13 @@ public class AddServiceRepair{
 			}
 		});
 		
-		
-		
-		
+				
 		complaintPanel2.add(addDecision);
      	complaintPanel.add(complaintPanel2);	
      	
-    	  complaintPanel2.add(complaintInfo2);    
+    	complaintPanel2.add(complaintInfo2);    
     	  
-      	 complaintPanel.add(complaintPanel2);
+      	complaintPanel.add(complaintPanel2);
 		complaintPanel.setBounds(100, 100, 350, 400);
 
 		addservicerepairFrame.getContentPane().add(complaintPanel);

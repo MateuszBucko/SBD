@@ -215,6 +215,7 @@ public class AddComplaintWindow {
 	private void refreshLists() {
 		productList = DatabaseData.getAllReportedProducts();
 		productComboBox.setModel(new DefaultComboBoxModel(productList.toArray()));
+		
 		adminDetailsList = DatabaseData.getAllAdministratorDetails();
 		adminComboBox.setModel(new DefaultComboBoxModel(adminDetailsList.toArray()));
 	}

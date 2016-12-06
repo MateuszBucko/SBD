@@ -23,6 +23,7 @@ import dialogWindows.AddComplaintWindow;
 import dialogWindows.AddDecisionWindow;
 import dialogWindows.AddRepairWindow;
 import dialogWindows.AddServiceRepair;
+import dialogWindows.AddRaportWindow;
 
 
 public class View extends JFrame {
@@ -72,6 +73,8 @@ public class View extends JFrame {
 		addRaportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				new AddRaportWindow();
+				
 			}
 		});
 
