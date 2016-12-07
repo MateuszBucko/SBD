@@ -18,6 +18,7 @@ import dialogWindows.AddUserWindow;
 import dialogWindows.DeleteAdminWindow;
 import dialogWindows.EditAdminWindow;
 import dialogWindows.EditUserWindow;
+import dialogWindows.LoggingWindow;
 import dialogWindows.AddProductWindow;
 import dialogWindows.AddComplaintWindow;
 import dialogWindows.AddDecisionWindow;
@@ -158,6 +159,14 @@ public class View extends JFrame {
 				
 			}
 		});
+		JButton logging = new JButton("Zaloguj");
+		logging.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new LoggingWindow();
+				
+			}
+		});
 
 		mainMenuPanel.add(addAdminButton);
 		mainMenuPanel.add(addUserPanel);
@@ -172,6 +181,7 @@ public class View extends JFrame {
 		mainMenuPanel.add(deleteAdmin);
 		mainMenuPanel.add(changeAdminData);
 		mainMenuPanel.add(changeUserData);
+		mainMenuPanel.add(logging);
 	}
 
 	public View() {
