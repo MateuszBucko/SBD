@@ -1,12 +1,15 @@
 package app;
 
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -43,7 +46,7 @@ public class View extends JFrame {
 		getContentPane().add(mainMenuPanel);
 		mainMenuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
-		JButton addUserPanel = new JButton("Add User");
+		JButton addUserPanel = new JButton("Dodaj użytkownika");
 		addUserPanel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -54,7 +57,7 @@ public class View extends JFrame {
 		});
 
 		
-		JButton addShopButton = new JButton("Add Shop");
+		JButton addShopButton = new JButton("Dodaj sklep");
 		addShopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -62,7 +65,7 @@ public class View extends JFrame {
 			}
 		});
 
-		JButton addRaportButton = new JButton("Add Raport");
+		JButton addRaportButton = new JButton("Dodaj raport");
 		addRaportButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -71,7 +74,7 @@ public class View extends JFrame {
 			}
 		});
 
-		JButton addServiceButton = new JButton("Add Service");
+		JButton addServiceButton = new JButton("Dodaj serwis");
 		addServiceButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -80,7 +83,7 @@ public class View extends JFrame {
 			}
 		});
 		
-		JButton addProduct = new JButton("Add Product");
+		JButton addProduct = new JButton("Dodaj produkt");
 		addProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -89,7 +92,7 @@ public class View extends JFrame {
 			}
 		});
 		
-		JButton addComplaint = new JButton("Add Complaint");
+		JButton addComplaint = new JButton("Dodaj reklamację");
 		addComplaint.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -99,7 +102,7 @@ public class View extends JFrame {
 		});
 		
 		
-		JButton addDecision = new JButton("Add Decision");
+		JButton addDecision = new JButton("Dodaj decyzję");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -146,15 +149,25 @@ public class View extends JFrame {
 		});
 
 		mainMenuPanel.add(addUserPanel);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addShopButton);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addRaportButton);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addServiceButton);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addProduct);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addComplaint);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addDecision);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addRepair);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(addServiceRepair);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(changeUserData);
+		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(logging);
 	}
 

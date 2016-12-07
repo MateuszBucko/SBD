@@ -1,12 +1,10 @@
 package dialogWindows;
-
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import mapping.*;
 import javax.persistence.EntityManager;
 import javax.swing.DefaultComboBoxModel;
@@ -16,10 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import com.fasterxml.classmate.members.ResolvedParameterizedMember;
-
-import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
 
@@ -27,7 +22,7 @@ public class AddServiceRepair{
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz produkt: ");
+	JLabel complaintLabel = new JLabel("Wybierz reklamację ");
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel("");
@@ -54,30 +49,30 @@ public class AddServiceRepair{
 	
 	
 	
-	ArrayList<String> lista2 = new ArrayList<String>();				
-	ArrayList<Service> listaserwis = new ArrayList<Service>();	
+	ArrayList<String> tempList = new ArrayList<String>();				
+	ArrayList<Service> serviceList = new ArrayList<Service>();	
 	
-	ArrayList<Repair_Service> listaserwisnaprawy= new ArrayList<Repair_Service>();	
+	ArrayList<Repair_Service> listServiceRepair= new ArrayList<Repair_Service>();	
 					
 	public AddServiceRepair() {
-		final JFrame addservicerepairFrame = new JFrame("Dodaj reklamacj");
+		final JFrame addservicerepairFrame = new JFrame("Dodaj szczegóły naprawy");
 
 		addservicerepairFrame.addWindowListener(Utils.getDialogWindowsListener(addservicerepairFrame,entityManager));
 		addservicerepairFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addservicerepairFrame.setBounds(100, 100, 400, 350);
 					
 				
-		listaserwis = DatabaseData.getAllServices();	
+		serviceList = DatabaseData.getAllServices();	
 		
-		for(Service x : listaserwis){			
+		for(Service x : serviceList){			
 						
-			lista2.add(x.getName()+" "+x.getCity());			
+			tempList.add(x.getName()+" "+x.getCity());			
 		}
 		
 		
 
 		
-		complaintComboBox.setModel(new DefaultComboBoxModel(lista2.toArray()));
+		complaintComboBox.setModel(new DefaultComboBoxModel(tempList.toArray()));
 		
 
 		
@@ -127,23 +122,14 @@ public class AddServiceRepair{
 					idnaprawy=x.getRepairId();
 								
 			}
-			
-			
-			Service ser = listaserwis.get(complaintComboBox.getSelectedIndex());
-			
-			
-			
-			System.out.println(idnaprawy+"omg omg serwis"+ser.getSeriveId());
-			
-			
-			int idserwisu = ser.getSeriveId();
-			
-			
-			listaserwisnaprawy = DatabaseData.getAllRepairSerive();
+	
+			Service ser = serviceList.get(complaintComboBox.getSelectedIndex());			
+			int idserwisu = ser.getSeriveId();			
+			listServiceRepair = DatabaseData.getAllRepairSerive();
 			
 			int idserwisnaprawy = 0;
 			
-			for(Repair_Service x:listaserwisnaprawy){
+			for(Repair_Service x:listServiceRepair){
 				
 				Repair rep1 = x.getRepair();
 			    Service serv1 = x.getService();	
@@ -208,7 +194,7 @@ public class AddServiceRepair{
 			}
 			
 			
-			Service ser = listaserwis.get(complaintComboBox.getSelectedIndex());
+			Service ser = serviceList.get(complaintComboBox.getSelectedIndex());
 			
 			
 			
@@ -218,11 +204,11 @@ public class AddServiceRepair{
 			int idserwisu = ser.getSeriveId();
 			
 			
-			listaserwisnaprawy = DatabaseData.getAllRepairSerive();
+			listServiceRepair = DatabaseData.getAllRepairSerive();
 			
 			int idserwisnaprawy = 0;
 			
-			for(Repair_Service x:listaserwisnaprawy){
+			for(Repair_Service x:listServiceRepair){
 				
 				Repair rep1 = x.getRepair();
 			    Service serv1 = x.getService();	
@@ -271,7 +257,7 @@ public class AddServiceRepair{
 				
 				if(serviceID>=0)
 				{	         
-					Service prod = listaserwis.get(serviceID);
+					Service prod = serviceList.get(serviceID);
 	     
 	               Service prod2 = entityManager.find(Service.class, prod.getSeriveId());
 					

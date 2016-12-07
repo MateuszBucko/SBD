@@ -1,6 +1,7 @@
 package dialogWindows;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 //import java.awt.List;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -66,7 +68,7 @@ public class AddComplaintWindow {
 	ArrayList<AdministratorDetails> adminDetailsList = new ArrayList<AdministratorDetails>();
 
 	public AddComplaintWindow() {
-		final JFrame addcomplaintFrame = new JFrame("Dodaj reklamacj");
+		final JFrame addcomplaintFrame = new JFrame("Dodaj reklamację");
 
 		addcomplaintFrame.addWindowListener(Utils.getDialogWindowsListener(addcomplaintFrame, entityManager));
 		addcomplaintFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -126,6 +128,17 @@ public class AddComplaintWindow {
 				int dayint = 0;
 				int monthint = 0;
 				int yearint = 0;
+				
+				if (!Utils.isInteger(complaintDayTextField.getText()) || !Utils.isInteger(complaintMonthTextField.getText())
+						|| !Utils.isInteger(complaintYearTextField.getText())) {
+					
+					Component controllingFrame = null;
+					JOptionPane.showMessageDialog(controllingFrame,
+			                "Zła data",
+			                "Error Message",
+			                JOptionPane.ERROR_MESSAGE);
+					addcomplaintFrame.dispose();
+				}
 
 				String day2 = complaintDayTextField.getText();
 

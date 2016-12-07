@@ -48,7 +48,7 @@ public class AddShopWindow {
 
 	public AddShopWindow() {
 		final JFrame addShopFrame = new JFrame("Dodaj Sklep");
-
+		addShopFrame.setResizable(false);
 		addShopFrame.addWindowListener(Utils.getDialogWindowsListener(addShopFrame,entityManager));
 		addShopFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addShopFrame.setBounds(100, 100, 350, 270);

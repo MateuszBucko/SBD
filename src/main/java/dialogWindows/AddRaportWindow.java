@@ -1,5 +1,6 @@
 package dialogWindows;
 
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,10 +19,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
 
@@ -29,7 +29,7 @@ public class AddRaportWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz produkt: ");
+	JLabel complaintLabel = new JLabel("Wybierz reklamację ");
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
@@ -52,7 +52,7 @@ public class AddRaportWindow {
 	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
 	
 	public AddRaportWindow() {
-		final JFrame addRaportFrame = new JFrame("Dodaj reklamacj");
+		final JFrame addRaportFrame = new JFrame("Dodaj raport");
 
 		addRaportFrame.addWindowListener(Utils.getDialogWindowsListener(addRaportFrame,entityManager));
 		addRaportFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -171,9 +171,21 @@ public class AddRaportWindow {
 				
 				bufferedWriter.write("Przebyte naprawy: ");
 				
+				if(repair2.getRepairService() == null){
+					Component controllingFrame = null;
+					JOptionPane.showMessageDialog(controllingFrame,
+			                "Brak napraw dla tej reklamacji!",
+			                "Error Message",
+			                JOptionPane.ERROR_MESSAGE);
+					addRaportFrame.dispose();
+					
+				}
 				List<Repair_Service> listanapraw = repair2.getRepairService();
 				
 				for(Repair_Service rs: listanapraw){
+					
+					if(rs.getRepair() != null && rs.getService() != null)
+					{
 														
 					System.out.println(rs.getDescription());
 					
@@ -186,11 +198,13 @@ public class AddRaportWindow {
 					
 					bufferedWriter.newLine();
 							
+					if(rs.getDescription()!=null)
 					bufferedWriter.write(rs.getDescription());		
 					
 					bufferedWriter.newLine();
 					
 					bufferedWriter.write("Data naprawy: "+rs.getRepairDate().toString());
+					}
 				}
 				
 				

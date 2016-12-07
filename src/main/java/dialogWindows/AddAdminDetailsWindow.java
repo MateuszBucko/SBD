@@ -35,27 +35,28 @@ public class AddAdminDetailsWindow {
 
 	JPanel adminPanel = new JPanel();
 
-	JLabel nameLabel = new JLabel("Podaj imiê: ");
+	JLabel nameLabel = new JLabel("Podaj imiï¿½: ");
 	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
-	JLabel streetLabel = new JLabel("Podaj ulicê: ");
+	JLabel streetLabel = new JLabel("Podaj ulicï¿½: ");
 	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
 	JLabel cityLabel = new JLabel("Podaj miasto: ");
 	JLabel phoneLabel = new JLabel("Podaj telefon: ");
 	JLabel birthLabel = new JLabel("Data urodzenia: ");
 	JLabel peselLabel = new JLabel("Podaj PESEL: ");
 	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
-	JLabel addAdminDateLabel = new JLabel("Podaj datê zatrudnienia administratora: ");
-	JLabel addAdminDayLabel = new JLabel("Dzieñ: ");
-	JLabel addAdminMonthLabel = new JLabel("Miesi¹c: ");
+	JLabel addAdminDateLabel = new JLabel("Podaj datï¿½ zatrudnienia administratora: ");
+	JLabel addAdminDayLabel = new JLabel("Dzieï¿½: ");
+	JLabel addAdminMonthLabel = new JLabel("Miesiï¿½c: ");
 	JLabel addAdminYearLabel = new JLabel("Rok: ");
 
 	JButton enterButton = new JButton("Enter");
 
 	public AddAdminDetailsWindow(final int day, final int month, final int year) {
-		final JFrame addAdminFrame = new JFrame("Dodaj dane szczegó³owe administratora");
+		final JFrame addAdminFrame = new JFrame("Dodaj dane szczegï¿½owe administratora");
 		addAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addAdminFrame.addWindowListener(Utils.getDialogWindowsListener(addAdminFrame, entityManager));
-		addAdminFrame.setBounds(100, 100, 370, 400);
+		addAdminFrame.setBounds(100, 100, 370, 300);
+		addAdminFrame.setResizable(false);
 
 		cityTextField.setColumns(20);
 		nameTextField.setColumns(20);

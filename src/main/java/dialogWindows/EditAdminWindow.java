@@ -68,6 +68,7 @@ public class EditAdminWindow {
 		changeAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		changeAdminFrame.addWindowListener(Utils.getDialogWindowsListener(changeAdminFrame, entityManager));
 		changeAdminFrame.setBounds(100, 100, 370, 580);
+		changeAdminFrame.setResizable(false);
 
 		ArrayList<AdministratorDetails> adminList = DatabaseData.getAllAdministratorDetails();
 

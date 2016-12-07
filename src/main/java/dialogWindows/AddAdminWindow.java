@@ -1,5 +1,6 @@
 package dialogWindows;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -7,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -34,6 +36,7 @@ public class AddAdminWindow {
 		addAdminDataFrame.addWindowListener(Utils.getDialogWindowsListener(addAdminDataFrame,entityManager));
 		addAdminDataFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addAdminDataFrame.setBounds(100, 100, 380, 297);
+		addAdminDataFrame.setResizable(false);
 
 		adminDataPanel.setBounds(0, 0, 315, 297);
 		addAdminDataFrame.getContentPane().add(adminDataPanel);
@@ -69,6 +72,17 @@ public class AddAdminWindow {
 				int dayint = 0;
 				int monthint = 0;
 				int yearint = 0;
+				
+				if (!Utils.isInteger(adminDayTextField.getText()) || !Utils.isInteger(adminMonthTextField.getText())
+						|| !Utils.isInteger(adminYearTextField.getText())) {
+					
+					Component controllingFrame = null;
+					JOptionPane.showMessageDialog(controllingFrame,
+			                "Zła data",
+			                "Error Message",
+			                JOptionPane.ERROR_MESSAGE);
+					addAdminDataFrame.dispose();
+				}
 
 				String day = adminDayTextField.getText();
 

@@ -30,7 +30,8 @@ public class DeleteAdminWindow {
 		JFrame deleteAdminFrame = new JFrame("Usuń administratora z jego danymi szczegółowymi");
 		deleteAdminFrame.addWindowListener(Utils.getDialogWindowsListener(deleteAdminFrame, entityManager));
 		deleteAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		deleteAdminFrame.setBounds(100, 100, 400, 350);
+		deleteAdminFrame.setBounds(100, 100, 400, 150);
+		deleteAdminFrame.setResizable(false);
 
 		adminComboBox.setPreferredSize(new Dimension(300, 50));
 		acceptDeleteAdmin.setPreferredSize(new Dimension(150, 30));

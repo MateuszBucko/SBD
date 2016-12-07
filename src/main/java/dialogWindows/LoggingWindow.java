@@ -38,7 +38,7 @@ public class LoggingWindow {
 	
 	public LoggingWindow()
 	{
-		final JFrame loginFrame = new JFrame("Head Admin Login");
+		final JFrame loginFrame = new JFrame("Zaloguj się");
 		loginFrame.addWindowListener(Utils.getDialogWindowsListener(loginFrame, entityManager));
 		loginFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		

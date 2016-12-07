@@ -15,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
 
@@ -23,7 +22,7 @@ public class AddDecisionWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz produkt: ");
+	JLabel complaintLabel = new JLabel("Wybierz reklamację: ");
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
@@ -43,19 +42,19 @@ public class AddDecisionWindow {
 	JPanel complaintPanel6 = new JPanel(new FlowLayout());
 	JPanel complaintPanel7 = new JPanel(new FlowLayout());
 					
-	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
+	ArrayList<Complaint> complaintListx = new ArrayList<Complaint>();	
 	
 	public AddDecisionWindow() {
-		final JFrame adddecisionFrame = new JFrame("Dodaj reklamacj");
+		final JFrame adddecisionFrame = new JFrame("Dodaj decyzję");
 
 		adddecisionFrame.addWindowListener(Utils.getDialogWindowsListener(adddecisionFrame,entityManager));
 		adddecisionFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		adddecisionFrame.setBounds(100, 100, 400, 350);
 					
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
-		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintListx = DatabaseData.getComplaintsBaseOnDecision('0');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(complaintListx.toArray()));
 		
-		if(listareklamacji.size() > 0) complaintComboBox.setSelectedItem(0);
+		if(complaintListx.size() > 0) complaintComboBox.setSelectedItem(0);
 		
 		
 		complaintPanel1.add(complaintLabel);		
@@ -161,11 +160,11 @@ public class AddDecisionWindow {
 	
 	private void refreshLists()
 	{
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('0');	
-		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintListx = DatabaseData.getComplaintsBaseOnDecision('0');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(complaintListx.toArray()));
 		
 		complaintComboBox.repaint();
-		if(listareklamacji.size() == 0){
+		if(complaintListx.size() == 0){
 			complaintInfo.setText("");
             
             complaintInfo2.setText("");

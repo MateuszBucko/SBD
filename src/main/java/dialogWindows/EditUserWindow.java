@@ -45,11 +45,12 @@ public class EditUserWindow {
 	JButton acceptSaveButton = new JButton("ZMIEŃ");
 
 	public EditUserWindow() {
-		final JFrame frameAddUser = new JFrame("Dodaj Użytkownika");
-		frameAddUser.addWindowListener(Utils.getDialogWindowsListener(frameAddUser, entityManager));
-		frameAddUser.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frameAddUser.setBounds(100, 100, 350, 550);
-		frameAddUser.setVisible(true);
+		final JFrame frameEditUser = new JFrame("Dodaj Użytkownika");
+		frameEditUser.addWindowListener(Utils.getDialogWindowsListener(frameEditUser, entityManager));
+		frameEditUser.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frameEditUser.setBounds(100, 100, 350, 550);
+		frameEditUser.setVisible(true);
+		frameEditUser.setResizable(false);
 
 		ArrayList<User> userList = DatabaseData.getAllUsers();
 
@@ -128,7 +129,7 @@ public class EditUserWindow {
 
 		userPanel.add(acceptSaveButton);
 		
-		frameAddUser.add(userPanel);
+		frameEditUser.add(userPanel);
 	}
 	private void refreshComboBox() {
 		ArrayList<User> userList = DatabaseData.getAllUsers();

@@ -44,6 +44,7 @@ public class AddUserWindow {
 		frameAddUser.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frameAddUser.setBounds(100, 100, 350, 300);
 		frameAddUser.setVisible(true);
+		frameAddUser.setResizable(false);
 
 		birthTextField.setColumns(17);
 		cityTextField.setColumns(20);

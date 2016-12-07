@@ -1,6 +1,7 @@
 package dialogWindows;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.List;
@@ -22,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -52,7 +54,7 @@ public class AddProductWindow {
 	JComboBox shopComboBox = new JComboBox();
 	JComboBox userComboBox = new JComboBox();
 
-	JButton enterButton = new JButton("Enter");
+	JButton enterButton = new JButton("Dodaj");
 
 	JPanel productPanel = new JPanel();
 	JPanel productPanel1 = new JPanel(new FlowLayout());
@@ -62,18 +64,17 @@ public class AddProductWindow {
 	JPanel productPanel5 = new JPanel(new FlowLayout());
 	JPanel productPanel6 = new JPanel(new FlowLayout());
 
-	ArrayList<String> lista = new ArrayList<String>();
-	ArrayList<Shop> listasklep = new ArrayList<Shop>();
+	ArrayList<Shop> shopsList = new ArrayList<Shop>();
 
-	ArrayList<String> lista2 = new ArrayList<String>();
-	ArrayList<User> listauzytkownikow = new ArrayList<User>();
+	ArrayList<User> usersList = new ArrayList<User>();
 
 	public AddProductWindow() {
-		final JFrame addProductFrame = new JFrame("Dodaj Sklep");
+		final JFrame addProductFrame = new JFrame("Dodaj produkt");
 
 		addProductFrame.addWindowListener(Utils.getDialogWindowsListener(addProductFrame, entityManager));
 		addProductFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addProductFrame.setBounds(100, 100, 400, 350);
+		
 
 		nameTextField.setColumns(20);
 		modelTextField.setColumns(20);
@@ -82,15 +83,15 @@ public class AddProductWindow {
 		productMonthTextField.setColumns(2);
 		productYearTextField.setColumns(4);
 
-		listasklep = DatabaseData.getAllShops();
-		shopComboBox.setModel(new DefaultComboBoxModel(listasklep.toArray()));
+		shopsList = DatabaseData.getAllShops();
+		shopComboBox.setModel(new DefaultComboBoxModel(shopsList.toArray()));
 
 		productPanel1.add(shopLabel);
 		productPanel1.add(shopComboBox);
 		productPanel.add(productPanel1);
 
-		listauzytkownikow = DatabaseData.getAllUsers();
-		userComboBox.setModel(new DefaultComboBoxModel(listauzytkownikow.toArray()));
+		usersList = DatabaseData.getAllUsers();
+		userComboBox.setModel(new DefaultComboBoxModel(usersList.toArray()));
 		//
 
 		productPanel2.add(userLabel);
@@ -131,6 +132,17 @@ public class AddProductWindow {
 				int dayint = 0;
 				int monthint = 0;
 				int yearint = 0;
+
+				if (!Utils.isInteger(productDayTextField.getText()) || !Utils.isInteger(productMonthTextField.getText())
+						|| !Utils.isInteger(productYearTextField.getText())) {
+					
+					Component controllingFrame = null;
+					JOptionPane.showMessageDialog(controllingFrame,
+			                "Zła data",
+			                "Error Message",
+			                JOptionPane.ERROR_MESSAGE);
+					addProductFrame.dispose();
+				}
 
 				String day2 = productDayTextField.getText();
 
@@ -187,7 +199,7 @@ public class AddProductWindow {
 
 					entityManager.getTransaction().commit();
 					entityManager.close();
-					
+
 					refreshLists();
 					shopComboBox.repaint();
 					userComboBox.repaint();
@@ -212,11 +224,13 @@ public class AddProductWindow {
 	}
 
 	private void refreshLists() {
-		listasklep = DatabaseData.getAllShops();
-		shopComboBox.setModel(new DefaultComboBoxModel(listasklep.toArray()));
-		
-		listauzytkownikow = DatabaseData.getAllUsers();
-		userComboBox.setModel(new DefaultComboBoxModel(listauzytkownikow.toArray()));
+		shopsList = DatabaseData.getAllShops();
+		shopComboBox.setModel(new DefaultComboBoxModel(shopsList.toArray()));
+
+		usersList = DatabaseData.getAllUsers();
+		userComboBox.setModel(new DefaultComboBoxModel(usersList.toArray()));
 	}
+
+	
 
 }

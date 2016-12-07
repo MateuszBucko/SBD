@@ -15,7 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import dialogWindows.AddDecisionDetailsWindow;
 import app.DatabaseData;
 import app.Utils;
 
@@ -23,7 +22,7 @@ public class AddRepairWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz produkt: ");
+	JLabel complaintLabel = new JLabel("Wybierz reklamację ");
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
@@ -56,7 +55,7 @@ public class AddRepairWindow {
 	ArrayList<Repair> listarepair = new ArrayList<Repair>();	
 	
 	public AddRepairWindow() {
-		final JFrame addrepairFrame = new JFrame("Dodaj reklamacj");
+		final JFrame addrepairFrame = new JFrame("Dodaj naprawę");
 
 		addrepairFrame.addWindowListener(Utils.getDialogWindowsListener(addrepairFrame,entityManager));
 		addrepairFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

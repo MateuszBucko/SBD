@@ -39,7 +39,7 @@ public class AddServiceWindow {
 	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
 	JLabel serviceNameLabel = new JLabel("Podaj nazwę serwisu: ");
 
-	JButton enterButton = new JButton("Enter");
+	JButton enterButton = new JButton("Dodaj");
 
 	private EntityManager entityManager;
 
