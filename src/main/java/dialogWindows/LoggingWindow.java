@@ -1,11 +1,13 @@
 package dialogWindows;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 
 import javax.persistence.EntityManager;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,12 +28,17 @@ public class LoggingWindow {
 	JPasswordField passwordField = new JPasswordField();
 	
 	JPanel loggingPanel = new JPanel();
+	JPanel adminPanel = new JPanel();
 	
 	JButton loginButton = new JButton("Zaloguj");
 	
+	JButton addAdminButton;
+	JButton deleteAdmin;
+	JButton changeAdminData;
+	
 	public LoggingWindow()
 	{
-		JFrame loginFrame = new JFrame("Head Admin Login");
+		final JFrame loginFrame = new JFrame("Head Admin Login");
 		loginFrame.addWindowListener(Utils.getDialogWindowsListener(loginFrame, entityManager));
 		loginFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
@@ -42,6 +49,33 @@ public class LoggingWindow {
 		loggingPanel.add(passwordField);
 		loggingPanel.add(loginButton);
 		
+		addAdminButton = new JButton("Dodaj Administratora ");
+		addAdminButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				new AddAdminWindow();
+
+
+			}
+		});
+		
+		deleteAdmin = new JButton("Usuń Admistratora    ");
+		deleteAdmin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new DeleteAdminWindow();
+				
+			}
+		});
+		changeAdminData = new JButton("Zmień Administratora");
+		changeAdminData.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new EditAdminWindow();
+				
+			}
+		});
+		
 		loginFrame.add(loggingPanel);
 		
 		loginButton.addActionListener(new ActionListener() {
@@ -51,7 +85,20 @@ public class LoggingWindow {
 				{
 					if(isPasswordCorrect(passwordField.getPassword()) && isLoginCorrect(loginTextField.getText()))
 					{
-						//TODO uzupelnienie do panelu admina
+						adminPanel.setLayout(new BoxLayout(adminPanel, BoxLayout.PAGE_AXIS));
+						loginFrame.getContentPane().removeAll();
+						addAdminButton.setPreferredSize(new Dimension(150, 50));
+						deleteAdmin.setPreferredSize(new Dimension(150, 50));
+						changeAdminData.setPreferredSize(new Dimension(150, 50));
+						adminPanel.add(addAdminButton);
+						adminPanel.add(Box.createRigidArea(new Dimension(0,10)));
+						adminPanel.add(deleteAdmin);
+						adminPanel.add(Box.createRigidArea(new Dimension(0,10)));
+						adminPanel.add(changeAdminData);	
+						adminPanel.add(Box.createRigidArea(new Dimension(0,10)));
+						loginFrame.add(adminPanel);
+						loginFrame.setBounds(100,100,350,150);
+
 					}
 					else
 					{

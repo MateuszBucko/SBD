@@ -34,6 +34,7 @@ public class View extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	JPanel mainMenuPanel = new JPanel();
+	JPanel headAdminPanel = new JPanel();
 	
 
 	public void menuPanel() {
@@ -52,16 +53,7 @@ public class View extends JFrame {
 			}
 		});
 
-		JButton addAdminButton = new JButton("Add Admin");
-		addAdminButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				new AddAdminWindow();
-
-
-			}
-		});
-
+		
 		JButton addShopButton = new JButton("Add Shop");
 		addShopButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,22 +126,7 @@ public class View extends JFrame {
 			}
 		});
 		
-		JButton deleteAdmin = new JButton("Delete Admin");
-		deleteAdmin.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				new DeleteAdminWindow();
-				
-			}
-		});
-		JButton changeAdminData = new JButton("Zmień Admina");
-		changeAdminData.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				new EditAdminWindow();
-				
-			}
-		});
+		
 		
 		JButton changeUserData = new JButton("Zmień Użytkownika");
 		changeUserData.addActionListener(new ActionListener() {
@@ -168,7 +145,6 @@ public class View extends JFrame {
 			}
 		});
 
-		mainMenuPanel.add(addAdminButton);
 		mainMenuPanel.add(addUserPanel);
 		mainMenuPanel.add(addShopButton);
 		mainMenuPanel.add(addRaportButton);
@@ -178,8 +154,6 @@ public class View extends JFrame {
 		mainMenuPanel.add(addDecision);
 		mainMenuPanel.add(addRepair);
 		mainMenuPanel.add(addServiceRepair);
-		mainMenuPanel.add(deleteAdmin);
-		mainMenuPanel.add(changeAdminData);
 		mainMenuPanel.add(changeUserData);
 		mainMenuPanel.add(logging);
 	}
