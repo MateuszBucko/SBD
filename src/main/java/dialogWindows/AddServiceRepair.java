@@ -237,7 +237,7 @@ public class AddServiceRepair{
 		
 		
 								
-		JButton addDecision = new JButton("Add Decision");
+		JButton addDecision = new JButton("Dodaj szczegóły naprawy");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

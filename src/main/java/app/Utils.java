@@ -21,8 +21,8 @@ public class Utils {
 		WindowListener exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close window?",
-						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				int confirm = JOptionPane.showOptionDialog(null, "Na pewno chcesz zamknąc okno?",
+						"Potwierdzenie wyjścia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
 					if(entityManager != null){
 					if(entityManager.getTransaction().isActive())

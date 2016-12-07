@@ -1,6 +1,7 @@
 package app;
 
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -14,12 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import dialogWindows.AddAdminWindow;
 import dialogWindows.AddServiceWindow;
 import dialogWindows.AddShopWindow;
 import dialogWindows.AddUserWindow;
-import dialogWindows.DeleteAdminWindow;
-import dialogWindows.EditAdminWindow;
+import dialogWindows.CheckRepairState;
 import dialogWindows.EditUserWindow;
 import dialogWindows.LoggingWindow;
 import dialogWindows.AddProductWindow;
@@ -111,7 +110,7 @@ public class View extends JFrame {
 			}
 		});
 		
-		JButton addRepair = new JButton("Add Repair");
+		JButton addRepair = new JButton("Dodaj naprawę");
 		addRepair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -147,6 +146,15 @@ public class View extends JFrame {
 				
 			}
 		});
+		
+		JButton checkRepairState = new JButton("Sprawdź stan produktu");
+		checkRepairState.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new CheckRepairState();
+				
+			}
+		});
 
 		mainMenuPanel.add(addUserPanel);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
@@ -169,22 +177,25 @@ public class View extends JFrame {
 		mainMenuPanel.add(changeUserData);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
 		mainMenuPanel.add(logging);
+		mainMenuPanel.add(checkRepairState);
+		repaint();
 	}
 
 	public View() {
 
 		new Utils();
 		setTitle("ProgramSBD");
-		setVisible(true);
-		setBounds(0, 0, 1600, 900);
+		getContentPane().setBackground(new Color(158, 244, 66));
+		setBounds(10, 10, 1500, 400);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
-
+		setVisible(true);
+		repaint();
 		WindowListener exitListener = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?",
-						"Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+				int confirm = JOptionPane.showOptionDialog(null, "Na pewno chesz zamknąć aplikację?",
+						"Potwierdzenie wyjścia", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
 					System.exit(0);
 				}

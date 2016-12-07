@@ -79,11 +79,11 @@ public class AddRaportWindow {
          
          txtField.setColumns(20);
          
-         final JButton AcceptButton = new JButton("Przyjmij reklamację");
+         final JButton generateButton = new JButton("Generuj raport");
          
          complaintPanel6.add(txtField);
          
-         complaintPanel6.add(AcceptButton);
+         complaintPanel6.add(generateButton);
          
           	                     
          complaintPanel.add(complaintPanel3);
@@ -95,7 +95,7 @@ public class AddRaportWindow {
          complaintPanel.add(complaintPanel6);
          
 		
-		AcceptButton.addActionListener(new ActionListener() {
+		generateButton.addActionListener(new ActionListener() {
 			private BufferedWriter bufferedWriter;
 
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,7 @@ public class AddRaportWindow {
 		       bufferedWriter = new BufferedWriter(fileWriter);
 				
 				
-		       bufferedWriter.write("Witam serdecznie,");
+		       bufferedWriter.write("Witamy serdecznie,");
 				
 		       bufferedWriter.newLine();
 		       bufferedWriter.newLine();

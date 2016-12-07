@@ -56,7 +56,6 @@ public class DeleteAdminWindow {
 						.getSelectedItem();
 				System.out.println(adminComboBox.getSelectedItem());
 				Administrator selectedAdministrator = selectedAdministratorDetails.getAdministrator();
-				Session session = entityManager.unwrap(Session.class);
 				entityManager.getTransaction().begin();
 				entityManager.remove(entityManager.contains(selectedAdministrator) ? selectedAdministrator : entityManager.merge(selectedAdministrator));
 				entityManager.getTransaction().commit();

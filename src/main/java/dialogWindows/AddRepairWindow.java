@@ -185,7 +185,7 @@ public class AddRepairWindow {
 		});
 		
 								
-		JButton addDecision = new JButton("Add Decision");
+		JButton addDecision = new JButton("Dodaj naprawę");
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

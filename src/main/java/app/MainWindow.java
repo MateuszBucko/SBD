@@ -14,14 +14,6 @@ public class MainWindow extends JPanel {
 	public static void main(String[] args) {	
 		@SuppressWarnings("unused")
 		View view = new View();
-	
-		
-		ArrayList<Complaint> list = DatabaseData.getComplaintsBaseOnDecision('Y');
-		for(Complaint c : list)
-		{
-			System.out.println("Decyzja " + c.getComplaintId());
-		}
-		
 		
 		
 		
