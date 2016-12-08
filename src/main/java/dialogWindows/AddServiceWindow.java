@@ -15,28 +15,18 @@ import mapping.Service;
 
 public class AddServiceWindow {
 
-	JTextField nameTextField = new JTextField();
-	JTextField surnameTextField = new JTextField();
 	JTextField streetTextField = new JTextField();
 	JTextField postcodeTextField = new JTextField();
 	JTextField cityTextField = new JTextField();
 	JTextField phoneTextField = new JTextField();
-	JTextField birthTextField = new JTextField();
-	JTextField peselTextField = new JTextField();
-	JTextField mailTextField = new JTextField();
 	JTextField serviceNameTextField = new JTextField();
 
 	JPanel servicePanel = new JPanel();
 
-	JLabel nameLabel = new JLabel("Podaj imię: ");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
 	JLabel streetLabel = new JLabel("Podaj ulicę: ");
 	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
 	JLabel cityLabel = new JLabel("Podaj miasto: ");
 	JLabel phoneLabel = new JLabel("Podaj telefon: ");
-	JLabel birthLabel = new JLabel("Data urodzenia: ");
-	JLabel peselLabel = new JLabel("Podaj PESEL: ");
-	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
 	JLabel serviceNameLabel = new JLabel("Podaj nazwę serwisu: ");
 
 	JButton enterButton = new JButton("Dodaj");
@@ -82,9 +72,6 @@ public class AddServiceWindow {
 				String input = serviceNameTextField.getText();
 
 				if (!input.equals("")) {
-					// dodawanie do bazy danych tutaj
-
-					System.out.println("dodano serwis");
 
 					Service service = new Service(serviceNameTextField.getText(), streetTextField.getText(),
 							cityTextField.getText(), postcodeTextField.getText(), phoneTextField.getText());

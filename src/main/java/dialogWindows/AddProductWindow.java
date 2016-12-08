@@ -1,9 +1,7 @@
 package dialogWindows;
 
-import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import mapping.Administrator;
 import mapping.ReportedProduct;
 import mapping.Shop;
 import mapping.User;
@@ -28,20 +25,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import app.Utils;
-//import mapping.Shop;
 
 public class AddProductWindow {
 
 	private EntityManager entityManager;
 
 	JLabel shopLabel = new JLabel("Wybierz sklep: ");
-	JLabel userLabel = new JLabel("Wybierz u�ytkownika: ");
+	JLabel userLabel = new JLabel("Wybierz użytkownika: ");
 	JLabel nameLabel = new JLabel("Nazwa produktu: ");
 	JLabel modelLabel = new JLabel("Model produktu: ");
 	JLabel producerLabel = new JLabel("Producent produktu: ");
-	JLabel addproductDateLabel = new JLabel("Podaj dat� zakupu: ");
-	JLabel addproductDayLabel = new JLabel("Dzie�:");
-	JLabel addproductMonthLabel = new JLabel("Miesi�c:");
+	JLabel addproductDateLabel = new JLabel("Podaj datę zakupu: ");
+	JLabel addproductDayLabel = new JLabel("Dzień:");
+	JLabel addproductMonthLabel = new JLabel("Miesiąc:");
 	JLabel addproductYearLabel = new JLabel("Rok:");
 
 	JTextField nameTextField = new JTextField();
@@ -75,7 +71,6 @@ public class AddProductWindow {
 		addProductFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addProductFrame.setBounds(100, 100, 400, 350);
 		
-
 		nameTextField.setColumns(20);
 		modelTextField.setColumns(20);
 		producerTextField.setColumns(18);
@@ -92,8 +87,7 @@ public class AddProductWindow {
 
 		usersList = DatabaseData.getAllUsers();
 		userComboBox.setModel(new DefaultComboBoxModel(usersList.toArray()));
-		//
-
+		
 		productPanel2.add(userLabel);
 		productPanel2.add(userComboBox);
 		productPanel.add(productPanel2);
@@ -169,15 +163,12 @@ public class AddProductWindow {
 
 				if (!input.equals("")) {
 
-					System.out.println("dodano sklep");
-
 					calendar.set(Calendar.MONTH, monthint - 1);
 					calendar.set(Calendar.YEAR, yearint);
 					calendar.set(Calendar.DATE, dayint);
 
 					Date date = calendar.getTime();
 
-					System.out.println(date.toString());
 
 					ReportedProduct reportedProduct_1 = new ReportedProduct(nameTextField.getText(),
 							modelTextField.getText(), producerTextField.getText(), date);
@@ -210,7 +201,6 @@ public class AddProductWindow {
 				nameTextField.setText("");
 				modelTextField.setText("");
 				producerTextField.setText("");
-				// streetTextField.setText("");
 
 			}
 		});
@@ -230,7 +220,4 @@ public class AddProductWindow {
 		usersList = DatabaseData.getAllUsers();
 		userComboBox.setModel(new DefaultComboBoxModel(usersList.toArray()));
 	}
-
-	
-
 }

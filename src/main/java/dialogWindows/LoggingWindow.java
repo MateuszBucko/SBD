@@ -116,13 +116,9 @@ public class LoggingWindow {
 				
 			}
 		});
-		
-		
-		
+						
 		loginFrame.setBounds(100, 100, 250, 150);
 		loginFrame.setVisible(true);
-		
-		
 	}
 	
 	private static boolean isPasswordCorrect(char[] input) {
@@ -144,6 +140,5 @@ public class LoggingWindow {
 	{
 		if(login.equals("admin")) return true;
 		return false;
-	}
-	
+	}	
 }

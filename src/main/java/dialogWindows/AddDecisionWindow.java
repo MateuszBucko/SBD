@@ -8,7 +8,6 @@ import java.util.Date;
 
 import mapping.*;
 import javax.persistence.EntityManager;
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,29 +21,26 @@ public class AddDecisionWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz reklamację: ");
+	JLabel decisionLabel = new JLabel("Wybierz reklamację: ");
 	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
 	JLabel complaintInfo3 = new JLabel();
-	JLabel complaintInfo4 = new JLabel();
 		
 	JComboBox complaintComboBox = new JComboBox();
-	
-	//JButton enterButton = new JButton("Enter");
-	
-	JPanel complaintPanel = new JPanel();	
-	JPanel complaintPanel1 = new JPanel(new FlowLayout());
-	JPanel complaintPanel2 = new JPanel(new FlowLayout());
-	JPanel complaintPanel3 = new JPanel(new FlowLayout());
-	JPanel complaintPanel4 = new JPanel(new FlowLayout());
-	JPanel complaintPanel5 = new JPanel(new FlowLayout());
-	JPanel complaintPanel6 = new JPanel(new FlowLayout());
-	JPanel complaintPanel7 = new JPanel(new FlowLayout());
+		
+	JPanel decisionPanel = new JPanel();	
+	JPanel decisionPanel1 = new JPanel(new FlowLayout());
+	JPanel decisionPanel2 = new JPanel(new FlowLayout());
+	JPanel decisionPanel3 = new JPanel(new FlowLayout());
+	JPanel decisionPanel4 = new JPanel(new FlowLayout());
+	JPanel decisionPanel5 = new JPanel(new FlowLayout());
+	JPanel decisionPanel6 = new JPanel(new FlowLayout());
 					
 	ArrayList<Complaint> complaintListx = new ArrayList<Complaint>();	
 	
 	public AddDecisionWindow() {
+		
 		final JFrame adddecisionFrame = new JFrame("Dodaj decyzję");
 
 		adddecisionFrame.addWindowListener(Utils.getDialogWindowsListener(adddecisionFrame,entityManager));
@@ -56,32 +52,30 @@ public class AddDecisionWindow {
 		
 		if(complaintListx.size() > 0) complaintComboBox.setSelectedItem(0);
 		
-		
-		complaintPanel1.add(complaintLabel);		
-        complaintPanel1.add(complaintComboBox);                        
-		complaintPanel.add(complaintPanel1);
+		decisionPanel1.add(decisionLabel);		
+        decisionPanel1.add(complaintComboBox);                        
+		decisionPanel.add(decisionPanel1);
 						
-		
-		 complaintPanel3.add(complaintInfo);
+		 decisionPanel3.add(complaintInfo);
          
-         complaintPanel4.add(complaintInfo2);
+         decisionPanel4.add(complaintInfo2);
          
-         complaintPanel5.add(complaintInfo3);
+         decisionPanel5.add(complaintInfo3);
          
          final JButton AcceptButton = new JButton("Przyjmij reklamację");
          final JButton DeclineButton = new JButton("Odrzuć reklamację");
          
-         complaintPanel6.add(AcceptButton);
+         decisionPanel6.add(AcceptButton);
          
-         complaintPanel6.add(DeclineButton);	           	            
+         decisionPanel6.add(DeclineButton);	           	            
          
-         complaintPanel.add(complaintPanel3);
+         decisionPanel.add(decisionPanel3);
          
-         complaintPanel.add(complaintPanel4);
+         decisionPanel.add(decisionPanel4);
          
-         complaintPanel.add(complaintPanel5);
+         decisionPanel.add(decisionPanel5);
          
-         complaintPanel.add(complaintPanel6);
+         decisionPanel.add(decisionPanel6);
          
 		
 		AcceptButton.addActionListener(new ActionListener() {
@@ -147,13 +141,12 @@ public class AddDecisionWindow {
 				
 			}
 		});
+			
+		decisionPanel.add(decisionPanel2);
 		
-     		
-		complaintPanel.add(complaintPanel2);
-		
-		complaintPanel.setBounds(100, 100, 350, 400);
+		decisionPanel.setBounds(100, 100, 350, 400);
 
-		adddecisionFrame.getContentPane().add(complaintPanel);
+		adddecisionFrame.getContentPane().add(decisionPanel);
 
 		adddecisionFrame.setVisible(true);
 	}

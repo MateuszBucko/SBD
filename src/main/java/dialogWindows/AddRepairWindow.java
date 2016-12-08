@@ -22,8 +22,7 @@ public class AddRepairWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz reklamację ");
-	
+	JLabel complaintLabel = new JLabel("Wybierz reklamację ");	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
 	JLabel complaintInfo3 = new JLabel();
@@ -32,27 +31,25 @@ public class AddRepairWindow {
 		
 	JComboBox complaintComboBox = new JComboBox();
 	JComboBox complaintComboBox2 = new JComboBox();
-	
-	//JButton enterButton = new JButton("Enter");
-	
-	JPanel complaintPanel = new JPanel();	
-	JPanel complaintPanel1 = new JPanel(new FlowLayout());
-	JPanel complaintPanel2 = new JPanel(new FlowLayout());
-	JPanel complaintPanel3 = new JPanel(new FlowLayout());
-	JPanel complaintPanel4 = new JPanel(new FlowLayout());
-	JPanel complaintPanel5 = new JPanel(new FlowLayout());
-	JPanel complaintPanel6 = new JPanel(new FlowLayout());
-	JPanel complaintPanel7 = new JPanel(new FlowLayout());
-	
-	ArrayList<String> lista = new ArrayList<String>();				
-	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
-	
 		
-	ArrayList<String> lista2 = new ArrayList<String>();				
-	ArrayList<Service> listaserwis = new ArrayList<Service>();	
+	JPanel repairPanel = new JPanel();	
+	JPanel repairPanel1 = new JPanel(new FlowLayout());
+	JPanel repairPanel2 = new JPanel(new FlowLayout());
+	JPanel repairPanel3 = new JPanel(new FlowLayout());
+	JPanel repairPanel4 = new JPanel(new FlowLayout());
+	JPanel repairPanel5 = new JPanel(new FlowLayout());
+	JPanel repairPanel6 = new JPanel(new FlowLayout());
+	JPanel repairPanel7 = new JPanel(new FlowLayout());
+	
+	ArrayList<String> list = new ArrayList<String>();				
+	ArrayList<Complaint> complaintList = new ArrayList<Complaint>();	
 	
 	
-	ArrayList<Repair> listarepair = new ArrayList<Repair>();	
+	ArrayList<String> list2 = new ArrayList<String>();				
+	ArrayList<Service> serviceList = new ArrayList<Service>();	
+	
+	
+	ArrayList<Repair> repairList = new ArrayList<Repair>();	
 	
 	public AddRepairWindow() {
 		final JFrame addrepairFrame = new JFrame("Dodaj naprawę");
@@ -61,35 +58,27 @@ public class AddRepairWindow {
 		addrepairFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addrepairFrame.setBounds(100, 100, 400, 350);
 					
+				
+		complaintList = DatabaseData.getComplaintsBaseOnDecision('2');	
 		
-		
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('2');	
-		
-		for(Complaint x : listareklamacji){			
-						
-			lista.add(x.getComplaintDate().toString()+" "+x.getDescription());			
+		for(Complaint x : complaintList){									
+			list.add(x.getComplaintDate().toString()+" "+x.getDescription());			
 		}
 		
 		
+		serviceList = DatabaseData.getAllServices();	
 		
-		listaserwis = DatabaseData.getAllServices();	
-		
-		for(Service x : listaserwis){			
-						
-			lista2.add(x.getName()+" "+x.getCity());			
+		for(Service x : serviceList){									
+			list2.add(x.getName()+" "+x.getCity());			
 		}
 		
+		complaintComboBox.setModel(new DefaultComboBoxModel(list.toArray()));
 		
+		complaintComboBox2.setModel(new DefaultComboBoxModel(list2.toArray()));
 		
-		
-		
-		complaintComboBox.setModel(new DefaultComboBoxModel(lista.toArray()));
-		
-		complaintComboBox2.setModel(new DefaultComboBoxModel(lista2.toArray()));
-		
-		complaintPanel1.add(complaintLabel);		
-        complaintPanel1.add(complaintComboBox);                        
-		complaintPanel.add(complaintPanel1);
+		repairPanel1.add(complaintLabel);		
+        repairPanel1.add(complaintComboBox);                        
+		repairPanel.add(repairPanel1);
 						
 		final JButton AcceptButton = new JButton("Przekaż do serwisu");
 		AcceptButton.addActionListener(new ActionListener() {
@@ -101,79 +90,61 @@ public class AddRepairWindow {
 								
 				int complaintID = complaintComboBox.getSelectedIndex();
 				
-				Complaint prod = listareklamacji.get(complaintID);
+				Complaint prod = complaintList.get(complaintID);
 							
-				listarepair = DatabaseData.getAllRepairs();
+				repairList = DatabaseData.getAllRepairs();
 				
 				int repairID = 0;
 				
 				int prodID;
 				
 				prodID = prod.getComplaintId();
-				
-				System.out.println("prod"+prodID);
-				
+								
 				if(prod.getComplaintId()>=0)
-				{
-				
-				for(Repair x : listarepair)
-				{			
-					
-					Complaint comp = x.getComplaint();
-					
-					int compID = comp.getComplaintId();
-					
-					System.out.println("compID" + compID);
-										
-					if(compID>=0)
-					{
-						
-					if(compID==prodID)
-					{												
-						repairID = x.getRepairId();						
-					}								
-					
-					}
-					
-					
-				}
-				
-				
+				{					
+				for(Repair x : repairList)
+					{								
+					Complaint comp = x.getComplaint();					
+					int compID = comp.getComplaintId();					
+											
+						if(compID>=0)
+						{				
+							if(compID==prodID)
+								{												
+									repairID = x.getRepairId();						
+								}											
+						}					
+					}							
 				}
 				
 				
 				int serviceID = complaintComboBox2.getSelectedIndex();
 				
-				Service serwis = listaserwis.get(serviceID);
+				Service service = serviceList.get(serviceID);
 				
-				Service serwis2 = entityManager.find( Service.class, serwis.getSeriveId());
+				Service service2 = entityManager.find( Service.class, service.getSeriveId());
 				
 				Decision dec = prod.getDecision();
 				
 				Decision decision = entityManager.find( Decision.class, dec.getIdDecision());
 				
 				decision.setIfPositive(MapConst.IN_SERVICE);
-				
-				
-				
-				System.out.println("repairID"+repairID);
-				
+										
 				Repair repair = entityManager.find(Repair.class, repairID);
-			
-				
+							
 			    Repair_Service repserv = new Repair_Service("opis",new Date());
 			    
 			    repserv.setRepair(repair);
-			    repserv.setService(serwis2);
+			    repserv.setService(service2);
 				
 			    List<Repair_Service> repairService = new ArrayList<Repair_Service>();
 			    repairService.add(repserv);
 			    
-			    serwis2.setRepairService(repairService);
+			    service2.setRepairService(repairService);
 			    repair.setRepairService(repairService);
 			    
 			    entityManager.persist(repair);
-			    entityManager.persist(serwis2);				
+			    entityManager.persist(service2);				
 				entityManager.persist(repserv);
 				entityManager.persist(decision);
 												
@@ -189,23 +160,14 @@ public class AddRepairWindow {
 		addDecision.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-			//	entityManager = Utils.createEntityManager();
-
-			//	entityManager.getTransaction().begin();
-
-				int complaintID = complaintComboBox.getSelectedIndex();
-				
-				System.out.println(complaintID);
+				int complaintID = complaintComboBox.getSelectedIndex();				
 				
 				if(complaintID>=0)
 				{
 				
-	            Complaint prod = listareklamacji.get(complaintID);
+	            Complaint prod = complaintList.get(complaintID);
 	            
-	            int ID = prod.getComplaintId();
-	            
-	            System.out.println(ID);
-	            
+	            	            
 	            String compstr = prod.getComplaintId() + " " + prod.getDescription() + " " +prod.getComplaintDate().toString();
 	            	            	            
 	            ReportedProduct repprod = prod.getReportedProduct();
@@ -222,48 +184,44 @@ public class AddRepairWindow {
 	            
 	            complaintInfo3.setText(compstr3);
 	            
-	            complaintPanel3.add(complaintInfo);
+	            repairPanel3.add(complaintInfo);
 	            
-	            complaintPanel4.add(complaintInfo2);
+	            repairPanel4.add(complaintInfo2);
 	            
-	            complaintPanel5.add(complaintInfo3);
+	            repairPanel5.add(complaintInfo3);
 	            
 	            complaintInfo5.setText("Wybierz serwis");
 	            
 	            
-	            complaintPanel6.add(complaintInfo5);
+	            repairPanel6.add(complaintInfo5);
 	            
-	            complaintPanel6.add(complaintComboBox2);	 
+	            repairPanel6.add(complaintComboBox2);	 
 	            
-	            complaintPanel7.add(AcceptButton);
+	            repairPanel7.add(AcceptButton);
 	            
-	            complaintPanel.add(complaintPanel3);
+	            repairPanel.add(repairPanel3);
 	            
-	            complaintPanel.add(complaintPanel4);
+	            repairPanel.add(repairPanel4);
 	            
-	            complaintPanel.add(complaintPanel5);
+	            repairPanel.add(repairPanel5);
 	            
-	            complaintPanel.add(complaintPanel6);
+	            repairPanel.add(repairPanel6);
 	            
-	            complaintPanel.add(complaintPanel7);
+	            repairPanel.add(repairPanel7);
 	            
-	            complaintPanel.revalidate();
-	     	            
-	    //        entityManager.getTransaction().commit();
-				
+	            repairPanel.revalidate();
+	     	            				
 				}
-				
-				//addrepairFrame.dispose();
 			}
 		});
 		
-		complaintPanel2.add(addDecision);
+		repairPanel2.add(addDecision);
      		
-		complaintPanel.add(complaintPanel2);
+		repairPanel.add(repairPanel2);
 		
-		complaintPanel.setBounds(100, 100, 350, 400);
+		repairPanel.setBounds(100, 100, 350, 400);
 
-		addrepairFrame.getContentPane().add(complaintPanel);
+		addrepairFrame.getContentPane().add(repairPanel);
 
 		addrepairFrame.setVisible(true);
 	}
@@ -271,16 +229,11 @@ public class AddRepairWindow {
 	
 	private void refreshLists() {
 		
-		listareklamacji =  DatabaseData.getComplaintsBaseOnDecision('2');	
-		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintList =  DatabaseData.getComplaintsBaseOnDecision('2');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(complaintList.toArray()));
 		
-		
-		listaserwis = DatabaseData.getAllServices();
-		complaintComboBox2.setModel(new DefaultComboBoxModel(listaserwis.toArray()));
-		
-		
-	}
-	
-	
-	
+		serviceList = DatabaseData.getAllServices();
+		complaintComboBox2.setModel(new DefaultComboBoxModel(serviceList.toArray()));
+				
+	}	
 }

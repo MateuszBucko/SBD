@@ -1,9 +1,6 @@
 package dialogWindows;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -115,7 +112,7 @@ public class EditAdminWindow {
 				Date birthDate = new Date(Integer.parseInt(adminYearTextField.getText()),
 						Integer.parseInt(adminMonthTextField.getText()), Integer.parseInt(adminDayTextField.getText()));
 				administratorDetails.setBirthDate(birthDate);
-				System.out.println(birthDate);
+	
 
 				entityManager.merge(administratorDetails);
 

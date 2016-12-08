@@ -17,28 +17,18 @@ public class AddShopWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel nameLabel = new JLabel("Podaj imię: ");
-	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
 	JLabel streetLabel = new JLabel("Podaj ulicę: ");
 	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
 	JLabel cityLabel = new JLabel("Podaj miasto: ");
 	JLabel phoneLabel = new JLabel("Podaj telefon: ");
-	JLabel birthLabel = new JLabel("Data urodzenia: ");
-	JLabel peselLabel = new JLabel("Podaj PESEL: ");
-	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
 	JLabel shopNameLabel = new JLabel("Podaj nazwę sklepu: ");
 	JLabel shopNipLabel = new JLabel("Podaj numer NIP: ");
 	JLabel serviceNameLabel = new JLabel("Podaj nazwę serwisu: ");
 	
-	JTextField nameTextField = new JTextField();
-	JTextField surnameTextField = new JTextField();
 	JTextField streetTextField = new JTextField();
 	JTextField postcodeTextField = new JTextField();
 	JTextField cityTextField = new JTextField();
 	JTextField phoneTextField = new JTextField();
-	JTextField birthTextField = new JTextField();
-	JTextField peselTextField = new JTextField();
-	JTextField mailTextField = new JTextField();
 	JTextField shopNameTextField = new JTextField();
 	JTextField shopNipTextField = new JTextField();
 	
@@ -80,9 +70,7 @@ public class AddShopWindow {
 
 		shopPanel.add(shopNipLabel);
 		shopPanel.add(shopNipTextField);
-		
-		
-
+				
 		shopPanel.add(enterButton);
 
 		enterButton.addActionListener(new ActionListener() {
@@ -95,8 +83,6 @@ public class AddShopWindow {
 				String input = shopNameTextField.getText();
 
 				if (!input.equals("")) {
-
-					System.out.println("dodano sklep");
 
 					Shop shop = new Shop(shopNameTextField.getText(), streetTextField.getText(),
 							cityTextField.getText(), postcodeTextField.getText(), phoneTextField.getText(),
@@ -114,7 +100,6 @@ public class AddShopWindow {
 				streetTextField.setText("");
 				shopNameTextField.setText("");
 				shopNipTextField.setText("");
-
 			}
 		});
 
@@ -123,7 +108,5 @@ public class AddShopWindow {
 		addShopFrame.getContentPane().add(shopPanel);
 
 		addShopFrame.setVisible(true);
-
 	}
-
 }

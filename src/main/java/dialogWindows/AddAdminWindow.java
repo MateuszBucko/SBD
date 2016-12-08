@@ -32,6 +32,7 @@ public class AddAdminWindow {
 	JButton nextButton = new JButton("Dalej");
 
 	public AddAdminWindow() {
+		
 		final JFrame addAdminDataFrame = new JFrame("Dodaj administratora");
 		addAdminDataFrame.addWindowListener(Utils.getDialogWindowsListener(addAdminDataFrame,entityManager));
 		addAdminDataFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -40,6 +41,7 @@ public class AddAdminWindow {
 
 		adminDataPanel.setBounds(0, 0, 315, 297);
 		addAdminDataFrame.getContentPane().add(adminDataPanel);
+		
 		adminDataPanel.setLayout(null);
 
 		addAdminDateLabel.setBounds(65, 51, 257, 14);
@@ -88,7 +90,6 @@ public class AddAdminWindow {
 
 				if (!day.equals("")) {
 
-					// jl.setText(input);
 					dayint = Integer.parseInt(day);
 
 				}
@@ -97,7 +98,6 @@ public class AddAdminWindow {
 
 				if (!month.equals("")) {
 
-					// jl.setText(input);
 					monthint = Integer.parseInt(month);
 
 				}
@@ -106,20 +106,14 @@ public class AddAdminWindow {
 
 				if (!year.equals("")) {
 
-					// jl.setText(input);
 					yearint = Integer.parseInt(year);
-
 				}
 
-				if (!day.equals("") && !month.equals("") && !year.equals("")) {
-
-					System.out.println("dzie�: " + day);
-					// jl.setText(input);
-
+				if (!day.equals("") && !month.equals("") && !year.equals(""))
+				{
 					new AddAdminDetailsWindow(dayint,monthint,yearint);
 				}
 
-				//
 
 				addAdminDataFrame.dispose();
 
@@ -134,9 +128,6 @@ public class AddAdminWindow {
 		adminDataPanel.add(nextButton);
 
 		addAdminDataFrame.getContentPane().add(adminDataPanel);
-
-		// frameAddAdmin.pack();
 		addAdminDataFrame.setVisible(true);
 	}
-
 }

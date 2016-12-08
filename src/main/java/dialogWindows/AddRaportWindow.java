@@ -8,12 +8,10 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import mapping.*;
 import javax.persistence.EntityManager;
-import javax.swing.Action;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -29,27 +27,22 @@ public class AddRaportWindow {
 	
 	private EntityManager entityManager;
 	
-	JLabel complaintLabel = new JLabel("Wybierz reklamację ");
-	
+	JLabel complaintLabel = new JLabel("Wybierz reklamację ");	
 	JLabel complaintInfo = new JLabel();
 	JLabel complaintInfo2 = new JLabel();
 	JLabel complaintInfo3 = new JLabel();
-	JLabel complaintInfo4 = new JLabel();
 		
 	JComboBox complaintComboBox = new JComboBox();
-	
-	//JButton enterButton = new JButton("Enter");
-	
-	JPanel complaintPanel = new JPanel();	
-	JPanel complaintPanel1 = new JPanel(new FlowLayout());
-	JPanel complaintPanel2 = new JPanel(new FlowLayout());
-	JPanel complaintPanel3 = new JPanel(new FlowLayout());
-	JPanel complaintPanel4 = new JPanel(new FlowLayout());
-	JPanel complaintPanel5 = new JPanel(new FlowLayout());
-	JPanel complaintPanel6 = new JPanel(new FlowLayout());
-	JPanel complaintPanel7 = new JPanel(new FlowLayout());
+		
+	JPanel raportWindow = new JPanel();	
+	JPanel raportWindow1 = new JPanel(new FlowLayout());
+	JPanel raportWindow2 = new JPanel(new FlowLayout());
+	JPanel raportWindow3 = new JPanel(new FlowLayout());
+	JPanel raportWindow4 = new JPanel(new FlowLayout());
+	JPanel raportWindow5 = new JPanel(new FlowLayout());
+	JPanel raportWindow6 = new JPanel(new FlowLayout());
 					
-	ArrayList<Complaint> listareklamacji = new ArrayList<Complaint>();	
+	ArrayList<Complaint> complaintList = new ArrayList<Complaint>();	
 	
 	public AddRaportWindow() {
 		final JFrame addRaportFrame = new JFrame("Dodaj raport");
@@ -58,22 +51,18 @@ public class AddRaportWindow {
 		addRaportFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addRaportFrame.setBounds(100, 100, 400, 350);
 					
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('4');	
-		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintList = DatabaseData.getComplaintsBaseOnDecision('4');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(complaintList.toArray()));
 		
-		if(listareklamacji.size() > 0) complaintComboBox.setSelectedItem(0);
-		
-		
-		complaintPanel1.add(complaintLabel);		
-        complaintPanel1.add(complaintComboBox);                        
-		complaintPanel.add(complaintPanel1);
-						
-		
-		 complaintPanel3.add(complaintInfo);
-         
-         complaintPanel4.add(complaintInfo2);
-         
-         complaintPanel5.add(complaintInfo3);
+		if(complaintList.size() > 0) complaintComboBox.setSelectedItem(0);
+			
+		raportWindow1.add(complaintLabel);		
+        raportWindow1.add(complaintComboBox);                        
+		raportWindow.add(raportWindow1);
+								
+		 raportWindow3.add(complaintInfo);         
+         raportWindow4.add(complaintInfo2);         
+         raportWindow5.add(complaintInfo3);
          
          final JTextField txtField = new JTextField();
          
@@ -81,27 +70,20 @@ public class AddRaportWindow {
          
          final JButton generateButton = new JButton("Generuj raport");
          
-         complaintPanel6.add(txtField);
-         
-         complaintPanel6.add(generateButton);
-         
-          	                     
-         complaintPanel.add(complaintPanel3);
-         
-         complaintPanel.add(complaintPanel4);
-         
-         complaintPanel.add(complaintPanel5);
-         
-         complaintPanel.add(complaintPanel6);
+         raportWindow6.add(txtField);       
+         raportWindow6.add(generateButton);
+                 	                   
+         raportWindow.add(raportWindow3);        
+         raportWindow.add(raportWindow4);       
+         raportWindow.add(raportWindow5);       
+         raportWindow.add(raportWindow6);
          
 		
 		generateButton.addActionListener(new ActionListener() {
 			private BufferedWriter bufferedWriter;
 
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+							
 		        String fileName = "";
 
 		        try {
@@ -135,8 +117,7 @@ public class AddRaportWindow {
 			    FileWriter fileWriter = new FileWriter(fileName);
 
 		       bufferedWriter = new BufferedWriter(fileWriter);
-				
-				
+								
 		       bufferedWriter.write("Witamy serdecznie,");
 				
 		       bufferedWriter.newLine();
@@ -148,8 +129,7 @@ public class AddRaportWindow {
 		       bufferedWriter.newLine();
 				
 			   Decision decision = complaint.getDecision();
-			
-				
+							
 				bufferedWriter.write("Przedmiot zlecenia: "+repr.getName()+" "+repr.getModel()+" "+repr.getProducer() );
 				
 				bufferedWriter.newLine();
@@ -187,8 +167,7 @@ public class AddRaportWindow {
 					if(rs.getRepair() != null && rs.getService() != null)
 					{
 														
-					System.out.println(rs.getDescription());
-					
+										
 					bufferedWriter.newLine();
 					bufferedWriter.newLine();
 					
@@ -210,12 +189,8 @@ public class AddRaportWindow {
 				
 				bufferedWriter.newLine();
 								
-				
-				
-				
 				Decision entdec = entityManager.find(Decision.class, decision.getIdDecision());
 						
-				System.out.println("id naprawy..."+repairID);
 				
 				DetailedRaport detailedRaport = new DetailedRaport(txtField.getText());
 				
@@ -235,7 +210,6 @@ public class AddRaportWindow {
 				
 				txtField.setText("");
 				
-		     	//	decision.setIfPositive(MapConst.END);
 				bufferedWriter.close();		       															
 			    entityManager.getTransaction().commit();	
 			    refreshLists();
@@ -275,11 +249,11 @@ public class AddRaportWindow {
 			}
 		});
 		    		
-		complaintPanel.add(complaintPanel2);
+		raportWindow.add(raportWindow2);
 		
-		complaintPanel.setBounds(100, 100, 350, 400);
+		raportWindow.setBounds(100, 100, 350, 400);
 
-		addRaportFrame.getContentPane().add(complaintPanel);
+		addRaportFrame.getContentPane().add(raportWindow);
 
 		addRaportFrame.setVisible(true);
 	}
@@ -287,10 +261,10 @@ public class AddRaportWindow {
 	
 	private void refreshLists()
 	{
-		listareklamacji = DatabaseData.getComplaintsBaseOnDecision('4');	
-		complaintComboBox.setModel(new DefaultComboBoxModel(listareklamacji.toArray()));
+		complaintList = DatabaseData.getComplaintsBaseOnDecision('4');	
+		complaintComboBox.setModel(new DefaultComboBoxModel(complaintList.toArray()));
 		complaintComboBox.repaint();
-		if(listareklamacji.size() == 0){
+		if(complaintList.size() == 0){
 			complaintInfo.setText("");
             
             complaintInfo2.setText("");

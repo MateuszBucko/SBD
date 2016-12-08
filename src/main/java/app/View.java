@@ -40,7 +40,6 @@ public class View extends JFrame {
 	JPanel mainMenuPanel = new JPanel();
 	JPanel headAdminPanel = new JPanel();
 	JPanel additionalOpt = new JPanel();
-	//JPanel panel_1 = new JPanel();
 
 	public void menuPanel() {
 
@@ -255,7 +254,5 @@ public class View extends JFrame {
 		addWindowListener(exitListener);
 
 		menuPanel();
-
 	}
-	
 }

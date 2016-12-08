@@ -14,9 +14,7 @@ public class MainWindow extends JPanel {
 	public static void main(String[] args) {	
 		@SuppressWarnings("unused")
 		View view = new View();
-		
-		
-		
+				
 	}
 
 }

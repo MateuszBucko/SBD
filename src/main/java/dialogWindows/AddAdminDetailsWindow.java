@@ -35,24 +35,25 @@ public class AddAdminDetailsWindow {
 
 	JPanel adminPanel = new JPanel();
 
-	JLabel nameLabel = new JLabel("Podaj imi�: ");
+	JLabel nameLabel = new JLabel("Podaj imię: ");
 	JLabel surnameLabel = new JLabel("Podaj nazwisko: ");
-	JLabel streetLabel = new JLabel("Podaj ulic�: ");
+	JLabel streetLabel = new JLabel("Podaj ulicę: ");
 	JLabel postcodeLabel = new JLabel("Podaj pod pocztowy: ");
 	JLabel cityLabel = new JLabel("Podaj miasto: ");
 	JLabel phoneLabel = new JLabel("Podaj telefon: ");
 	JLabel birthLabel = new JLabel("Data urodzenia: ");
 	JLabel peselLabel = new JLabel("Podaj PESEL: ");
 	JLabel mailLabel = new JLabel(" Podaj e-mail: ");
-	JLabel addAdminDateLabel = new JLabel("Podaj dat� zatrudnienia administratora: ");
-	JLabel addAdminDayLabel = new JLabel("Dzie�: ");
-	JLabel addAdminMonthLabel = new JLabel("Miesi�c: ");
+	JLabel addAdminDateLabel = new JLabel("Podaj datę zatrudnienia administratora: ");
+	JLabel addAdminDayLabel = new JLabel("Dzień: ");
+	JLabel addAdminMonthLabel = new JLabel("Miesiąc: ");
 	JLabel addAdminYearLabel = new JLabel("Rok: ");
 
 	JButton enterButton = new JButton("Enter");
 
 	public AddAdminDetailsWindow(final int day, final int month, final int year) {
-		final JFrame addAdminFrame = new JFrame("Dodaj dane szczeg�owe administratora");
+		
+		final JFrame addAdminFrame = new JFrame("Dodaj dane szczegółowe administratora");
 		addAdminFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addAdminFrame.addWindowListener(Utils.getDialogWindowsListener(addAdminFrame, entityManager));
 		addAdminFrame.setBounds(100, 100, 370, 300);
@@ -91,8 +92,10 @@ public class AddAdminDetailsWindow {
 
 		adminPanel.add(addAdminDayLabel);
 		adminPanel.add(adminDayTextField);
+		
 		adminPanel.add(addAdminMonthLabel);
 		adminPanel.add(adminMonthTextField);
+		
 		adminPanel.add(addAdminYearLabel);
 		adminPanel.add(adminYearTextField);
 
@@ -132,8 +135,6 @@ public class AddAdminDetailsWindow {
 					yearint = Integer.parseInt(year2);
 				}
 
-				// Data urodzenia
-
 				Calendar calendar2 = Calendar.getInstance();
 				calendar2.clear();
 
@@ -143,19 +144,9 @@ public class AddAdminDetailsWindow {
 					calendar2.set(Calendar.DATE, dayint);
 				}
 
-				Date date2 = calendar2.getTime();
-
-				//
-
-				if (!year2.equals("")) {
-
-					System.out.println(date2.toString());
-
-				}
+				Date date2 = calendar2.getTime();			
 
 				if (!input.equals("")) {
-
-					System.out.println(day + " " + month + " " + year);
 
 					Calendar calendar = Calendar.getInstance();
 					calendar.clear();
@@ -163,10 +154,6 @@ public class AddAdminDetailsWindow {
 					calendar.set(Calendar.YEAR, year);
 					calendar.set(Calendar.DATE, day);
 					Date date = calendar.getTime();
-
-					System.out.println("data zatrudnienia" + date.toString());
-
-					System.out.println("data narodzin" + date2.toString());
 
 					Administrator administrator = new Administrator(date);
 					AdministratorDetails administratorDetails = new AdministratorDetails(nameTextField.getText(),
@@ -179,8 +166,6 @@ public class AddAdminDetailsWindow {
 					entityManager.persist(administratorDetails);
 
 					entityManager.getTransaction().commit();
-
-					// entityManagerFactory.close();
 
 				}
 
@@ -205,7 +190,5 @@ public class AddAdminDetailsWindow {
 		addAdminFrame.getContentPane().add(adminPanel);
 
 		addAdminFrame.setVisible(true);
-
 	}
-
 }

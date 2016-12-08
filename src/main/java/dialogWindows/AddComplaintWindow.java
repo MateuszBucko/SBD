@@ -1,10 +1,7 @@
 package dialogWindows;
 
-import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-//import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,8 +12,6 @@ import java.util.List;
 import mapping.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -27,7 +22,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.hibernate.Session;
 
 import app.DatabaseData;
 import app.Utils;
@@ -39,9 +33,9 @@ public class AddComplaintWindow {
 	JLabel productLabel = new JLabel("Wybierz produkt: ");
 	JLabel adminLabel = new JLabel("Wybierz administratora: ");
 	JLabel describeLabel = new JLabel("Opis reklamacji: ");
-	JLabel addcomplaintDateLabel = new JLabel("Podaj dat� zg�oszenia: ");
-	JLabel addcomplaintDayLabel = new JLabel("Dzie�:");
-	JLabel addcomplaintMonthLabel = new JLabel("Miesi�c:");
+	JLabel addcomplaintDateLabel = new JLabel("Podaj datę zgłoszenia: ");
+	JLabel addcomplaintDayLabel = new JLabel("Dzień:");
+	JLabel addcomplaintMonthLabel = new JLabel("Miesiąc:");
 	JLabel addcomplaintYearLabel = new JLabel("Rok:");
 
 	JTextField describeTextField = new JTextField();
@@ -75,8 +69,7 @@ public class AddComplaintWindow {
 		addcomplaintFrame.setBounds(100, 100, 400, 350);
 
 		describeTextField.setColumns(20);
-		// describeTextField.setSize(100, 100);
-
+		
 		complaintDayTextField.setColumns(2);
 		complaintMonthTextField.setColumns(2);
 		complaintYearTextField.setColumns(4);
@@ -87,9 +80,9 @@ public class AddComplaintWindow {
 		
 		if(productList.size() > 0) productComboBox.setSelectedIndex(0);
 		
-
 		complaintPanel1.add(productLabel);
 		complaintPanel1.add(productComboBox);
+		
 		complaintPanel.add(complaintPanel1);
 
 		adminDetailsList = DatabaseData.getAllAdministratorDetails();
@@ -98,7 +91,6 @@ public class AddComplaintWindow {
 		
 		if(adminDetailsList.size() >0) adminComboBox.setSelectedIndex(0);
 		
-
 		complaintPanel2.add(adminLabel);
 		complaintPanel2.add(adminComboBox);
 		complaintPanel.add(complaintPanel2);
@@ -108,10 +100,13 @@ public class AddComplaintWindow {
 		complaintPanel.add(complaintPanel3);
 
 		complaintPanel4.add(addcomplaintDateLabel);
-		complaintPanel4.add(addcomplaintDayLabel);
+		
+		complaintPanel4.add(addcomplaintDayLabel);		
 		complaintPanel4.add(complaintDayTextField);
+		
 		complaintPanel4.add(addcomplaintMonthLabel);
 		complaintPanel4.add(complaintMonthTextField);
+		
 		complaintPanel4.add(addcomplaintYearLabel);
 		complaintPanel4.add(complaintYearTextField);
 
@@ -173,15 +168,10 @@ public class AddComplaintWindow {
 
 					Complaint complaint = new Complaint(describeTextField.getText(), date);
 
-					AdministratorDetails admininistratorDetails = (AdministratorDetails) adminComboBox
-							.getSelectedItem();
+					AdministratorDetails admininistratorDetails = (AdministratorDetails) adminComboBox.getSelectedItem();
 					Administrator administrator = admininistratorDetails.getAdministrator();
+					
 					ReportedProduct reportedProduct = (ReportedProduct) productComboBox.getSelectedItem();
-
-					// Administrator admin = entityManager.find(
-					// Administrator.class, 119);
-					// ReportedProduct repoprod = entityManager.find(
-					// ReportedProduct.class, 53 );
 
 					Decision decision = new Decision(MapConst.NEW);
 
@@ -213,7 +203,6 @@ public class AddComplaintWindow {
 				complaintMonthTextField.setText("");
 				complaintYearTextField.setText("");
 
-
 			}
 		});
 
@@ -222,7 +211,6 @@ public class AddComplaintWindow {
 		addcomplaintFrame.getContentPane().add(complaintPanel);
 
 		addcomplaintFrame.setVisible(true);
-
 	}
 
 	private void refreshLists() {
@@ -232,5 +220,4 @@ public class AddComplaintWindow {
 		adminDetailsList = DatabaseData.getAllAdministratorDetails();
 		adminComboBox.setModel(new DefaultComboBoxModel(adminDetailsList.toArray()));
 	}
-
 }
