@@ -71,7 +71,7 @@ public class CheckRepairState {
 						statesTable[0] = "Brak reklamacji dla tego przedmiotu";
 						statesList.setListData(statesTable);
 					}
-				} else if (selectedProduct.getComplaints().size() > 1) {
+				} else if (selectedProduct.getComplaints().size() >= 1) {
 					for (Complaint c : selectedProduct.getComplaints()) {
 						if (c.getDecision() != null) {
 							if (c.getDecision().getIfPositive() != '\u0000') {
