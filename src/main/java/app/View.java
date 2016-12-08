@@ -27,7 +27,9 @@ import dialogWindows.AddDecisionWindow;
 import dialogWindows.AddRepairWindow;
 import dialogWindows.AddServiceRepair;
 import dialogWindows.AddRaportWindow;
-
+import dialogWindows.EditAdminWindow;
+import dialogWindows.DeleteAdminWindow;
+import dialogWindows.AddAdminWindow;
 
 public class View extends JFrame {
 
@@ -37,13 +39,23 @@ public class View extends JFrame {
 	private static final long serialVersionUID = 1L;
 	JPanel mainMenuPanel = new JPanel();
 	JPanel headAdminPanel = new JPanel();
-	
+	JPanel additionalOpt = new JPanel();
+	//JPanel panel_1 = new JPanel();
 
 	public void menuPanel() {
 
-		mainMenuPanel.setBounds(10, 11, 1245, 65);
+		mainMenuPanel.setBounds(10, 11, 1245, 55);
 		getContentPane().add(mainMenuPanel);
-		mainMenuPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		mainMenuPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		
+		
+		headAdminPanel.setBounds(10, 81, 1245, 55);
+		getContentPane().add(headAdminPanel);
+		headAdminPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5,5));
+		
+		additionalOpt.setBounds(10, 151, 1245, 55);
+		getContentPane().add(additionalOpt);
+		additionalOpt.setLayout(new FlowLayout(FlowLayout.LEFT, 5,5));
 
 		JButton addUserPanel = new JButton("Dodaj użytkownika");
 		addUserPanel.addActionListener(new ActionListener() {
@@ -119,7 +131,7 @@ public class View extends JFrame {
 			}
 		});
 		
-		JButton addServiceRepair = new JButton("Add Service_Repair");
+		JButton addServiceRepair = new JButton("Zatwierdź naprawę");
 		addServiceRepair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -155,29 +167,68 @@ public class View extends JFrame {
 				
 			}
 		});
+		
+		JButton addAdmin = new JButton("Dodaj Admina");
+		addAdmin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new AddAdminWindow();
+				
+			}
+		});
+		
+		JButton editAdmin = new JButton("Edytuj Admina");
+		editAdmin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new EditAdminWindow();
+				
+			}
+		});
+		
+		JButton deleteAdmin = new JButton("Usuń Admina");
+		deleteAdmin.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new DeleteAdminWindow();
+				
+			}
+		});
 
 		mainMenuPanel.add(addUserPanel);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		
 		mainMenuPanel.add(addShopButton);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		
 		mainMenuPanel.add(addRaportButton);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		
 		mainMenuPanel.add(addServiceButton);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		
 		mainMenuPanel.add(addProduct);
 		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(addComplaint);
-		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(addDecision);
-		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(addRepair);
-		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(addServiceRepair);
-		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(changeUserData);
-		mainMenuPanel.add(Box.createRigidArea(new Dimension(10,0)));
-		mainMenuPanel.add(logging);
-		mainMenuPanel.add(checkRepairState);
+		
+		
+		headAdminPanel.add(addComplaint);
+		headAdminPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		headAdminPanel.add(addDecision);
+		headAdminPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		headAdminPanel.add(addRepair);
+		headAdminPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		headAdminPanel.add(addServiceRepair);
+		headAdminPanel.add(Box.createRigidArea(new Dimension(10,0)));
+		additionalOpt.add(changeUserData);
+		additionalOpt.add(Box.createRigidArea(new Dimension(10,0)));
+		additionalOpt.add(logging);
+		additionalOpt.add(Box.createRigidArea(new Dimension(10,0)));
+		additionalOpt.add(addAdmin);
+		additionalOpt.add(Box.createRigidArea(new Dimension(10,0)));
+		additionalOpt.add(editAdmin);
+		additionalOpt.add(Box.createRigidArea(new Dimension(10,0)));
+		additionalOpt.add(deleteAdmin);
+		headAdminPanel.add(checkRepairState);
 		repaint();
 	}
 
@@ -185,7 +236,7 @@ public class View extends JFrame {
 
 		new Utils();
 		setTitle("ProgramSBD");
-		getContentPane().setBackground(new Color(158, 244, 66));
+		getContentPane().setBackground(new Color(166, 166, 166));
 		setBounds(10, 10, 1500, 400);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
